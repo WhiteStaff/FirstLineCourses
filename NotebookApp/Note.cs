@@ -24,6 +24,7 @@ namespace NotebookApp
                 while (value == "")
                 {
                     Console.WriteLine("Поле не должно быть пустым!!!");
+                    Console.Write("Введите имя: ");
                     value = Console.ReadLine();
                 }
 
@@ -39,6 +40,7 @@ namespace NotebookApp
                 while (value == "")
                 {
                     Console.WriteLine("Поле не должно быть пустым!!!");
+                    Console.Write("Введите фамилию: ");
                     value = Console.ReadLine();
                 }
 
@@ -52,7 +54,6 @@ namespace NotebookApp
             set
             {
                 if (value == "") value = "Отсуствует";
-
                 _lastname = value;
             }
         }
@@ -66,6 +67,7 @@ namespace NotebookApp
                 while (ulong.TryParse(value, out number))
                 {
                     Console.WriteLine("Номер состоит только из цифр!!");
+                    Console.Write("Введите телефон: ");
                     value = Console.ReadLine();
                 }
 
@@ -81,6 +83,7 @@ namespace NotebookApp
                 while (value == "")
                 {
                     Console.WriteLine("Поле не должно быть пустым!!!");
+                    Console.Write("Введите страну: ");
                     value = Console.ReadLine();
                 }
 
