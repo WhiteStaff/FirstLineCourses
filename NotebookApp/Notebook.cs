@@ -57,8 +57,6 @@ namespace NotebookApp
 
         static void CreateNote()
         {
-            string a = "";
-            notes.Add(new Note(DateTime.Parse(a)));
         }
 
         static void ShowAllNotes()

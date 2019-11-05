@@ -6,9 +6,19 @@ namespace NotebookApp
 {
     class Note
     {
+        private string _name;
+        private string _surname;
+        private string _lastname;
+        private ulong _phoneNumber;
+        private string _country;
+        private DateTime _birthdate;
+        private string _organization;
+        private string _position;
+        private string _other;
+
         public string Name
         {
-            get => Name;
+            get => _name;
             set
             {
                 while (value == "")
@@ -17,13 +27,13 @@ namespace NotebookApp
                     value = Console.ReadLine();
                 }
 
-                Name = value;
+                _name = value;
             }
         }
 
         public string Surname
         {
-            get => Surname;
+            get => _surname;
             set
             {
                 while (value == "")
@@ -32,39 +42,40 @@ namespace NotebookApp
                     value = Console.ReadLine();
                 }
 
-                Surname = value;
+                _surname = value;
             }
         }
 
         public string Lastname
         {
-            get => Lastname;
+            get => _lastname;
             set
             {
                 if (value == "") value = "Отсуствует";
 
-                Lastname = value;
+                _lastname = value;
             }
         }
 
         public string PhoneNumber
         {
-            get => PhoneNumber;
+            get => _phoneNumber.ToString();
             set
             {
-                while (long.TryParse(value, out var number))
+                ulong number;
+                while (ulong.TryParse(value, out number))
                 {
                     Console.WriteLine("Номер состоит только из цифр!!");
                     value = Console.ReadLine();
                 }
 
-                PhoneNumber = value;
+                _phoneNumber = number;
             }
         }
 
         public string Country
         {
-            get => Country;
+            get => _country;
             set
             {
                 while (value == "")
@@ -73,58 +84,58 @@ namespace NotebookApp
                     value = Console.ReadLine();
                 }
 
-                Country = value;
+                _country = value;
             }
         }
 
-        public DateTime? Birthdate
+        public string Birthdate
         {
-            get => Birthdate;
+            get => _birthdate == DateTime.MinValue ? "Отсутствует" : _birthdate.ToString();
 
             set
             {
-                if (value.ToString() == "") value = null;
+                if (value == "") _birthdate = DateTime.MinValue;
+                var date = new DateTime();
+                while (DateTime.TryParse(value, out date))
+                {
+                    value = Console.ReadLine();
+                }
 
-                Birthdate = value;
+                _birthdate = date;
             }
         }
 
         public string Organization
         {
-            get => Organization;
+            get => _organization;
             set
             {
                 if (value == "") value = "Отсуствует";
 
-                Organization = value;
+                _organization = value;
             }
         }
 
         public string Position
         {
-            get => Position;
+            get => _position;
             set
             {
                 if (value == "") value = "Отсуствует";
 
-                Position = value;
+                _position = value;
             }
         }
 
         public string OtherNotes
         {
-            get => OtherNotes;
+            get => _other;
             set
             {
                 if (value == "") value = "Отсуствует";
 
-                OtherNotes = value;
+                _other = value;
             }
-        }
-
-        public Note(DateTime? Birthday)
-        {
-            Birthdate = Birthday;
         }
     }
 }
