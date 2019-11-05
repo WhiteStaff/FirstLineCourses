@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
@@ -18,8 +20,7 @@ namespace NotebookApp
 
         static void Start()
         {
-            var isItEnd = true;
-            while (isItEnd)
+            while (true)
             {
                 var input = Console.ReadLine();
                 switch (input)
@@ -28,24 +29,24 @@ namespace NotebookApp
                         CreateNote();
                         break;
                     case "2":
-                        Console.WriteLine("поиск");
+                        FindNote();
                         break;
                     case "3":
-                        Console.WriteLine("ред");
+                        EditNote();
                         break;
                     case "4":
-                        Console.WriteLine("удаление");
+                        DeleteNote();
                         break;
                     case "5":
                         ShowAllNotes();
                         break;
-                    case "справка":
-                        Console.WriteLine("справка");
+                    case "6":
+                        Companion.Info();
                         break;
-                    case "пока":
+                    case "7":
                         Console.WriteLine("Прощай, друг");
                         Thread.Sleep(1000);
-                        isItEnd = false;
+                        Environment.Exit(0);
                         break;
                     default:
                         Console.WriteLine("Ничего не понимаю! Введи корректную команду");
@@ -55,7 +56,7 @@ namespace NotebookApp
             }
         }
 
-        static void CreateNote()
+        private static void CreateNote()
         {
             var note = new Note();
 
@@ -87,11 +88,12 @@ namespace NotebookApp
             note.OtherNotes = Console.ReadLine();
 
             notes.Add(note);
+            Console.Clear();
             Console.WriteLine("Поздравляю, запись успешно создана!");
 
         }
 
-        static void ShowAllNotes()
+        private static void ShowAllNotes()
         {
             if (notes.Count == 0) {
                 Console.WriteLine("На даный момент записей нет, но их же можно создать!");
@@ -102,24 +104,103 @@ namespace NotebookApp
                 Console.WriteLine($"Имя: {item.Name}");
                 Console.WriteLine($"Фамилия: {item.Surname}");
                 Console.WriteLine($"Телефон: {item.PhoneNumber}");
-                Console.WriteLine($"");
+                Console.WriteLine("****************************");
             }
         }
 
-        static void FindNote()
+        private static void FindNote()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("По какому полю искать?");
+            Console.WriteLine("нажмите 1 для поиска по имени");
+            Console.WriteLine("нажмите 2 для поиска по фамилии");
+            Console.WriteLine("нажмите 3 для поиска по телефону");
+            var userInput = Console.ReadLine();
+            var isItEnd = false;
+            while (!isItEnd)
+            {
+                switch (userInput)
+                {
+                    case "1":
+                    {
+                        Console.WriteLine("Введите имя: ");
+                        var input = Console.ReadLine();
+                        while (input == "")
+                        {
+                            Console.WriteLine("Нельзя пустую стрроку, попробуй еще раз!");
+                            Console.WriteLine("Введите имя: ");
+                            input = Console.ReadLine();
+                        }
+
+                        foreach (var item in notes.Where(x => x.Name == input))
+                        {
+                            item.ShowAllInfo();
+                        }
+                    }
+
+                        isItEnd = true;
+
+                        break;
+                    case "2":
+                    {
+                        Console.WriteLine("Введите фамилию: ");
+                        var input = Console.ReadLine();
+                        while (input == "")
+                        {
+                            Console.WriteLine("Нельзя пустую стрроку, попробуй еще раз!");
+                            Console.WriteLine("Введите имя: ");
+                            input = Console.ReadLine();
+                        }
+
+                        foreach (var item in notes.Where(x => x.Surname == input))
+                        {
+                            item.ShowAllInfo();
+                        }
+                    }
+
+                        isItEnd = true;
+                        break;
+                    case "3":
+                    {
+                        Console.WriteLine("Введите телефон: ");
+                        var input = Console.ReadLine();
+                        while (input == "")
+                        {
+                            Console.WriteLine("Нельзя пустую стрроку, попробуй еще раз!");
+                            Console.WriteLine("Введите имя: ");
+                            input = Console.ReadLine();
+                        }
+
+                        foreach (var item in notes.Where(x => x.PhoneNumber == input))
+                        {
+                            item.ShowAllInfo();
+                        }
+                    }
+
+                        isItEnd = true;
+                        break;
+                    default:
+                        Console.WriteLine("Ничего не понимаю! Введи корректную команду");
+                        break;
+                }
+            }
         }
 
-        static void EditNote()
+        private static void EditNote()
         {
-            throw new NotImplementedException();
+            FindNote();
+            //TODO: подумать как вытащить номер эелемента и как оформить изменение полей
         }
 
-        static void DeleteNote()
+        private static void DeleteNote()
         {
-            throw new NotImplementedException();
+            FindNote();
+            Console.Write("Введите id записи которую надо удалить: ");
+            var id = Console.ReadLine();
+            //TODO: подумать как вытащить номер эелемента
+            //notes.Remove(notes.Where(x => x.Id.ToString() == id));
         }
+
+        
 
     }
 }
