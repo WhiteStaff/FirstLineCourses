@@ -7,7 +7,7 @@ namespace NotebookApp
 {
     class Note
     {
-        public static int id;
+        private static int id;
         private int _id;
         private string _name;
         private string _surname;
@@ -19,8 +19,8 @@ namespace NotebookApp
         private string _position;
         private string _other;
 
-        public int Id { get; }
-        
+        public int Id => _id;
+
         public string Name
         {
             get => _name;
@@ -159,8 +159,16 @@ namespace NotebookApp
             Console.WriteLine($"Организация: {Organization}");
             Console.WriteLine($"Должность: {Position}");
             Console.WriteLine($"Другая информация: {OtherNotes}");
-            Console.WriteLine();
+            Console.WriteLine("------------------------------------");
 
+        }
+
+        public void ShowMainInfo()
+        {
+            Console.WriteLine($"Имя: {Name}");
+            Console.WriteLine($"Фамилия: {Surname}");
+            Console.WriteLine($"Телефон: {PhoneNumber}");
+            Console.WriteLine("****************************");
         }
 
         public Note()

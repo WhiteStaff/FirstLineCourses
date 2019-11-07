@@ -50,6 +50,7 @@
     <Compile Include="Note.cs" />
     <Compile Include="Notebook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\NotebookTests.cs" />
     <Compile Include="Tests\NoteTests.cs" />
   </ItemGroup>
   <ItemGroup>

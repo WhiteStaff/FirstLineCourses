@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NotebookApp;
 using NUnit.Framework;
 
-namespace NotebookApp
+namespace _NotebookApp.Tests
 {
     [TestFixture]
-    class test
+    class NoteTests
     {
         [TestCase("1212", ExpectedResult = "1212")]
         public string SetName(string name)
@@ -30,7 +31,7 @@ namespace NotebookApp
         }
 
 
-        [TestCase("", ExpectedResult="Отсутствует")]
+        [TestCase("", ExpectedResult = "Отсутствует")]
         [TestCase("1212", ExpectedResult = "1212")]
         public string SetLastname(string lastname)
         {
@@ -72,3 +73,4 @@ namespace NotebookApp
 
     }
 }
+

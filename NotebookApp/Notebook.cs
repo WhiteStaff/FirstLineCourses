@@ -14,7 +14,7 @@ namespace NotebookApp
         static void Main(string[] args)
         {
             Companion.Greetings();
-            Companion.Info();
+            Companion.PrintInfo();
             Start();
         }
 
@@ -26,22 +26,22 @@ namespace NotebookApp
                 switch (input)
                 {
                     case "1":
-                        CreateNote();
+                        Companion.NoteCreator();
                         break;
                     case "2":
-                        FindNote();
+                        Companion.Finder();
                         break;
                     case "3":
                         EditNote();
                         break;
                     case "4":
-                        DeleteNote();
+                        //DeleteNote();
                         break;
                     case "5":
                         ShowAllNotes();
                         break;
                     case "6":
-                        Companion.Info();
+                        Companion.PrintInfo();
                         break;
                     case "7":
                         Console.WriteLine("Прощай, друг");
@@ -56,42 +56,7 @@ namespace NotebookApp
             }
         }
 
-        private static void CreateNote()
-        {
-            var note = new Note();
-
-            Console.Write("Введите фамилию: ");
-            note.Surname = Console.ReadLine();
-
-            Console.Write("Введите имя: ");
-            note.Name = Console.ReadLine();
-
-            Console.Write("Введите отчество (необязательно): ");
-            note.Lastname = Console.ReadLine();
-
-            Console.Write("Введите номер телефона (только цифры): ");
-            note.PhoneNumber = Console.ReadLine();
-
-            Console.Write("Введите страну: ");
-            note.Country = Console.ReadLine();
-
-            Console.Write("Введите дату рождения: ");
-            note.Birthdate = Console.ReadLine();
-
-            Console.Write("Введите организацию: ");
-            note.Organization = Console.ReadLine();
-
-            Console.Write("Введите должность: ");
-            note.Position = Console.ReadLine();
-
-            Console.Write("Введите прочую информацию: ");
-            note.OtherNotes = Console.ReadLine();
-
-            notes.Add(note);
-            Console.Clear();
-            Console.WriteLine("Поздравляю, запись успешно создана!");
-
-        }
+        public static void CreateNote(Note note) => notes.Add(note);
 
         private static void ShowAllNotes()
         {
@@ -101,103 +66,47 @@ namespace NotebookApp
             }
             foreach (var item in notes)
             {
-                Console.WriteLine($"Имя: {item.Name}");
-                Console.WriteLine($"Фамилия: {item.Surname}");
-                Console.WriteLine($"Телефон: {item.PhoneNumber}");
-                Console.WriteLine("****************************");
+                item.ShowMainInfo();
             }
         }
 
-        private static void FindNote()
+        public static List<int> FindNote(string searchParameter, string searchInfo)
         {
-            Console.WriteLine("По какому полю искать?");
-            Console.WriteLine("нажмите 1 для поиска по имени");
-            Console.WriteLine("нажмите 2 для поиска по фамилии");
-            Console.WriteLine("нажмите 3 для поиска по телефону");
-            var userInput = Console.ReadLine();
-            var isItEnd = false;
-            while (!isItEnd)
+            var returnedId = new List<int>();
+            switch (searchParameter)
             {
-                switch (userInput)
-                {
-                    case "1":
+                case "Name":
+                    foreach (var item in notes.Where(x=> x.Name == searchInfo))
                     {
-                        Console.WriteLine("Введите имя: ");
-                        var input = Console.ReadLine();
-                        while (input == "")
-                        {
-                            Console.WriteLine("Нельзя пустую стрроку, попробуй еще раз!");
-                            Console.WriteLine("Введите имя: ");
-                            input = Console.ReadLine();
-                        }
+                        item.ShowAllInfo();
+                        returnedId.Add(item.Id);
 
-                        foreach (var item in notes.Where(x => x.Name == input))
-                        {
-                            item.ShowAllInfo();
-                        }
                     }
-
-                        isItEnd = true;
-
-                        break;
-                    case "2":
+                    break;
+                case "Surname":
+                    foreach (var item in notes.Where(x => x.Surname == searchInfo))
                     {
-                        Console.WriteLine("Введите фамилию: ");
-                        var input = Console.ReadLine();
-                        while (input == "")
-                        {
-                            Console.WriteLine("Нельзя пустую стрроку, попробуй еще раз!");
-                            Console.WriteLine("Введите имя: ");
-                            input = Console.ReadLine();
-                        }
-
-                        foreach (var item in notes.Where(x => x.Surname == input))
-                        {
-                            item.ShowAllInfo();
-                        }
+                        item.ShowAllInfo();
+                        returnedId.Add(item.Id);
                     }
-
-                        isItEnd = true;
-                        break;
-                    case "3":
-                    {
-                        Console.WriteLine("Введите телефон: ");
-                        var input = Console.ReadLine();
-                        while (input == "")
-                        {
-                            Console.WriteLine("Нельзя пустую стрроку, попробуй еще раз!");
-                            Console.WriteLine("Введите имя: ");
-                            input = Console.ReadLine();
-                        }
-
-                        foreach (var item in notes.Where(x => x.PhoneNumber == input))
-                        {
-                            item.ShowAllInfo();
-                        }
-                    }
-
-                        isItEnd = true;
-                        break;
-                    default:
-                        Console.WriteLine("Ничего не понимаю! Введи корректную команду");
-                        break;
-                }
+                    break;
             }
+            return returnedId;
         }
 
         private static void EditNote()
         {
-            FindNote();
-            //TODO: подумать как вытащить номер эелемента и как оформить изменение полей
+            
+            //TODO: подумать как вытащить номер элемента и как оформить изменение полей
         }
 
-        private static void DeleteNote()
+        public static void DeleteNote(int[] id)
         {
-            FindNote();
-            Console.Write("Введите id записи которую надо удалить: ");
-            var id = Console.ReadLine();
-            //TODO: подумать как вытащить номер эелемента
-            //notes.Remove(notes.Where(x => x.Id.ToString() == id));
+            foreach (var item in notes)
+            {
+                
+            }
+            
         }
 
         
