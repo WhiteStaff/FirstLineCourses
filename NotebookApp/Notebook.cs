@@ -15,58 +15,6 @@ namespace NotebookApp
 
         static void Main(string[] args)
         {
-            var note1 = new Note()
-            {
-                Name = "1",
-                Surname = "2",
-                Lastname = "",
-                PhoneNumber = "12345",
-                Birthdate = "",
-                Organization = "qwer",
-                Position = "qwww",
-                Country = "qqwwwww",
-                OtherNotes = ""
-            };
-            var note2 = new Note()
-            {
-                Name = "12",
-                Surname = "22",
-                Lastname = "",
-                PhoneNumber = "12345",
-                Birthdate = "",
-                Organization = "qwer",
-                Position = "qwww",
-                Country = "qqwwwww",
-                OtherNotes = ""
-            };
-            var note3 = new Note()
-            {
-                Name = "1111",
-                Surname = "2",
-                Lastname = "",
-                PhoneNumber = "12345",
-                Birthdate = "",
-                Organization = "qwer",
-                Position = "qwww",
-                Country = "qqwwwww",
-                OtherNotes = ""
-            };
-            var note4 = new Note()
-            {
-                Name = "1",
-                Surname = "2222",
-                Lastname = "",
-                PhoneNumber = "12345",
-                Birthdate = "",
-                Organization = "qwer",
-                Position = "qwww",
-                Country = "qqwwwww",
-                OtherNotes = ""
-            };
-            CreateNote(note1);
-            CreateNote(note2);
-            CreateNote(note3);
-            CreateNote(note4);
             Companion.Greetings();
             Companion.PrintInfo();
             Start();
