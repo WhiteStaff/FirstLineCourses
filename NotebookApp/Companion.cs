@@ -18,8 +18,8 @@ namespace NotebookApp
             Console.WriteLine("Для редактирования записей напиши \"3\"");
             Console.WriteLine("Для удаления записи напиши \"4\"");
             Console.WriteLine("Для отображения всех записей напиши \"5\"");
-            Console.WriteLine("Для показа справки напиши \"справка\"");
-            Console.WriteLine("Для выхода из программы напиши \"пока\" (Помни, я всё забуду если закроюсь!)");
+            Console.WriteLine("Для показа справки напиши \"6\"");
+            Console.WriteLine("Для выхода из программы напиши \"7\" (Помни, я всё забуду если закроюсь!)");
         }
 
         public static List<int> Finder()
@@ -66,7 +66,63 @@ namespace NotebookApp
 
         public static void Editor()
         {
-            var x = Finder();
+            var foundId = Finder();
+            Console.WriteLine("Введите Id записи, которую надо редактировать");
+            var userInput = Console.ReadLine();
+            int id;
+
+            while (!(int.TryParse(userInput, out id) && foundId.Contains(id))) 
+            {
+                Console.WriteLine("Некорректный ввод!");
+                Console.Write("Попробуй еще раз: ");
+                userInput = Console.ReadLine();
+            }
+
+            var note = Notebook.GetNoteToEdit(id);
+            string input;
+
+            Console.WriteLine($"Текущая фамилия: {note.Surname}");
+            Console.Write("Введите новую фамилию (чтобы оставить фамилию неизменной, введите \"-\"): ");
+            input = Console.ReadLine();
+            if (input != "-") note.Surname = input;
+
+            Console.WriteLine($"Текущее имя: {note.Name}");
+            Console.Write("Введите новое имя (чтобы оставить имя неизменным, введите \"-\"): ");
+            input = Console.ReadLine();
+            if (input != "-") note.Name = input;
+
+            Console.WriteLine($"Текущая фамилия: {note.Lastname}");
+            Console.Write("Введите новое отчество (чтобы оставить отчество неизменным, введите \"-\"): ");
+            input = Console.ReadLine();
+            if (input != "-") note.Lastname = input;
+
+            Console.WriteLine($"Текущий телефон: {note.PhoneNumber}");
+            Console.Write("Введите новый телефон (чтобы оставить телефон неизменным, введите \"-\"): ");
+            input = Console.ReadLine();
+            if (input != "-") note.PhoneNumber = input;
+
+            Console.WriteLine($"Текущая страна: {note.Country}");
+            Console.Write("Введите новую фамилию (чтобы оставить страну неизменной, введите \"-\"): ");
+            input = Console.ReadLine();
+            if (input != "-") note.Country = input;
+
+            Console.WriteLine($"Текущая организация: {note.Organization}");
+            Console.Write("Введите новую организацию (чтобы оставить организацию неизменной, введите \"-\"): ");
+            input = Console.ReadLine();
+            if (input != "-") note.Organization = input;
+
+            Console.WriteLine($"Текущая должность: {note.Position}");
+            Console.Write("Введите новую должность (чтобы оставить должность неизменной, введите \"-\"): ");
+            input = Console.ReadLine();
+            if (input != "-") note.Surname = input;
+
+            Console.WriteLine($"Текущая заметка: {note.OtherNotes}");
+            Console.Write("Введите новую заметку (чтобы оставить заметку неизменной, введите \"-\"): ");
+            input = Console.ReadLine();
+            if (input != "-") note.OtherNotes = input;
+
+            Console.Clear();
+            Console.WriteLine("Поздравляю, запись успешно обновлена!");
         }
 
         public static void Deleter()
@@ -76,7 +132,7 @@ namespace NotebookApp
             var userInput = Console.ReadLine();
             var id = -1;
 
-            while (userInput == "все" || (int.TryParse(userInput, out id) && id > 0))
+            while (!(userInput == "все" || int.TryParse(userInput, out id) && foundId.Contains(id))) 
             {
                 Console.WriteLine("Некорректный ввод!");
                 Console.Write("Попробуй еще раз: ");
@@ -84,6 +140,8 @@ namespace NotebookApp
             }
 
             Notebook.DeleteNote(id == -1 ? foundId.ToArray() : new [] {id});
+
+            Console.WriteLine("Выбранное успешно удалено");
         }
 
         public static void NoteCreator()

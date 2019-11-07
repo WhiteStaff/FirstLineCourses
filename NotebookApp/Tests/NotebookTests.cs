@@ -75,5 +75,6 @@ namespace _NotebookApp.Tests
             var x = Notebook.FindNote(searchParameter, searchInfo).Count;
             return x;
         }
+        
     }
 }

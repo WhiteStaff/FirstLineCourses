@@ -11,8 +11,61 @@ namespace NotebookApp
     class Notebook
     {
         private static List<Note> notes = new List<Note>();
+
         static void Main(string[] args)
         {
+            var note1 = new Note()
+            {
+                Name = "1",
+                Surname = "2",
+                Lastname = "",
+                PhoneNumber = "12345",
+                Birthdate = "",
+                Organization = "qwer",
+                Position = "qwww",
+                Country = "qqwwwww",
+                OtherNotes = ""
+            };
+            var note2 = new Note()
+            {
+                Name = "12",
+                Surname = "22",
+                Lastname = "",
+                PhoneNumber = "12345",
+                Birthdate = "",
+                Organization = "qwer",
+                Position = "qwww",
+                Country = "qqwwwww",
+                OtherNotes = ""
+            };
+            var note3 = new Note()
+            {
+                Name = "1111",
+                Surname = "2",
+                Lastname = "",
+                PhoneNumber = "12345",
+                Birthdate = "",
+                Organization = "qwer",
+                Position = "qwww",
+                Country = "qqwwwww",
+                OtherNotes = ""
+            };
+            var note4 = new Note()
+            {
+                Name = "1",
+                Surname = "2222",
+                Lastname = "",
+                PhoneNumber = "12345",
+                Birthdate = "",
+                Organization = "qwer",
+                Position = "qwww",
+                Country = "qqwwwww",
+                OtherNotes = ""
+            };
+            CreateNote(note1);
+            CreateNote(note2);
+            CreateNote(note3);
+            CreateNote(note4);
             Companion.Greetings();
             Companion.PrintInfo();
             Start();
@@ -32,10 +85,10 @@ namespace NotebookApp
                         Companion.Finder();
                         break;
                     case "3":
-                        EditNote();
+                        Companion.Editor();
                         break;
                     case "4":
-                        //DeleteNote();
+                        Companion.Deleter();
                         break;
                     case "5":
                         ShowAllNotes();
@@ -52,7 +105,6 @@ namespace NotebookApp
                         Console.WriteLine("Ничего не понимаю! Введи корректную команду");
                         break;
                 }
-                
             }
         }
 
@@ -60,10 +112,12 @@ namespace NotebookApp
 
         private static void ShowAllNotes()
         {
-            if (notes.Count == 0) {
+            if (notes.Count == 0)
+            {
                 Console.WriteLine("На даный момент записей нет, но их же можно создать!");
                 return;
             }
+
             foreach (var item in notes)
             {
                 item.ShowMainInfo();
@@ -76,12 +130,12 @@ namespace NotebookApp
             switch (searchParameter)
             {
                 case "Name":
-                    foreach (var item in notes.Where(x=> x.Name == searchInfo))
+                    foreach (var item in notes.Where(x => x.Name == searchInfo))
                     {
                         item.ShowAllInfo();
                         returnedId.Add(item.Id);
-
                     }
+
                     break;
                 case "Surname":
                     foreach (var item in notes.Where(x => x.Surname == searchInfo))
@@ -89,27 +143,22 @@ namespace NotebookApp
                         item.ShowAllInfo();
                         returnedId.Add(item.Id);
                     }
+
                     break;
             }
+
+            if (returnedId.Count == 0) Console.WriteLine("Записей не найдено");
             return returnedId;
         }
 
-        private static void EditNote()
-        {
-            
-            //TODO: подумать как вытащить номер элемента и как оформить изменение полей
-        }
+        public static Note GetNoteToEdit(int id) => notes.First(x => x.Id == id);
 
         public static void DeleteNote(int[] id)
         {
-            foreach (var item in notes)
+            foreach (var item in id)
             {
-                
+                notes.Remove(notes.First(x => x.Id == item));
             }
-            
         }
-
-        
-
     }
 }

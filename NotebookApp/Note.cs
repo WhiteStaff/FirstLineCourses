@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -8,7 +9,6 @@ namespace NotebookApp
     class Note
     {
         private static int id;
-        private int _id;
         private string _name;
         private string _surname;
         private string _lastname;
@@ -19,7 +19,13 @@ namespace NotebookApp
         private string _position;
         private string _other;
 
-        public int Id => _id;
+        public Note()
+        {
+            Id = id;
+            id++;
+        }
+
+        public int Id { get; }
 
         public string Name
         {
@@ -171,10 +177,6 @@ namespace NotebookApp
             Console.WriteLine("****************************");
         }
 
-        public Note()
-        {
-            _id = id;
-            id++;
-        }
+        
     }
 }
