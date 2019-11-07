@@ -32,10 +32,11 @@ namespace RunningCatsTotalizator
         {
             while (true)
             {
-                var enter = Console.ReadLine();
+                var enter = Console.ReadLine().ToLower();
                 if (enter == "да")
                 {
-                    if (PositiveAnswerHandler()) break;
+                    PositiveAnswerHandler();
+                    break;
                 }
 
                 if (enter == "нет")
@@ -48,26 +49,24 @@ namespace RunningCatsTotalizator
             }
         }
 
-        
-        private static bool PositiveAnswerHandler()
+
+        private static void PositiveAnswerHandler()
         {
             Console.Clear();
             Console.WriteLine(
                 "Отлично!!!Забег вот вот начнется, какой номер по вашему мнению выиграет ? " +
                 $"Укажите пожалуйста число от 1 до {Cat.totalCatsInTheGame}");
 
-            if (!UserInputHandler()) return false;
+            UserInputHandler();
 
 
             Console.WriteLine("Спортсмены готовы! Нажмите любую клавишу чтобы начать забег!");
             Console.ReadKey();
-                
+
             CreateResults();
 
             PrintResults();
-
-            return true;
-
+            
         }
 
         private static void CreateResults()
@@ -110,7 +109,15 @@ namespace RunningCatsTotalizator
             }
         }
 
-        private static bool UserInputHandler() => int.TryParse(Console.ReadLine(), out var input) && input > 0 && input <=Cat.totalCatsInTheGame;
+        private static void UserInputHandler()
+        {
+            var x = Console.ReadLine();
+            while (!(int.TryParse(x, out var input) && input > 0 && input <= Cat.totalCatsInTheGame))
+            {
+                Console.WriteLine("Выбери кота корректно");
+                x = Console.ReadLine();
+            }
+        }
 
         private static void NegativeAnswerHandler()
         {
