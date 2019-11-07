@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -83,6 +84,7 @@ namespace NotebookApp
                         break;
                     case "2":
                         Companion.Finder();
+                        Companion.PrintInfo();
                         break;
                     case "3":
                         Companion.Editor();
@@ -94,9 +96,11 @@ namespace NotebookApp
                         ShowAllNotes();
                         break;
                     case "6":
+                        Console.Clear();
                         Companion.PrintInfo();
                         break;
                     case "7":
+                        Console.Clear();
                         Console.WriteLine("Прощай, друг");
                         Thread.Sleep(1000);
                         Environment.Exit(0);
@@ -112,16 +116,22 @@ namespace NotebookApp
 
         private static void ShowAllNotes()
         {
+            Console.Clear();
             if (notes.Count == 0)
             {
-                Console.WriteLine("На даный момент записей нет, но их же можно создать!");
+                Console.WriteLine("На даный момент записей нет, но их же можно создать!\n");
+                Companion.PrintInfo();
                 return;
             }
 
+            Console.WriteLine("Текущие записи: \n");
             foreach (var item in notes)
             {
                 item.ShowMainInfo();
             }
+
+            Console.WriteLine();
+            Companion.PrintInfo();
         }
 
         public static List<int> FindNote(string searchParameter, string searchInfo)
@@ -136,6 +146,7 @@ namespace NotebookApp
                         returnedId.Add(item.Id);
                     }
 
+                    Console.WriteLine();
                     break;
                 case "Surname":
                     foreach (var item in notes.Where(x => x.Surname == searchInfo))
@@ -144,10 +155,13 @@ namespace NotebookApp
                         returnedId.Add(item.Id);
                     }
 
+                    Console.WriteLine();
                     break;
             }
 
-            if (returnedId.Count == 0) Console.WriteLine("Записей не найдено");
+            if (returnedId.Count != 0) return returnedId;
+            Console.Clear();
+            Console.WriteLine("Записей не найдено\n");
             return returnedId;
         }
 

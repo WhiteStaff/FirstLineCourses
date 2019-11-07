@@ -75,6 +75,15 @@ namespace _NotebookApp.Tests
             var x = Notebook.FindNote(searchParameter, searchInfo).Count;
             return x;
         }
-        
+
+        [TestCase(1, ExpectedResult = 1)]
+        [TestCase(2, ExpectedResult = 2)]
+        [TestCase(0, ExpectedResult = 0)]
+        public int CheckGetNoteToEdit(int id)
+        {
+            var x = Notebook.GetNoteToEdit(id).Id;
+            return x;
+        }
+
     }
 }

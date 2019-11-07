@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NotebookApp
 {
@@ -39,10 +38,13 @@ namespace NotebookApp
                         var input = Console.ReadLine();
                         while (input == "")
                         {
-                            Console.WriteLine("Нельзя пустую стрроку, попробуй еще раз!");
+                            Console.WriteLine("Нельзя пустую строку, попробуй еще раз!");
                             Console.WriteLine("Введите имя: ");
                             input = Console.ReadLine();
                         }
+
+                        Console.Clear();
+                        Console.WriteLine("Найденные записи:\n");
                         return Notebook.FindNote("Name", input);
                     }
                     case "2":
@@ -51,14 +53,18 @@ namespace NotebookApp
                         var input = Console.ReadLine();
                         while (input == "")
                         {
-                            Console.WriteLine("Нельзя пустую стрроку, попробуй еще раз!");
+                            Console.WriteLine("Нельзя пустую строку, попробуй еще раз!");
                             Console.WriteLine("Введите имя: ");
                             input = Console.ReadLine();
                         }
+
+                        Console.Clear();
+                        Console.WriteLine("Найденные записи:\n");
                         return Notebook.FindNote("Surname", input);
                     }
                     default:
                         Console.WriteLine("Ничего не понимаю! Введи корректную команду");
+                        userInput = Console.ReadLine();
                         break;
                 }
             }
@@ -71,7 +77,7 @@ namespace NotebookApp
             var userInput = Console.ReadLine();
             int id;
 
-            while (!(int.TryParse(userInput, out id) && foundId.Contains(id))) 
+            while (!(int.TryParse(userInput, out id) && foundId.Contains(id)))
             {
                 Console.WriteLine("Некорректный ввод!");
                 Console.Write("Попробуй еще раз: ");
@@ -91,7 +97,7 @@ namespace NotebookApp
             input = Console.ReadLine();
             if (input != "-") note.Name = input;
 
-            Console.WriteLine($"Текущая фамилия: {note.Lastname}");
+            Console.WriteLine($"Текущее отчество: {note.Lastname}");
             Console.Write("Введите новое отчество (чтобы оставить отчество неизменным, введите \"-\"): ");
             input = Console.ReadLine();
             if (input != "-") note.Lastname = input;
@@ -106,6 +112,11 @@ namespace NotebookApp
             input = Console.ReadLine();
             if (input != "-") note.Country = input;
 
+            Console.WriteLine($"Текущая дата рождения: {note.Birthdate}");
+            Console.Write("Введите новую дату рождения (чтобы оставить страну неизменной, введите \"-\"): ");
+            input = Console.ReadLine();
+            if (input != "-") note.Birthdate = input;
+
             Console.WriteLine($"Текущая организация: {note.Organization}");
             Console.Write("Введите новую организацию (чтобы оставить организацию неизменной, введите \"-\"): ");
             input = Console.ReadLine();
@@ -114,7 +125,7 @@ namespace NotebookApp
             Console.WriteLine($"Текущая должность: {note.Position}");
             Console.Write("Введите новую должность (чтобы оставить должность неизменной, введите \"-\"): ");
             input = Console.ReadLine();
-            if (input != "-") note.Surname = input;
+            if (input != "-") note.Position = input;
 
             Console.WriteLine($"Текущая заметка: {note.OtherNotes}");
             Console.Write("Введите новую заметку (чтобы оставить заметку неизменной, введите \"-\"): ");
@@ -122,31 +133,40 @@ namespace NotebookApp
             if (input != "-") note.OtherNotes = input;
 
             Console.Clear();
-            Console.WriteLine("Поздравляю, запись успешно обновлена!");
+            Console.WriteLine("Поздравляю, запись успешно обновлена!\n");
+            PrintInfo();
         }
 
         public static void Deleter()
         {
             var foundId = Finder();
-            Console.WriteLine("Введите Id записи, которую нужно удалить, если хотите удалить всё, введите \"все\"");
-            var userInput = Console.ReadLine();
-            var id = -1;
-
-            while (!(userInput == "все" || int.TryParse(userInput, out id) && foundId.Contains(id))) 
+            if (foundId.Count != 0)
             {
-                Console.WriteLine("Некорректный ввод!");
-                Console.Write("Попробуй еще раз: ");
-                userInput = Console.ReadLine();
+                Console.WriteLine("Введите Id записи, которую нужно удалить, если хотите удалить всё, введите \"все\"");
+                var userInput = Console.ReadLine();
+                var id = -1;
+
+                while (!(userInput == "все" || int.TryParse(userInput, out id) && foundId.Contains(id)))
+                {
+                    Console.WriteLine("Некорректный ввод!");
+                    Console.Write("Попробуй еще раз: ");
+                    userInput = Console.ReadLine();
+                }
+
+
+                Notebook.DeleteNote(id == -1 ? foundId.ToArray() : new[] {id});
+
+                Console.Clear();
+                Console.WriteLine("Выбранное успешно удалено\n");
             }
 
-            Notebook.DeleteNote(id == -1 ? foundId.ToArray() : new [] {id});
-
-            Console.WriteLine("Выбранное успешно удалено");
+            PrintInfo();
         }
 
         public static void NoteCreator()
         {
             var note = new Note();
+            Console.Clear();
 
             Console.Write("Введите фамилию: ");
             note.Surname = Console.ReadLine();
@@ -163,22 +183,23 @@ namespace NotebookApp
             Console.Write("Введите страну: ");
             note.Country = Console.ReadLine();
 
-            Console.Write("Введите дату рождения: ");
+            Console.Write("Введите дату рождения (необязательно): ");
             note.Birthdate = Console.ReadLine();
 
-            Console.Write("Введите организацию: ");
+            Console.Write("Введите организацию (необязательно): ");
             note.Organization = Console.ReadLine();
 
-            Console.Write("Введите должность: ");
+            Console.Write("Введите должность (необязательно): ");
             note.Position = Console.ReadLine();
 
-            Console.Write("Введите прочую информацию: ");
+            Console.Write("Введите прочую информацию (необязательно): ");
             note.OtherNotes = Console.ReadLine();
 
             Notebook.CreateNote(note);
 
             Console.Clear();
-            Console.WriteLine("Поздравляю, запись успешно создана!");
+            Console.WriteLine("Поздравляю, запись успешно создана!\n");
+            PrintInfo();
         }
     }
 }

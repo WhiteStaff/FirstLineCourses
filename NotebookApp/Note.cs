@@ -115,6 +115,7 @@ namespace NotebookApp
                     Console.Write("Введите дату: ");
                     value = Console.ReadLine();
                 }
+
                 if (value == "") _birthdate = DateTime.MinValue;
                 _birthdate = date;
             }
@@ -166,7 +167,6 @@ namespace NotebookApp
             Console.WriteLine($"Должность: {Position}");
             Console.WriteLine($"Другая информация: {OtherNotes}");
             Console.WriteLine("------------------------------------");
-
         }
 
         public void ShowMainInfo()
@@ -176,7 +176,5 @@ namespace NotebookApp
             Console.WriteLine($"Телефон: {PhoneNumber}");
             Console.WriteLine("****************************");
         }
-
-        
     }
 }
