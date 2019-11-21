@@ -8,7 +8,7 @@ namespace TreatsParcer
 {
     class TreatInfo
     {
-        public string Id { get; }
+        public int Id { get; }
         public string Name { get; }
         public string Description { get; }
         public string Source { get; }
@@ -19,11 +19,11 @@ namespace TreatsParcer
 
         public TreatInfo(string[] rowValues)
         {
-            Id = rowValues[0];
-            Name = rowValues[1];
+            Id = int.Parse(rowValues[0]);
+            Name = rowValues[1].Replace("_x000d_", ""); ;
             Description = rowValues[2].Replace("_x000d_", "");
-            Source = rowValues[3];
-            ExposureSubject = rowValues[4];
+            Source = rowValues[3].Replace("_x000d_", ""); ;
+            ExposureSubject = rowValues[4].Replace("_x000d_", ""); ;
             IsHasPrivacyViolation = rowValues[5].Equals("1");
             IsHasIntegrityViolation = rowValues[6].Equals("1");
             IsHasAvailabilityViolation = rowValues[7].Equals("1");

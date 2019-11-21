@@ -21,27 +21,33 @@ namespace TreatsParcer
     /// </summary>
     public partial class MainWindow : Window
     {
-        ArrayList items;
+        List<TreatInfo> items;
+        private bool isItemsExist = false;
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void TreatsGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var x = TreatsGrid.SelectedItem as TreatInfo;
-
-            MessageBox.Show(x.ToString(), x.Name);
-        }
-
-        private void TreatsGrid_Loaded(object sender, RoutedEventArgs e)
-        {
-            TreatsGrid.ItemsSource = items;
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             items = new FileWorker().CheckFile();
+        }
+
+        private void TreatsGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var x = TreatsGrid.SelectedItem as TreatInfo;
+            MessageBox.Show(x.ToString(), x.Name);
+        }
+
+        private void MuchBack_OnClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void All_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            TreatsGrid.DataContext = items.Where(x => x.Id <= 15);
+            PageInfo.Content = $"1 of {items.Count / 15 + 1}";
         }
     }
 }

@@ -20,7 +20,7 @@ namespace TreatsParcer
             }
         }
 
-        public ArrayList CheckFile()
+        public List<TreatInfo> CheckFile()
         {
             try
             {
@@ -34,17 +34,15 @@ namespace TreatsParcer
             return Parse();
         }
 
-        public ArrayList Parse()
+        public List<TreatInfo> Parse()
         {
-            var excelData = new ArrayList();
+            var excelData = new List<TreatInfo>();
             byte[] bin = File.ReadAllBytes("data.xlsx");
             using (MemoryStream stream = new MemoryStream(bin))
             using (ExcelPackage excelPackage = new ExcelPackage(stream))
             {
                 int x = 0;
                 var sheet = excelPackage.Workbook.Worksheets[1];
-                //MessageBox.Show(sheet.Cells[3, 2].Value.ToString());
-                    //loop all rows
                     for (int i = 3; i <= sheet.Dimension.End.Row; i++)
                     {
                         x++;

@@ -7,14 +7,31 @@
         xmlns:generic="clr-namespace:System.Collections.Generic;assembly=mscorlib"
         xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
-    <Grid>
-        <DataGrid Name="TreatsGrid" Height="409" Margin="10,0" VerticalAlignment="Top" AutoGenerateColumns="True" ItemsSource="{DynamicResource ResourceKey=treats}" Loaded="TreatsGrid_Loaded" MouseDoubleClick="TreatsGrid_MouseDoubleClick">
+        Title="MainWindow" Height="572.658" Width="800" Loaded="Window_Loaded">
+    <Grid Name="All" Loaded="All_OnLoaded">
+        <DataGrid Name="TreatsGrid" CanUserAddRows="False" HeadersVisibility="Column"
+                  HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled"
+                  Margin="68,0,0,0" AutoGenerateColumns="False" ItemsSource="{Binding}"
+                  MouseDoubleClick="TreatsGrid_MouseDoubleClick" HorizontalAlignment="Left"
+                  Width="450" Height="450" VerticalAlignment="Top">
             <DataGrid.Resources>
-                <collections:ArrayList x:Key="treats">
-                </collections:ArrayList>
+                <Style TargetType="TextBlock" x:Key="WrapText">
+                    <Setter Property="TextWrapping" Value="Wrap" />
+                </Style>
             </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="50" Header="ID" ElementStyle="{StaticResource WrapText}"
+                                    Binding="{Binding Id, Mode=OneWay, StringFormat=УБИ.{0}}" />
+                <DataGridTextColumn Width="400" Header="Название угрозы" Binding="{Binding Name, Mode=OneWay}"
+                                    ElementStyle="{StaticResource WrapText}" />
+            </DataGrid.Columns>
         </DataGrid>
-
+        <Grid Margin="171,455,0,0" HorizontalAlignment="Left" Width="244" Height="44" VerticalAlignment="Top" Name="PageChanger">
+            <Button Content="&lt;&lt;" Margin="10,10,0,9" HorizontalAlignment="Left" Width="40" Name="MuchBack" Click="MuchBack_OnClick" />
+            <Button Content="&lt;" Margin="55,10,0,9" HorizontalAlignment="Left" Width="30" Name="OneBack" />
+            <Label Content="" Margin="90,10,0,9" HorizontalAlignment="Left" Width="60" Name="PageInfo" HorizontalContentAlignment="Center"/>
+            <Button Content="&gt;" Margin="159,10,0,9" HorizontalAlignment="Left" Width="30" Grid.ColumnSpan="2" Name="OneNext"/>
+            <Button Content="&gt;&gt;" Margin="194,10,0,9" HorizontalAlignment="Left" Width="40" Name="MuchNext"/>
+        </Grid>
     </Grid>
 </Window>
