@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,11 +21,27 @@ namespace TreatsParcer
     /// </summary>
     public partial class MainWindow : Window
     {
+        ArrayList items;
         public MainWindow()
         {
-            var items = new FileWorker().CheckFile();
             InitializeComponent();
+        }
+
+        private void TreatsGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var x = TreatsGrid.SelectedItem as TreatInfo;
+
+            MessageBox.Show(x.ToString(), x.Name);
+        }
+
+        private void TreatsGrid_Loaded(object sender, RoutedEventArgs e)
+        {
             TreatsGrid.ItemsSource = items;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            items = new FileWorker().CheckFile();
         }
     }
 }
