@@ -7,31 +7,47 @@
         xmlns:generic="clr-namespace:System.Collections.Generic;assembly=mscorlib"
         xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="572.658" Width="800" Loaded="Window_Loaded">
+        Title="TreatParser" Height="570.91" Width="800" MinHeight="540" Loaded="Window_Loaded">
     <Grid Name="All" Loaded="All_OnLoaded">
         <DataGrid Name="TreatsGrid" CanUserAddRows="False" HeadersVisibility="Column"
-                  HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled"
-                  Margin="68,0,0,0" AutoGenerateColumns="False" ItemsSource="{Binding}"
+                  HorizontalScrollBarVisibility="Disabled"
+                  Margin="8,8,0,0" AutoGenerateColumns="False" ItemsSource="{Binding}"
                   MouseDoubleClick="TreatsGrid_MouseDoubleClick" HorizontalAlignment="Left"
-                  Width="450" Height="450" VerticalAlignment="Top">
+                  MaxWidth="470" MaxHeight="450" VerticalAlignment="Top" CanUserReorderColumns="False" BorderThickness="0"
+                  CanUserResizeColumns="False" CanUserSortColumns="False">
+
             <DataGrid.Resources>
                 <Style TargetType="TextBlock" x:Key="WrapText">
                     <Setter Property="TextWrapping" Value="Wrap" />
                 </Style>
+                <Style TargetType="DataGridCell" x:Key="FirstColumn">
+                    <Setter Property="BorderThickness" Value="1,0,0,0"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                </Style>
+                <Style TargetType="DataGridCell" x:Key="SecondColumn">
+                    <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Width="50" Header="ID" ElementStyle="{StaticResource WrapText}"
-                                    Binding="{Binding Id, Mode=OneWay, StringFormat=УБИ.{0}}" />
+                                    Binding="{Binding Id, Mode=OneWay, StringFormat=УБИ.{0}}" CellStyle="{StaticResource FirstColumn}"/>
                 <DataGridTextColumn Width="400" Header="Название угрозы" Binding="{Binding Name, Mode=OneWay}"
-                                    ElementStyle="{StaticResource WrapText}" />
+                                    ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource SecondColumn}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Grid Margin="171,455,0,0" HorizontalAlignment="Left" Width="244" Height="44" VerticalAlignment="Top" Name="PageChanger">
-            <Button Content="&lt;&lt;" Margin="10,10,0,9" HorizontalAlignment="Left" Width="40" Name="MuchBack" Click="MuchBack_OnClick" />
-            <Button Content="&lt;" Margin="55,10,0,9" HorizontalAlignment="Left" Width="30" Name="OneBack" />
-            <Label Content="" Margin="90,10,0,9" HorizontalAlignment="Left" Width="60" Name="PageInfo" HorizontalContentAlignment="Center"/>
-            <Button Content="&gt;" Margin="159,10,0,9" HorizontalAlignment="Left" Width="30" Grid.ColumnSpan="2" Name="OneNext"/>
-            <Button Content="&gt;&gt;" Margin="194,10,0,9" HorizontalAlignment="Left" Width="40" Name="MuchNext"/>
+        <Grid Margin="111,463,0,0" HorizontalAlignment="Left" Width="244" Height="44" VerticalAlignment="Top"
+              Name="PageChanger">
+            <Button Content="&lt;&lt;" Margin="10,10,0,9" HorizontalAlignment="Left" Width="40" Name="MuchBack"
+                    Click="MuchBack_OnClick" />
+            <Button Content="&lt;" Margin="55,10,0,9" HorizontalAlignment="Left" Width="30" Name="OneBack"
+                    Click="OneBack_Click" />
+            <Label Content="" Margin="90,10,0,9" HorizontalAlignment="Left" Width="60" Name="PageInfo"
+                   HorizontalContentAlignment="Center" />
+            <Button Content="&gt;" Margin="159,10,0,9" HorizontalAlignment="Left" Width="30" Grid.ColumnSpan="2"
+                    Name="OneNext" Click="OneNext_Click" />
+            <Button Content="&gt;&gt;" Margin="194,10,0,9" HorizontalAlignment="Left" Width="40" Name="MuchNext"
+                    Click="MuchNext_Click" />
         </Grid>
     </Grid>
 </Window>

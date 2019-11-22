@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -20,7 +19,7 @@ namespace TreatsParcer
             }
         }
 
-        public List<TreatInfo> CheckFile()
+        public List<ThreatInfo> CheckFile()
         {
             try
             {
@@ -34,9 +33,9 @@ namespace TreatsParcer
             return Parse();
         }
 
-        public List<TreatInfo> Parse()
+        public List<ThreatInfo> Parse()
         {
-            var excelData = new List<TreatInfo>();
+            var excelData = new List<ThreatInfo>();
             byte[] bin = File.ReadAllBytes("data.xlsx");
             using (MemoryStream stream = new MemoryStream(bin))
             using (ExcelPackage excelPackage = new ExcelPackage(stream))
@@ -52,7 +51,7 @@ namespace TreatsParcer
                             var value = sheet.Cells[i, j].Value.ToString();
                             row[j - 1] = value;
                         }
-                        excelData.Add(new TreatInfo(row));
+                        excelData.Add(new ThreatInfo(row));
                     }
             }
 
