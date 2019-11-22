@@ -24,6 +24,7 @@ namespace TreatsParcer
         private List<ThreatInfo> _items;
         private int _pageNumber;
         private int _maxPages;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -45,15 +46,6 @@ namespace TreatsParcer
             {
                 MessageBox.Show("Выберите столбец!", "Ошибка данных");
             }
-            
-        }
-
-        private void MuchBack_OnClick(object sender, RoutedEventArgs e)
-        {
-            _pageNumber -= 10;
-            if (_pageNumber < 1) _pageNumber = 1;
-            
-            PageInfo.Content = $"{_pageNumber} of {_maxPages}";
         }
 
         private void All_OnLoaded(object sender, RoutedEventArgs e)
@@ -61,35 +53,40 @@ namespace TreatsParcer
             TreatsGrid.DataContext = _items.Where(x => x.Id <= 15);
             _pageNumber = 1;
             _maxPages = _items.Count / 15 + 1;
-            PageInfo.Content = $"1 of {_maxPages}";
+            PageInfo.Content = $"Страница {_pageNumber} из {_maxPages}";
             OneBack.Click += PageChanger_ButtonClick;
             MuchBack.Click += PageChanger_ButtonClick;
             OneNext.Click += PageChanger_ButtonClick;
             MuchNext.Click += PageChanger_ButtonClick;
+            //TreatsGrid.Columns.
         }
 
         private void PageChanger_ButtonClick(object sender, RoutedEventArgs e)
         {
             TreatsGrid.DataContext = _items.Where(x => x.Id > (_pageNumber - 1) * 15 && x.Id <= (_pageNumber) * 15);
+            PageInfo.Content = $"Страница {_pageNumber} из {_maxPages}";
+        }
+
+        private void MuchBack_OnClick(object sender, RoutedEventArgs e)
+        {
+            _pageNumber -= 10;
+            if (_pageNumber < 1) _pageNumber = 1;
         }
 
         private void OneBack_Click(object sender, RoutedEventArgs e)
         {
             if (_pageNumber > 1) _pageNumber--;
-            PageInfo.Content = $"{_pageNumber} of {_maxPages}";
         }
 
         private void OneNext_Click(object sender, RoutedEventArgs e)
         {
             if (_pageNumber < _maxPages) _pageNumber++;
-            PageInfo.Content = $"{_pageNumber} of {_maxPages}";
         }
 
         private void MuchNext_Click(object sender, RoutedEventArgs e)
         {
             _pageNumber += 10;
             if (_pageNumber > _maxPages) _pageNumber = _maxPages;
-            PageInfo.Content = $"{_pageNumber} of {_maxPages}";
         }
     }
 }
