@@ -4,10 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TreatsParcer"
-        xmlns:generic="clr-namespace:System.Collections.Generic;assembly=mscorlib"
-        xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="TreatParser" Height="570.91" Width="800" MinHeight="540" Loaded="Window_Loaded">
+        Title="TreatParser" Height="570.91" Width="610" MinHeight="570" MinWidth="610" Loaded="Window_Loaded">
     <Grid Name="All" Loaded="All_OnLoaded" Margin="0,0,2,0">
         <DataGrid Name="TreatsGrid" CanUserAddRows="False" HeadersVisibility="Column"
                   HorizontalScrollBarVisibility="Disabled"
@@ -30,9 +28,9 @@
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Width="50" Header="ID" ElementStyle="{StaticResource WrapText}"
+                <DataGridTextColumn Width="60" Header="ID" ElementStyle="{StaticResource WrapText}"
                                     Binding="{Binding Id, Mode=OneWay, StringFormat=УБИ.{0}}" CellStyle="{StaticResource FirstColumn}"/>
-                <DataGridTextColumn Width="400" Header="Название угрозы" Binding="{Binding Name, Mode=OneWay}"
+                <DataGridTextColumn Width="390" Header="Название угрозы" Binding="{Binding Name, Mode=OneWay}"
                                     ElementStyle="{StaticResource WrapText}"  CellStyle="{StaticResource SecondColumn}"/>
             </DataGrid.Columns>
         </DataGrid>
@@ -50,5 +48,9 @@
                     Click="MuchNext_Click" />
         </Grid>
         <Menu HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" Width="792" Name="MainMenu"/>
+        <Button Content="Сохранить" Margin="486,211,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.362,-2.551" Name="SaveButton" Click="SaveButton_Click" HorizontalAlignment="Left" Width="75"/>
+        <Button HorizontalAlignment="Left" Margin="486,250,0,0" VerticalAlignment="Top" Width="75" Height="44">
+            <TextBlock Text="Проверить обновления" TextWrapping="Wrap" TextAlignment="Center" Height="34"/>
+        </Button>
     </Grid>
 </Window>

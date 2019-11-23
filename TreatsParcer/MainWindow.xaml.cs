@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +17,7 @@ using System.Windows.Shapes;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
 using TreatsParcer.Actions;
 using TreatsParcer.Actions.Interfaces;
+using TreatsParcer.FileActions;
 
 namespace TreatsParcer
 {
@@ -24,18 +26,18 @@ namespace TreatsParcer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<ThreatInfo> _items;
+        private static List<ThreatInfo> _items;
         private int _pageNumber;
         private int _maxPages;
 
-        public MainWindow() : this(new UIAction[] {new FileSaver()})
+        public MainWindow() : this(new MenuAction[] {new About(), new Help()})
         {
-            
         }
 
-        private MainWindow(UIAction[] actions)
+        private MainWindow(MenuAction[] actions)
         {
             InitializeComponent();
+
             foreach (var item in actions.ToMenuItems())
             {
                 MainMenu.Items.Add(item);
@@ -44,7 +46,7 @@ namespace TreatsParcer
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _items = new FileWorker().CheckFile();
+            _items = FileWorker.GetParsedData();
         }
 
 
@@ -71,8 +73,6 @@ namespace TreatsParcer
             MuchBack.Click += PageChanger_ButtonClick;
             OneNext.Click += PageChanger_ButtonClick;
             MuchNext.Click += PageChanger_ButtonClick;
-
-            //TreatsGrid.Columns.
         }
 
         private void PageChanger_ButtonClick(object sender, RoutedEventArgs e)
@@ -101,6 +101,11 @@ namespace TreatsParcer
         {
             _pageNumber += 10;
             if (_pageNumber > _maxPages) _pageNumber = _maxPages;
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            FileSaver.Save(_items);
         }
     }
 }

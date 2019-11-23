@@ -11,7 +11,7 @@ namespace TreatsParcer
 {
     class FileWorker
     {
-        private void Download()
+        private static void Download()
         {
             using (var client = new WebClient())
             {
@@ -19,7 +19,7 @@ namespace TreatsParcer
             }
         }
 
-        public List<ThreatInfo> CheckFile()
+        public static void CheckFile()
         {
             try
             {
@@ -36,11 +36,15 @@ namespace TreatsParcer
                 MessageBox.Show($"{e.Message}\nДальнейшая работа невозможна");
                 Environment.Exit(0);
             }
+        }
 
+        public static List<ThreatInfo> GetParsedData()
+        {
+            CheckFile();
             return Parse();
         }
 
-        public List<ThreatInfo> Parse()
+        private static List<ThreatInfo> Parse()
         {
             var excelData = new List<ThreatInfo>();
             byte[] bin = File.ReadAllBytes("data.xlsx");

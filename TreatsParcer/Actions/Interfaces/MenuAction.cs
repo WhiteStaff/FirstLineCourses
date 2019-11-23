@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TreatsParcer.Actions.Interfaces
 {
-    public interface UIAction
+    public interface MenuAction
     {
         string Category { get; }
         string Name { get; }
