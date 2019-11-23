@@ -61,6 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Actions\Interfaces\UIAction.cs" />
+    <Compile Include="Actions\Interfaces\UIActionExtension.cs" />
+    <Compile Include="Actions\FileSaver.cs" />
     <Compile Include="FileWorker.cs" />
     <Compile Include="ThreatInfo.cs" />
     <Page Include="MainWindow.xaml">

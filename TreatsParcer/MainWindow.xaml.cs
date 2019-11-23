@@ -13,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
+using TreatsParcer.Actions;
+using TreatsParcer.Actions.Interfaces;
 
 namespace TreatsParcer
 {
@@ -25,15 +28,25 @@ namespace TreatsParcer
         private int _pageNumber;
         private int _maxPages;
 
-        public MainWindow()
+        public MainWindow() : this(new UIAction[] {new FileSaver()})
+        {
+            
+        }
+
+        private MainWindow(UIAction[] actions)
         {
             InitializeComponent();
+            foreach (var item in actions.ToMenuItems())
+            {
+                MainMenu.Items.Add(item);
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _items = new FileWorker().CheckFile();
         }
+
 
         private void TreatsGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -58,6 +71,7 @@ namespace TreatsParcer
             MuchBack.Click += PageChanger_ButtonClick;
             OneNext.Click += PageChanger_ButtonClick;
             MuchNext.Click += PageChanger_ButtonClick;
+
             //TreatsGrid.Columns.
         }
 
