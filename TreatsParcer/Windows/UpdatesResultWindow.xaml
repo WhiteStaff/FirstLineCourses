@@ -9,10 +9,10 @@
         mc:Ignorable="d"
         Title="Список обновленных записей" Height="542.925" Width="1061.567">
     <Grid>
-        <ListBox HorizontalAlignment="Left" Margin="10,53,0,17" Width="165" ItemsSource="{Binding Id}" Name="Changes" />
-        <TextBlock Text="Идентификаторы угроз изменившихся записей:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="165" Height="38" TextWrapping="Wrap" TextAlignment="Center" />
+        <ListBox HorizontalAlignment="Left" Margin="10,53,0,17" Width="165" ItemsSource="{Binding Id}" Name="Changes"  />
+        <TextBlock Text="Идентификаторы угроз изменившихся записей (Всего 0):" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="218" Height="38" TextWrapping="Wrap" TextAlignment="Left" Name="Info" />
         <DataGrid Margin="182,53,0,17" Name="Changelog" CanUserAddRows="False" HeadersVisibility="Column" MaxWidth="870" Width="850" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Disabled" 
-                  AutoGenerateColumns="False" BorderThickness="0" Background="White">
+                  AutoGenerateColumns="False" BorderThickness="0" Background="White" Visibility="Hidden">
             <DataGrid.Resources>
                 <Style TargetType="TextBlock" x:Key="WrapText">
                     <Setter Property="TextWrapping" Value="Wrap" />

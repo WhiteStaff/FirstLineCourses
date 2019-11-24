@@ -4,7 +4,7 @@ using System.IO;
 using System.Net;
 using System.Windows;
 using OfficeOpenXml;
-using ThreatsParser;
+
 
 namespace ThreatsParser.FileActions
 {

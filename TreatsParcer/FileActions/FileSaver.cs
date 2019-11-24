@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Microsoft.Win32;
-using ThreatsParser;
 
 namespace ThreatsParser.FileActions
 {

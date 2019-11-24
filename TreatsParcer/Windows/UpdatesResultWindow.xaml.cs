@@ -24,12 +24,14 @@ namespace ThreatsParser
         public UpdatesResultWindow()
         {
             InitializeComponent();
+            
             names = new[] {"Идентификатор угрозы", "Название угрозы", "Описание", "Источник", "Объект воздействия", "Нарушение конфиденциальности", "Нарушение целостности", "Нарушение доступности" };
             Changes.SelectionChanged += Changes_OnSelected;
         }
 
         private void Changes_OnSelected(object sender, RoutedEventArgs e)
         {
+            Changelog.Visibility = Visibility.Visible;
             Changelog.Items.Clear();
             var x = Changes.SelectedItem as ThreatsChanges;
             var first = x.Was;

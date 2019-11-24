@@ -1,22 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
-using OfficeOpenXml.FormulaParsing.Exceptions;
 using ThreatsParser.Actions;
 using ThreatsParser.Actions.Interfaces;
 using ThreatsParser;
@@ -121,7 +108,8 @@ namespace ThreatsParser
                 if (changes.Count == 0)
                 {
                     File.Delete("newdata.xlsx");
-                    MessageBox.Show("Используется актуальная версия файла!", "Успешно", MessageBoxButton.OK ,MessageBoxImage.Exclamation);
+                    MessageBox.Show("Используется актуальная версия файла!", "Успешно", MessageBoxButton.OK,
+                        MessageBoxImage.Exclamation);
                     updateWindow.Close();
                 }
                 else
@@ -129,8 +117,10 @@ namespace ThreatsParser
                     File.Delete("data.xlsx");
                     File.Move("newdata.xlsx", "data.xlsx");
                     _items = FileCreator.GetParsedData();
-                    TreatsGrid.DataContext = _items.Where(x => x.Id > (_pageNumber - 1) * 15 && x.Id <= (_pageNumber) * 15);
+                    TreatsGrid.DataContext =
+                        _items.Where(x => x.Id > (_pageNumber - 1) * 15 && x.Id <= (_pageNumber) * 15);
                     updateWindow.Changes.ItemsSource = changes;
+                    updateWindow.Info.Text = $"Идентификаторы угроз изменившихся записей (Всего {changes.Count}):";
                     updateWindow.Show();
                 }
             }
