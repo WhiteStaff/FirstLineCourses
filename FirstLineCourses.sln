@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunningCatsTotalizator", "R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotebookApp", "NotebookApp\NotebookApp.csproj", "{FADAB541-5216-4740-A165-BF2C5E19410B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreatsParser", "TreatsParcer\TreatsParser.csproj", "{808EDCE8-64ED-4976-AEF5-DA0BAA394F70}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreatsParser", "TreatsParcer\ThreatsParser.csproj", "{808EDCE8-64ED-4976-AEF5-DA0BAA394F70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TreatsParcer.Actions.Interfaces
+namespace ThreatsParser.Actions.Interfaces
 {
     public interface MenuAction
     {

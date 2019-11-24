@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Windows;
-using System.Windows.Controls;
 using OfficeOpenXml;
+using ThreatsParser;
 
-
-namespace TreatsParcer
+namespace ThreatsParser.FileActions
 {
-    class FileWorker
+    class FileCreator
     {
         private static void Download()
         {
@@ -23,13 +22,11 @@ namespace TreatsParcer
         {
             try
             {
-                if (!File.Exists("data.xlsx"))
-                {
-                    if (MessageBox.Show("Файл отсутствует, скачать?", "Ошибка файла", MessageBoxButton.YesNo,
-                            MessageBoxImage.Question) == MessageBoxResult.Yes)
-                        Download();
-                    else Environment.Exit(0);
-                }
+                if (File.Exists("data.xlsx")) return;
+                if (MessageBox.Show("Файл отсутствует, скачать?", "Ошибка файла", MessageBoxButton.YesNo,
+                        MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    Download();
+                else Environment.Exit(0);
             }
             catch (Exception e)
             {
@@ -38,26 +35,24 @@ namespace TreatsParcer
             }
         }
 
-        public static List<ThreatInfo> GetParsedData()
+        public static List<Threat> GetParsedData()
         {
             CheckFile();
             return Parse();
         }
 
-        private static List<ThreatInfo> Parse()
+        private static List<Threat> Parse()
         {
-            var excelData = new List<ThreatInfo>();
+            var excelData = new List<Threat>();
             byte[] bin = File.ReadAllBytes("data.xlsx");
             using (MemoryStream stream = new MemoryStream(bin))
             using (ExcelPackage excelPackage = new ExcelPackage(stream))
             {
-                int x = 0;
                 try
                 {
                     var sheet = excelPackage.Workbook.Worksheets[1];
                     for (int i = 3; i <= sheet.Dimension.End.Row; i++)
                     {
-                        x++;
                         var row = new string[8];
                         for (int j = 1; j <= 8; j++)
                         {
@@ -65,7 +60,7 @@ namespace TreatsParcer
                             row[j - 1] = value;
                         }
 
-                        excelData.Add(new ThreatInfo(row));
+                        excelData.Add(new Threat(row));
                     }
                 }
                 catch (Exception e)

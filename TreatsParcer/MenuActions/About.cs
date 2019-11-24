@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xaml.Schema;
-using TreatsParcer.Actions.Interfaces;
+using ThreatsParser.Actions.Interfaces;
 
-namespace TreatsParcer.Actions
+namespace ThreatsParser.Actions
 {
     class About : MenuAction
     {

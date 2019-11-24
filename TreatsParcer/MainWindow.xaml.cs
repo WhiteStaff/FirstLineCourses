@@ -15,18 +15,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
-using TreatsParcer.Actions;
-using TreatsParcer.Actions.Interfaces;
-using TreatsParcer.FileActions;
+using ThreatsParser.Actions;
+using ThreatsParser.Actions.Interfaces;
+using ThreatsParser;
+using ThreatsParser.Entities;
+using ThreatsParser.FileActions;
 
-namespace TreatsParcer
+namespace ThreatsParser
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static List<ThreatInfo> _items;
+        private static List<Threat> _items;
         private int _pageNumber;
         private int _maxPages;
 
@@ -46,13 +48,13 @@ namespace TreatsParcer
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _items = FileWorker.GetParsedData();
+            _items = FileCreator.GetParsedData();
         }
 
 
         private void TreatsGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var x = TreatsGrid.SelectedItem as ThreatInfo;
+            var x = TreatsGrid.SelectedItem as Threat;
             try
             {
                 MessageBox.Show(x.ToString(), x.Name);
@@ -106,6 +108,28 @@ namespace TreatsParcer
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             FileSaver.Save(_items);
+        }
+
+        private void CheckUpdates_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                List<ThreatsChanges> changes = FileUpdater.GetDifference(_items);
+                if (changes.Count == 0)
+                {
+                    MessageBox.Show("Используется актуальная версия файла!", "Успешно", MessageBoxButton.OK ,MessageBoxImage.Exclamation);
+                }
+                else
+                {
+                    var x = new UpdatesResultWindow();
+                    x.Changes.ItemsSource = changes;
+                    x.Show();
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show($"Ошибка обновления!\n{exception.Message}", "Ошибка");
+            }
         }
     }
 }

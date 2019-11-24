@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace TreatsParcer.Actions.Interfaces
+namespace ThreatsParser.Actions.Interfaces
 {
-    public static class UIActionExtension
+    public static class MenuActionExtension
     {
         public static MenuItem[] ToMenuItems(this MenuAction[] actions)
         {

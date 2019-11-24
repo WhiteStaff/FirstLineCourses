@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using Microsoft.Win32;
-using TreatsParcer.Actions;
-using TreatsParcer.Actions.Interfaces;
+using ThreatsParser;
 
-namespace TreatsParcer.FileActions
+namespace ThreatsParser.FileActions
 {
     static class FileSaver
     {
-        public static void Save(List<ThreatInfo> items)
+        public static void Save(List<Threat> items)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Text file (*.txt)|*.txt";
+            SaveFileDialog saveFileDialog = new SaveFileDialog {Filter = "Text file (*.txt)|*.txt"};
             string result = "";
             string separator =
                 "---------------------------------------------------------------------------------------";
