@@ -20,21 +20,24 @@ namespace ThreatsParser
     /// </summary>
     public partial class UpdatesResultWindow : Window
     {
+        private string[] names;
         public UpdatesResultWindow()
         {
             InitializeComponent();
+            names = new[] {"Идентификатор угрозы", "Название угрозы", "Описание", "Источник", "Объект воздействия", "Нарушение конфиденциальности", "Нарушение целостности", "Нарушение доступности" };
+            Changes.SelectionChanged += Changes_OnSelected;
         }
 
-        private void Changes_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void Changes_OnSelected(object sender, RoutedEventArgs e)
         {
+            Changelog.Items.Clear();
             var x = Changes.SelectedItem as ThreatsChanges;
-            for (int i = 0; i < 8; i++)
+            var first = x.Was;
+            var second = x.Will;
+            for (var i = 0; i < 8; i++)
             {
-                Changelog.Items.
+                Changelog.Items.Add(new [] {names[i], first[i], second[i] });
             }
-           
-
-            
         }
     }
 }

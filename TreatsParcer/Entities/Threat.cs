@@ -32,14 +32,14 @@ namespace ThreatsParser
         public string[] GetValuesAsArray()
         {
             var privacy = (IsHasPrivacyViolation
-                ? "Нарушение конфиденциальности присутствует"
-                : "Нарушение конфиденциальности отсутствует");
+                ? "Присутствует"
+                : "Отсутствует");
             var integrity = (IsHasPrivacyViolation
-                ? "Нарушение конфиденциальности присутствует"
-                : "Нарушение конфиденциальности отсутствует");
+                ? "Присутствует"
+                : "Отсутствует");
             var available = (IsHasPrivacyViolation
-                ? "Нарушение конфиденциальности присутствует"
-                : "Нарушение конфиденциальности отсутствует");
+                ? "Присутствует"
+                : "Отсутствует");
             return new[] {$"УБИ.{Id}", $"{Name}", $"{Description}", $"{Source}", $"{ExposureSubject}", privacy, integrity, available};
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -15,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
+using OfficeOpenXml.FormulaParsing.Exceptions;
 using ThreatsParser.Actions;
 using ThreatsParser.Actions.Interfaces;
 using ThreatsParser;
@@ -112,23 +114,30 @@ namespace ThreatsParser
 
         private void CheckUpdates_OnClick(object sender, RoutedEventArgs e)
         {
+            var updateWindow = new UpdatesResultWindow();
             try
             {
                 List<ThreatsChanges> changes = FileUpdater.GetDifference(_items);
                 if (changes.Count == 0)
                 {
+                    File.Delete("newdata.xlsx");
                     MessageBox.Show("Используется актуальная версия файла!", "Успешно", MessageBoxButton.OK ,MessageBoxImage.Exclamation);
+                    updateWindow.Close();
                 }
                 else
                 {
-                    var x = new UpdatesResultWindow();
-                    x.Changes.ItemsSource = changes;
-                    x.Show();
+                    File.Delete("data.xlsx");
+                    File.Move("newdata.xlsx", "data.xlsx");
+                    _items = FileCreator.GetParsedData();
+                    TreatsGrid.DataContext = _items.Where(x => x.Id > (_pageNumber - 1) * 15 && x.Id <= (_pageNumber) * 15);
+                    updateWindow.Changes.ItemsSource = changes;
+                    updateWindow.Show();
                 }
             }
             catch (Exception exception)
             {
                 MessageBox.Show($"Ошибка обновления!\n{exception.Message}", "Ошибка");
+                updateWindow.Close();
             }
         }
     }

@@ -30,14 +30,13 @@ namespace ThreatsParser.FileActions
             if (AreFilesEqual()) return result;
 
             byte[] bin = File.ReadAllBytes("newdata.xlsx");
-                
+
             using (MemoryStream stream = new MemoryStream(bin))
             using (ExcelPackage excelPackage = new ExcelPackage(stream))
             {
-                
                 int x = 0;
                 var sheet = excelPackage.Workbook.Worksheets[1];
-                var lines = Math.Min(sheet.Dimension.End.Row, items.Count+2);
+                var lines = Math.Min(sheet.Dimension.End.Row, items.Count + 2);
                 for (int i = 3; i <= lines; i++)
                 {
                     var row = new string[8];
@@ -48,16 +47,42 @@ namespace ThreatsParser.FileActions
                     }
 
                     Threat currentNewThreat = new Threat(row);
-                    var act = items[x];
-                    var b = currentNewThreat.Equals(act);
-                    if (!b)
+                    if (!currentNewThreat.Equals(items[x]))
                     {
                         result.Add(new ThreatsChanges(items[x], currentNewThreat));
                     }
 
                     x++;
                 }
+
+                if (sheet.Dimension.End.Row > lines  )
+                {
+                    for (int i = lines + 1; i <= sheet.Dimension.End.Row; i++)
+                    {
+                        var row = new string[8];
+                        for (int j = 1; j <= 8; j++)
+                        {
+                            var value = sheet.Cells[i, j].Value.ToString();
+                            row[j - 1] = value;
+                        }
+
+                        Threat currentNewThreat = new Threat(row);
+                        
+                            result.Add(new ThreatsChanges(null, currentNewThreat));
+                        
+
+                        x++;
+                    }
+                }
+                else if (x > lines - 3)
+                {
+                    for (int i = x; i < items.Count; i++)
+                    {
+                        result.Add(new ThreatsChanges(items[i], null));
+                    }
+                }
             }
+
             return result;
         }
     }

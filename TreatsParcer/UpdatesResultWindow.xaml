@@ -7,21 +7,33 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:entities="clr-namespace:ThreatsParser.Entities"
         mc:Ignorable="d"
-        Title="Список обновленных записей" Height="450" Width="800">
-    <Window.Resources>
-        <ObjectDataProvider x:Key="newGuidProvider"
-                            ObjectType="{x:Type entities:ThreatsChanges}"
-                            MethodName="AAA"
-        />
-    </Window.Resources>
+        Title="Список обновленных записей" Height="542.925" Width="1061.567">
     <Grid>
-        <ListBox HorizontalAlignment="Left" Height="239" Margin="10,0,0,127" VerticalAlignment="Bottom" Width="165" ItemsSource="{Binding Id}" Name="Changes" MouseDoubleClick="Changes_OnMouseDoubleClick"/>
+        <ListBox HorizontalAlignment="Left" Margin="10,53,0,17" Width="165" ItemsSource="{Binding Id}" Name="Changes" />
         <TextBlock Text="Идентификаторы угроз изменившихся записей:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="165" Height="38" TextWrapping="Wrap" TextAlignment="Center" />
-        <DataGrid HorizontalAlignment="Left" Height="239" Margin="180,53,0,0" VerticalAlignment="Top" Width="600" Name="Changelog">
+        <DataGrid Margin="182,53,0,17" Name="Changelog" CanUserAddRows="False" HeadersVisibility="Column" MaxWidth="870" Width="850" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Disabled" 
+                  AutoGenerateColumns="False" BorderThickness="0" Background="White">
+            <DataGrid.Resources>
+                <Style TargetType="TextBlock" x:Key="WrapText">
+                    <Setter Property="TextWrapping" Value="Wrap" />
+                </Style>
+                <Style TargetType="DataGridCell" x:Key="ZeroColumn">
+                    <Setter Property="BorderThickness" Value="1,0,0,0"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                </Style>
+                <Style TargetType="DataGridCell" x:Key="FirstColumn">
+                    <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                </Style>
+                <Style TargetType="DataGridCell" x:Key="SecondColumn">
+                    <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Width="10" Header="" Binding="{Binding}"/>
-                <DataGridTextColumn Width="300" Header="Было" Binding="{Binding AA}"/>
-                <DataGridTextColumn Width="300" Header="Было" Binding="{Binding AA}"/>
+                <DataGridTextColumn Width="150" Header="" Binding="{Binding [0], Mode=OneWay}" ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource ZeroColumn}"  />
+                <DataGridTextColumn Width="350" Header="Было" Binding="{Binding [1], Mode=OneWay}" ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource FirstColumn}" />
+                <DataGridTextColumn Width="350" Header="Стало" Binding="{Binding [2], Mode=OneWay}" ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource SecondColumn}"/>
             </DataGrid.Columns>
         </DataGrid>
 
