@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using OfficeOpenXml;
 using ThreatsParser.Entities;
 
@@ -17,11 +18,31 @@ namespace ThreatsParser.FileActions
                 client.DownloadFile("https://bdu.fstec.ru/documents/files/thrlist.xlsx", "newdata.xlsx");
             }
 
-            var file1 = File.ReadAllBytes("data.xlsx");
-            var file2 = File.ReadAllBytes("newdata.xlsx");
+            byte[] firstHash;
+            byte[] secondHash;
 
-            if (file1.Length != file2.Length) return false;
-            return !file1.Where((t, i) => t != file2[i]).Any();
+            var areEqual = true;
+
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead("data.xlsx"))
+                {
+                    firstHash = md5.ComputeHash(stream);
+                }
+
+                using (var stream = File.OpenRead("newdata.xlsx"))
+                {
+                    secondHash = md5.ComputeHash(stream);
+                }
+            }
+
+
+            for (var i = 0; i < 16; i++)
+            {
+                areEqual = areEqual & (firstHash[i] == secondHash[i]);
+            }
+
+            return areEqual;
         }
 
         public static List<ThreatsChanges> GetDifference(List<Threat> items)
@@ -55,7 +76,7 @@ namespace ThreatsParser.FileActions
                     x++;
                 }
 
-                if (sheet.Dimension.End.Row > lines  )
+                if (sheet.Dimension.End.Row > lines)
                 {
                     for (int i = lines + 1; i <= sheet.Dimension.End.Row; i++)
                     {
@@ -67,9 +88,9 @@ namespace ThreatsParser.FileActions
                         }
 
                         Threat currentNewThreat = new Threat(row);
-                        
-                            result.Add(new ThreatsChanges(null, currentNewThreat));
-                        
+
+                        result.Add(new ThreatsChanges(null, currentNewThreat));
+
 
                         x++;
                     }
