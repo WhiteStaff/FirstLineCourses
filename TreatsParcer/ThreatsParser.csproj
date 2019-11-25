@@ -65,6 +65,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Entities\ThreatsChanges.cs" />
+    <Compile Include="Exceptions\NoFileException.cs" />
     <Compile Include="MenuActions\About.cs" />
     <Compile Include="MenuActions\Help.cs" />
     <Compile Include="MenuActions\Interfaces\MenuAction.cs" />

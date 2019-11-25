@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Windows;
 using OfficeOpenXml;
+using TreatsParcer.Exceptions;
 
 
 namespace ThreatsParser.FileActions
@@ -18,7 +19,7 @@ namespace ThreatsParser.FileActions
             }
         }
 
-        public static void CheckFile()
+        private static void CheckFile()
         {
             try
             {
@@ -26,19 +27,29 @@ namespace ThreatsParser.FileActions
                 if (MessageBox.Show("Файл отсутствует, скачать?", "Ошибка файла", MessageBoxButton.YesNo,
                         MessageBoxImage.Question) == MessageBoxResult.Yes)
                     Download();
-                else Environment.Exit(0);
+                else throw  new NoFileException();
             }
             catch (Exception e)
             {
-                MessageBox.Show($"{e.Message}\nДальнейшая работа невозможна");
-                Environment.Exit(0);
+                throw e;
             }
         }
 
         public static List<Threat> GetParsedData()
         {
-            CheckFile();
-            return Parse();
+            try
+            {
+                CheckFile();
+                return Parse();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"{e.Message}\nДальнейшая работа невозможна", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown();
+                return new List<Threat>();
+            }
+            
+            
         }
 
         private static List<Threat> Parse()
@@ -73,8 +84,7 @@ namespace ThreatsParser.FileActions
                     }
                     else
                     {
-                        MessageBox.Show($"Дальнейшая работа невозможна");
-                        Environment.Exit(0);
+                        throw new NoFileException();
                     }
                 }
             }

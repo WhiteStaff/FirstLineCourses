@@ -16,7 +16,7 @@ namespace ThreatsParser.Actions
 
         public void Perform()
         {
-            MessageBox.Show("Программа для парсинга базы угроз РФ. \nВерсия 1.0 \n" +
+            MessageBox.Show("Программа для парсинга базы угроз РФ. \nВерсия 1.1 \n" +
                             "Внимание!! Поддержа программы заканчивается 31.12.2019", Name);
         }
     }
