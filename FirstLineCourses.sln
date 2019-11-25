@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotebookApp", "NotebookApp\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreatsParser", "TreatsParcer\ThreatsParser.csproj", "{808EDCE8-64ED-4976-AEF5-DA0BAA394F70}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "Benchmark\Benchmark.csproj", "{2D066EE6-280D-4649-B70D-307BFF088AD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{808EDCE8-64ED-4976-AEF5-DA0BAA394F70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{808EDCE8-64ED-4976-AEF5-DA0BAA394F70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{808EDCE8-64ED-4976-AEF5-DA0BAA394F70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D066EE6-280D-4649-B70D-307BFF088AD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D066EE6-280D-4649-B70D-307BFF088AD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D066EE6-280D-4649-B70D-307BFF088AD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D066EE6-280D-4649-B70D-307BFF088AD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
