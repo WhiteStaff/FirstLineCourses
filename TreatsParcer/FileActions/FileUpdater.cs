@@ -45,9 +45,10 @@ namespace ThreatsParser.FileActions
             return areEqual;
         }
 
-        public static List<ThreatsChanges> GetDifference(List<Threat> items)
+        public static List<ThreatsChanges> GetDifference(List<Threat> items, out List<Threat> newitems)
         {
             var result = new List<ThreatsChanges>();
+            newitems = new List<Threat>();
             if (AreFilesEqual()) return result;
 
             byte[] bin = File.ReadAllBytes("newdata.xlsx");
@@ -68,6 +69,7 @@ namespace ThreatsParser.FileActions
                     }
 
                     Threat currentNewThreat = new Threat(row);
+                    newitems.Add(currentNewThreat);
                     if (!currentNewThreat.Equals(items[x]))
                     {
                         result.Add(new ThreatsChanges(items[x], currentNewThreat));
@@ -90,6 +92,7 @@ namespace ThreatsParser.FileActions
                         Threat currentNewThreat = new Threat(row);
 
                         result.Add(new ThreatsChanges(null, currentNewThreat));
+                        newitems.Add(currentNewThreat);
 
 
                         x++;

@@ -104,7 +104,7 @@ namespace ThreatsParser
             var updateWindow = new UpdatesResultWindow();
             try
             {
-                List<ThreatsChanges> changes = FileUpdater.GetDifference(_items);
+                List<ThreatsChanges> changes = FileUpdater.GetDifference(_items, out var newItems);
                 if (changes.Count == 0)
                 {
                     File.Delete("newdata.xlsx");
@@ -116,7 +116,7 @@ namespace ThreatsParser
                 {
                     File.Delete("data.xlsx");
                     File.Move("newdata.xlsx", "data.xlsx");
-                    _items = FileCreator.GetParsedData();
+                    _items = newItems;
                     TreatsGrid.DataContext =
                         _items.Where(x => x.Id > (_pageNumber - 1) * 15 && x.Id <= (_pageNumber) * 15);
                     updateWindow.Changes.ItemsSource = changes;
