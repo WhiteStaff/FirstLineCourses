@@ -53,7 +53,14 @@ namespace Encryptor.Models
 
         public string Encrypt(string text, string key, bool isEncrypted)
         {
-            return isEncrypted ? Decrypt(text, key) : Encrypt(text, key);
+            try
+            {
+                return isEncrypted ? Decrypt(text, key) : Encrypt(text, key);
+            }
+            catch (Exception e)
+            {
+                return "ошибка";
+            }
         }
     }
 }

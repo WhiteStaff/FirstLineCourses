@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
-    ViewBag.active = "active in";
+    
 }
 
 <div class="jumbotron">
@@ -19,7 +19,7 @@
 
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade @ViewBag.active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="tab-pane fade @ViewBag.firstActive" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="container">
             @using (Html.BeginForm("Send", "Home", FormMethod.Post))
             {
@@ -49,14 +49,14 @@
                 <div class="row" style="margin-top: 5px">
                     <label>Результат</label>
                     <div name="result" style="min-height: 300px">
-                        <span>@ViewBag.result</span>
+                        <span style="white-space: pre-line">@ViewBag.result</span>
                     </div>
                 </div>
             }
             </div>
 
         </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="tab-pane fade @ViewBag.secondActive" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             @{
                 ViewBag.Title = "Upload";
             }

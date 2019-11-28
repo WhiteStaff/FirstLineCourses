@@ -34,7 +34,19 @@ namespace Encryptor.Controllers
             ViewBag.key = ((TextRequestEntity)Session["curr"])?.Key??"";
             ViewBag.isEncrypted = ((TextRequestEntity)Session["curr"])?.IsEncrypted??false;
             ViewBag.result = ((TextRequestEntity)Session["curr"])?.Result??"";
-            
+            ViewBag.firstActive = "";
+            ViewBag.secondActive = "";
+            bool isFirst;
+            if (Session["firstactive"] == null) isFirst = true;
+            else isFirst = (bool) Session["firstactive"];
+
+            if (isFirst)
+            {
+                ViewBag.firstActive = "active in";
+            }
+            else
+                ViewBag.secondActive = "active in";
+
             return View();
         }
 
@@ -43,11 +55,13 @@ namespace Encryptor.Controllers
         {
             if (upload != null)
             {
-                // получаем имя файла
-                string fileName = System.IO.Path.GetFileName(upload.FileName);
-                // сохраняем файл в папку Files в проекте
-                upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+                using (var x = upload.InputStream)
+                {
+                    var a = x.Read(new byte[100], 0, 100);
+                }
             }
+
+            Session["firstactive"] = false;
             return RedirectToAction("Index");
         }
 
@@ -55,6 +69,7 @@ namespace Encryptor.Controllers
         public ActionResult Send(string text, string key,bool isEncrypted)
         {
             Session["curr"] = new TextRequestEntity(text, key, isEncrypted, new Models.Encryptor().Encrypt(text, key, isEncrypted));
+            Session["firstactive"] = true;
             return RedirectToAction("Index");
         }
 

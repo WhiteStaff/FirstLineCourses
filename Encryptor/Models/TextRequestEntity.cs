@@ -16,15 +16,10 @@ namespace Encryptor.Models
 
         public TextRequestEntity(string text, string key, bool isEncrypted, string result)
         {
-            this.Text = text;
-            this.Key = key;
-            this.IsEncrypted = isEncrypted;
-            this.Result = result;
-        }
-
-        public TextRequestEntity()
-        {
-
+            Text = text;
+            Key = key;
+            IsEncrypted = isEncrypted;
+            Result = result;
         }
     }
 }
