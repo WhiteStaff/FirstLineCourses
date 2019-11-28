@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using ThreatsParser.Actions.Interfaces;
+﻿using System.Windows;
+using ThreatsParser.MenuActions.Interfaces;
 
-namespace ThreatsParser.Actions
+namespace ThreatsParser.MenuActions
 {
     class Help : IMenuAction
     {

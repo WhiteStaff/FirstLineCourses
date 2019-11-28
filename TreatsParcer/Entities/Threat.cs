@@ -1,7 +1,6 @@
 ﻿using System.Text;
 
-
-namespace ThreatsParser
+namespace ThreatsParser.Entities
 {
     class Threat
     {

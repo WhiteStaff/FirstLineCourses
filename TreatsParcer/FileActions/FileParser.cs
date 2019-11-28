@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using OfficeOpenXml;
-using ThreatsParser;
-using TreatsParser.Exceptions;
+using ThreatsParser.Entities;
 
-namespace TreatsParser.FileActions
+namespace ThreatsParser.FileActions
 {
     static class FileParser
     {
