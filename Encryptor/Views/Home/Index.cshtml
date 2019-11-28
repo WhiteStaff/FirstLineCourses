@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    ViewBag.active = "active in";
 }
 
 <div class="jumbotron">
@@ -8,7 +9,7 @@
 </div>
 
 <div class="row">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <ul class="nav nav-tabs  " id="myTab" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" aria-expanded="true">Текст</a>
         </li>
@@ -18,7 +19,7 @@
 
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade active in" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="tab-pane fade @ViewBag.active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="container">
             @using (Html.BeginForm("Send", "Home", FormMethod.Post))
             {
@@ -35,10 +36,10 @@
                     </div>
                     <div class="col-lg-3" style="height: 100%">
                         <div class="radio">
-                            <label><input name="isEncrypted" value="true"  type="radio" aria-checked="@ViewBag.isEncrypted">Расшифровать</label>
+                            <label><input name="isEncrypted" value="true"  type="radio" >Расшифровать</label>
                         </div>
                         <div class="radio">
-                            <label><input name="isEncrypted" value="false" type="radio" aria-checked="@ViewBag.isEncrypted">Зашифровать</label>
+                            <label><input name="isEncrypted" value="false" type="radio">Зашифровать</label>
                         </div>
                     </div>
                     <div class="col-lg-3">

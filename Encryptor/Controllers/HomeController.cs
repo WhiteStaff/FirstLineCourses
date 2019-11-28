@@ -13,12 +13,6 @@ namespace Encryptor.Controllers
 {
     public class HomeController : Controller
     {
-
-        private string text;
-        private string key;
-        private bool isEncrypted;
-        private string result;
-
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -36,6 +30,11 @@ namespace Encryptor.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            ViewBag.text = ((TextRequestEntity)Session["curr"])?.Text??"";
+            ViewBag.key = ((TextRequestEntity)Session["curr"])?.Key??"";
+            ViewBag.isEncrypted = ((TextRequestEntity)Session["curr"])?.IsEncrypted??false;
+            ViewBag.result = ((TextRequestEntity)Session["curr"])?.Result??"";
+            
             return View();
         }
 
@@ -55,10 +54,7 @@ namespace Encryptor.Controllers
         [HttpPost]
         public ActionResult Send(string text, string key,bool isEncrypted)
         {
-            ViewBag.text = text;
-            ViewBag.key = key;
-            ViewBag.isEncrypted = isEncrypted;
-            ViewBag.result = Models.Encryptor.Encrypt(text, key);
+            Session["curr"] = new TextRequestEntity(text, key, isEncrypted, Models.Encryptor.Encrypt(text, key));
             return RedirectToAction("Index");
         }
 
