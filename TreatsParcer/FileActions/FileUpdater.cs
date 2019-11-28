@@ -6,8 +6,7 @@ using System.Net;
 using System.Security.Cryptography;
 using OfficeOpenXml;
 using ThreatsParser.Entities;
-using TreatsParser.Exceptions;
-using TreatsParser.FileActions;
+using ThreatsParser.Exceptions;
 
 namespace ThreatsParser.FileActions
 {
@@ -53,8 +52,8 @@ namespace ThreatsParser.FileActions
 
             return areEqual;
         }
-        
-        public static List<ThreatsChanges> GetDifference(List<Threat> items, out List<Threat> newitems) 
+
+        public static List<ThreatsChanges> GetDifference(List<Threat> items, out List<Threat> newitems)
         {
             var result = new List<ThreatsChanges>();
             newitems = new List<Threat>();
@@ -66,7 +65,7 @@ namespace ThreatsParser.FileActions
 
             for (int i = 0; i < itemsCount; i++)
             {
-                if (!items[i].Equals(newitems[i])) result.Add( new ThreatsChanges(items[i], newitems[i]));
+                if (!items[i].Equals(newitems[i])) result.Add(new ThreatsChanges(items[i], newitems[i]));
             }
 
             if (items.Count > itemsCount)

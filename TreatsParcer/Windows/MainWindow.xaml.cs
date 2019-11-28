@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using ThreatsParser.Actions;
-using ThreatsParser.Actions.Interfaces;
 using ThreatsParser;
 using ThreatsParser.Entities;
 using ThreatsParser.FileActions;
+using ThreatsParser.MenuActions;
+using ThreatsParser.MenuActions.Interfaces;
 
 namespace ThreatsParser
 {

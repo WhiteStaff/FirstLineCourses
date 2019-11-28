@@ -4,8 +4,8 @@ using System.IO;
 using System.Net;
 using System.Windows;
 using OfficeOpenXml;
-using TreatsParser.Exceptions;
-using TreatsParser.FileActions;
+using ThreatsParser.Entities;
+using ThreatsParser.Exceptions;
 
 
 namespace ThreatsParser.FileActions
