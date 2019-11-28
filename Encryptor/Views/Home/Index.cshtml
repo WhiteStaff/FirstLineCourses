@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-lg-3" style="height: 100%">
                         <div class="radio">
-                            <label><input name="isEncrypted" value="true"  type="radio" >Расшифровать</label>
+                            <label><input name="isEncrypted" value="true"  type="radio" checked="checked">Расшифровать</label>
                         </div>
                         <div class="radio">
                             <label><input name="isEncrypted" value="false" type="radio">Зашифровать</label>
@@ -48,7 +48,9 @@
                 </div>
                 <div class="row" style="margin-top: 5px">
                     <label>Результат</label>
-                    <div name="result" style="min-height: 300px">@ViewBag.result</div>
+                    <div name="result" style="min-height: 300px">
+                        <span>@ViewBag.result</span>
+                    </div>
                 </div>
             }
             </div>

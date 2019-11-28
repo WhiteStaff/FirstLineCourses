@@ -54,7 +54,7 @@ namespace Encryptor.Controllers
         [HttpPost]
         public ActionResult Send(string text, string key,bool isEncrypted)
         {
-            Session["curr"] = new TextRequestEntity(text, key, isEncrypted, Models.Encryptor.Encrypt(text, key));
+            Session["curr"] = new TextRequestEntity(text, key, isEncrypted, new Models.Encryptor().Encrypt(text, key, isEncrypted));
             return RedirectToAction("Index");
         }
 
