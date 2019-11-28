@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>MainIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
@@ -65,10 +68,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Entities\ThreatsChanges.cs" />
+    <Compile Include="Exceptions\NoConnectionException.cs" />
     <Compile Include="Exceptions\NoFileException.cs" />
+    <Compile Include="FileActions\FileParser.cs" />
     <Compile Include="MenuActions\About.cs" />
     <Compile Include="MenuActions\Help.cs" />
-    <Compile Include="MenuActions\Interfaces\MenuAction.cs" />
+    <Compile Include="MenuActions\Interfaces\IMenuAction.cs" />
     <Compile Include="MenuActions\Interfaces\MenuActionExtension.cs" />
     <Compile Include="FileActions\FileSaver.cs" />
     <Compile Include="FileActions\FileUpdater.cs" />
@@ -121,6 +126,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="MainIcon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

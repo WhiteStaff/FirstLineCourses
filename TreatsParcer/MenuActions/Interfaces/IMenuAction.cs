@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ThreatsParser.Actions.Interfaces
 {
-    public interface MenuAction
+    public interface IMenuAction
     {
         string Category { get; }
         string Name { get; }

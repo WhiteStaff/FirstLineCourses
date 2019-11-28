@@ -8,7 +8,7 @@ using ThreatsParser.Actions.Interfaces;
 
 namespace ThreatsParser.Actions
 {
-    class Help : MenuAction
+    class Help : IMenuAction
     {
         public string Category => "About";
         public string Name => "Помощь";

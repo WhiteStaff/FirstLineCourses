@@ -4,19 +4,28 @@ using System.IO;
 using System.Net;
 using System.Windows;
 using OfficeOpenXml;
-using TreatsParcer.Exceptions;
+using TreatsParser.Exceptions;
+using TreatsParser.FileActions;
 
 
 namespace ThreatsParser.FileActions
 {
-    class FileCreator
+    static class FileCreator
     {
         private static void Download()
         {
-            using (var client = new WebClient())
+            try
             {
-                client.DownloadFile("https://bdu.fstec.ru/documents/files/thrlist.xlsx", "data.xlsx");
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile("https://bdu.fstec.ru/documents/files/thrlist.xlsx", "data.xlsx");
+                }
             }
+            catch (Exception e)
+            {
+                throw new NoConnectionException();
+            }
+            
         }
 
         private static void CheckFile()
@@ -37,42 +46,14 @@ namespace ThreatsParser.FileActions
 
         public static List<Threat> GetParsedData()
         {
+            var excelData = new List<Threat>();
             try
             {
                 CheckFile();
-                return Parse();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show($"{e.Message}\nДальнейшая работа невозможна", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                Application.Current.Shutdown();
-                return new List<Threat>();
-            }
-            
-            
-        }
-
-        private static List<Threat> Parse()
-        {
-            var excelData = new List<Threat>();
-            byte[] bin = File.ReadAllBytes("data.xlsx");
-            using (MemoryStream stream = new MemoryStream(bin))
-            using (ExcelPackage excelPackage = new ExcelPackage(stream))
-            {
                 try
                 {
-                    var sheet = excelPackage.Workbook.Worksheets[1];
-                    for (int i = 3; i <= sheet.Dimension.End.Row; i++)
-                    {
-                        var row = new string[8];
-                        for (int j = 1; j <= 8; j++)
-                        {
-                            var value = sheet.Cells[i, j].Value.ToString();
-                            row[j - 1] = value;
-                        }
-
-                        excelData.Add(new Threat(row));
-                    }
+                    excelData = FileParser.Parse("data.xlsx");
+                    
                 }
                 catch (Exception e)
                 {
@@ -80,16 +61,23 @@ namespace ThreatsParser.FileActions
                             "Ошибка", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
                     {
                         Download();
-                        excelData = Parse();
+                        excelData = FileParser.Parse("data.xlsx");
                     }
                     else
                     {
                         throw new NoFileException();
                     }
                 }
-            }
+                return excelData;
 
-            return excelData;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"{e.Message}\nДальнейшая работа невозможна", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown();
+                return excelData;
+            }
+            
         }
     }
 }

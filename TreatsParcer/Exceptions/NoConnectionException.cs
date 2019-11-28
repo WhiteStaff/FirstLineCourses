@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace TreatsParser.Exceptions
 {
-    class NoFileException : Exception
+    class NoConnectionException : Exception
     {
-        public NoFileException() : base("Отсутствует файл базы данных угроз.")
-        {
-
-        }
+        public NoConnectionException() : base("Проблемы с соединением к серверу.")
+        { }
     }
 }

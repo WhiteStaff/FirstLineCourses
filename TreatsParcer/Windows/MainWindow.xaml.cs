@@ -21,11 +21,11 @@ namespace ThreatsParser
         private int _pageNumber;
         private int _maxPages;
 
-        public MainWindow() : this(new MenuAction[] {new About(), new Help()})
+        public MainWindow() : this(new IMenuAction[] {new About(), new Help()})
         {
         }
 
-        private MainWindow(MenuAction[] actions)
+        private MainWindow(IMenuAction[] actions)
         {
             InitializeComponent();
 
@@ -46,7 +46,7 @@ namespace ThreatsParser
             var x = TreatsGrid.SelectedItem as Threat;
             try
             {
-                MessageBox.Show(x.ToString(), x.Name);
+                MessageBox.Show(x.ToString(), $"УБИ.{x.Id.ToString()}");
             }
             catch (NullReferenceException exception)
             {

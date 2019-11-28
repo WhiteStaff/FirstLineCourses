@@ -6,6 +6,8 @@ using System.Net;
 using System.Security.Cryptography;
 using OfficeOpenXml;
 using ThreatsParser.Entities;
+using TreatsParser.Exceptions;
+using TreatsParser.FileActions;
 
 namespace ThreatsParser.FileActions
 {
@@ -13,9 +15,16 @@ namespace ThreatsParser.FileActions
     {
         private static bool AreFilesEqual()
         {
-            using (var client = new WebClient())
+            try
             {
-                client.DownloadFile("https://bdu.fstec.ru/documents/files/thrlist.xlsx", "newdata.xlsx");
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile("https://bdu.fstec.ru/documents/files/thrlist.xlsx", "newdata.xlsx");
+                }
+            }
+            catch (Exception e)
+            {
+                throw new NoConnectionException();
             }
 
             byte[] firstHash;
@@ -44,66 +53,35 @@ namespace ThreatsParser.FileActions
 
             return areEqual;
         }
-
-        public static List<ThreatsChanges> GetDifference(List<Threat> items, out List<Threat> newitems)
+        
+        public static List<ThreatsChanges> GetDifference(List<Threat> items, out List<Threat> newitems) 
         {
             var result = new List<ThreatsChanges>();
             newitems = new List<Threat>();
             if (AreFilesEqual()) return result;
 
-            byte[] bin = File.ReadAllBytes("newdata.xlsx");
+            newitems = FileParser.Parse("newdata.xlsx");
 
-            using (MemoryStream stream = new MemoryStream(bin))
-            using (ExcelPackage excelPackage = new ExcelPackage(stream))
+            var itemsCount = Math.Min(items.Count, newitems.Count);
+
+            for (int i = 0; i < itemsCount; i++)
             {
-                int x = 0;
-                var sheet = excelPackage.Workbook.Worksheets[1];
-                var lines = Math.Min(sheet.Dimension.End.Row, items.Count + 2);
-                for (int i = 3; i <= lines; i++)
+                if (!items[i].Equals(newitems[i])) result.Add( new ThreatsChanges(items[i], newitems[i]));
+            }
+
+            if (items.Count > itemsCount)
+            {
+                for (int i = itemsCount; i < items.Count; i++)
                 {
-                    var row = new string[8];
-                    for (int j = 1; j <= 8; j++)
-                    {
-                        var value = sheet.Cells[i, j].Value.ToString();
-                        row[j - 1] = value;
-                    }
-
-                    Threat currentNewThreat = new Threat(row);
-                    newitems.Add(currentNewThreat);
-                    if (!currentNewThreat.Equals(items[x]))
-                    {
-                        result.Add(new ThreatsChanges(items[x], currentNewThreat));
-                    }
-
-                    x++;
+                    result.Add(new ThreatsChanges(items[i], null));
                 }
+            }
 
-                if (sheet.Dimension.End.Row > lines)
+            if (newitems.Count > itemsCount)
+            {
+                for (int i = itemsCount; i < newitems.Count; i++)
                 {
-                    for (int i = lines + 1; i <= sheet.Dimension.End.Row; i++)
-                    {
-                        var row = new string[8];
-                        for (int j = 1; j <= 8; j++)
-                        {
-                            var value = sheet.Cells[i, j].Value.ToString();
-                            row[j - 1] = value;
-                        }
-
-                        Threat currentNewThreat = new Threat(row);
-
-                        result.Add(new ThreatsChanges(null, currentNewThreat));
-                        newitems.Add(currentNewThreat);
-
-
-                        x++;
-                    }
-                }
-                else if (x > lines - 3)
-                {
-                    for (int i = x; i < items.Count; i++)
-                    {
-                        result.Add(new ThreatsChanges(items[i], null));
-                    }
+                    result.Add(new ThreatsChanges(null, newitems[i]));
                 }
             }
 
