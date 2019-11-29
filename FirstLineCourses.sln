@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunningCatsTotalizator", "RunningCatsTotalizator\RunningCatsTotalizator.csproj", "{F3482FF2-DCF8-4FD2-9C4A-A121E06CFEA8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotebookApp", "NotebookApp\NotebookApp.csproj", "{FADAB541-5216-4740-A165-BF2C5E19410B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreatsParser", "TreatsParcer\ThreatsParser.csproj", "{808EDCE8-64ED-4976-AEF5-DA0BAA394F70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F3482FF2-DCF8-4FD2-9C4A-A121E06CFEA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3482FF2-DCF8-4FD2-9C4A-A121E06CFEA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3482FF2-DCF8-4FD2-9C4A-A121E06CFEA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3482FF2-DCF8-4FD2-9C4A-A121E06CFEA8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FADAB541-5216-4740-A165-BF2C5E19410B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FADAB541-5216-4740-A165-BF2C5E19410B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FADAB541-5216-4740-A165-BF2C5E19410B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FADAB541-5216-4740-A165-BF2C5E19410B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{808EDCE8-64ED-4976-AEF5-DA0BAA394F70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{808EDCE8-64ED-4976-AEF5-DA0BAA394F70}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{808EDCE8-64ED-4976-AEF5-DA0BAA394F70}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{808EDCE8-64ED-4976-AEF5-DA0BAA394F70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
