@@ -6,7 +6,7 @@ using System.Web;
 namespace Encryptor.Models
 {
     [Serializable]
-    public class TextRequestEntity
+    public class TextRequest
     {
         public string Text { get;}
         public string Key { get;}
@@ -14,7 +14,7 @@ namespace Encryptor.Models
         public string Result { get;}
         
 
-        public TextRequestEntity(string text, string key, bool isEncrypted, string result)
+        public TextRequest(string text, string key, bool isEncrypted, string result)
         {
             Text = text;
             Key = key;
