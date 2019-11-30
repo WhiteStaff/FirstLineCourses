@@ -31,14 +31,23 @@ namespace Encryptor.Models
 
         public DocX Parse()
         {
-            var doc = DocX.Load(_docxStream);
-            foreach (var section in doc.Sections)
+            DocX doc;
+            try
             {
-                foreach (var paragraph in section.SectionParagraphs)
+                doc = DocX.Load(_docxStream);
+                foreach (var section in doc.Sections)
                 {
-                    ParseParagraph(paragraph);
+                    foreach (var paragraph in section.SectionParagraphs)
+                    {
+                        ParseParagraph(paragraph);
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            
 
             return doc;
         }

@@ -20,15 +20,13 @@ namespace Encryptor.Controllers
     {
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Описание приложения";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 
@@ -39,6 +37,8 @@ namespace Encryptor.Controllers
             ViewBag.key = ((TextRequest)Session["curr"])?.Key??"";
             ViewBag.isEncrypted = ((TextRequest)Session["curr"])?.IsEncrypted??false;
             ViewBag.result = ((TextRequest)Session["curr"])?.Result??"";
+            if (Session["error"] == null) Session["error"] = false;
+            ViewBag.error = Session["error"];
             ViewBag.firstActive = "";
             ViewBag.secondActive = "";
             bool isFirst;
@@ -58,24 +58,35 @@ namespace Encryptor.Controllers
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase upload, string key, bool isEncrypted, string name)
         {
-            DocX a;
-            if (upload != null)
+            try
             {
-                MemoryStream stream = new MemoryStream();
-                using (var x = upload.InputStream)
+                ViewBag.error = false;
+                DocX a;
+                if (upload != null)
                 {
-                    a = new DocxHandler(x, key, isEncrypted).Parse(); 
+                    MemoryStream stream = new MemoryStream();
+                    using (var x = upload.InputStream)
+                    {
+                        a = new DocxHandler(x, key, isEncrypted).Parse();
+                    }
+
+                    Session["firstactive"] = false;
+                    a.SaveAs(stream);
+                    stream.Position = 0;
+                    if (string.IsNullOrEmpty(name)) name = upload.FileName.Replace(".docx", "");
+
+                    return File(stream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                        $"{name}.docx");
+
                 }
-                
-                Session["firstactive"] = false;
-                a.SaveAs(stream);
-                stream.Position = 0;
-                if (string.IsNullOrEmpty(name)) name = upload.FileName.Replace(".docx", "");
-                
-                return File(stream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                    $"{name}.docx");
-                
             }
+            catch (Exception e)
+            {
+                Session["secondactive"] = true;
+                Session["firstactive"] = false;
+                Session["error"] = true;
+            }
+            
             
             
             return RedirectToAction("Index");
