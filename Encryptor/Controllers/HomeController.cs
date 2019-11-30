@@ -58,7 +58,7 @@ namespace Encryptor.Controllers
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase upload)
         {
-            WordDocument a;
+            DocX a;
             if (upload != null)
             {
                 MemoryStream stream = new MemoryStream();
@@ -68,7 +68,7 @@ namespace Encryptor.Controllers
                 }
                 
                 Session["firstactive"] = false;
-                a.Save(stream, FormatType.Docx);
+                a.SaveAs(stream);
                 stream.Position = 0;
                 return File(stream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                     "123.docx");

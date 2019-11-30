@@ -43,17 +43,28 @@ namespace Encryptor.Models
         private string Decrypt(string text, string key)
         {
             string alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+            string bigAlphabet = alphabet.ToUpper();
             StringBuilder result = new StringBuilder();
             int counter = 0;
             for (int i = 0; i < text.Length; i++)
             {
                 var keySymbolNumber = alphabet.IndexOf(key[counter % key.Length]);
                 var symbol = text[i];
-                if (alphabet.Contains(symbol))
+                if (alphabet.Contains(symbol) || bigAlphabet.Contains(symbol))
                 {
                     counter++;
-                    var newSymbolNumber = (alphabet.IndexOf(symbol) + alphabet.Length - keySymbolNumber) % alphabet.Length;
-                    result.Append(alphabet[newSymbolNumber]);
+                    if (alphabet.Contains(symbol))
+                    {
+                        var newSymbolNumber = (alphabet.IndexOf(symbol) + alphabet.Length - keySymbolNumber) % alphabet.Length;
+                        result.Append(alphabet[newSymbolNumber]);
+                    }
+                    else
+                    {
+                        var newSymbolNumber = (bigAlphabet.IndexOf(symbol) + bigAlphabet.Length - keySymbolNumber) % bigAlphabet.Length;
+                        result.Append(bigAlphabet[newSymbolNumber]);
+                    }
+                    
+                    
                 }
                 else result.Append(text[i]);
             }

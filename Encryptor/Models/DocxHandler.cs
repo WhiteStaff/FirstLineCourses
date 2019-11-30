@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Xml;
+using System.Xml.Linq;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
+using Xceed.Document.NET;
 using Xceed.Words.NET;
+using Paragraph = Xceed.Document.NET.Paragraph;
 
 namespace Encryptor.Models
 {
     public class DocxHandler
     {
-        private Stream _docxStream;
-        private Stream _outdocxStream;
-        private bool _isEncrypted;
-        private string _key;
-        private WordprocessingDocument _clone;
+        private readonly Stream _docxStream;
+        private readonly bool _isEncrypted;
+        private readonly string _key;
+
 
         public DocxHandler(Stream docxStream, string key, bool isEncrypted)
         {
@@ -26,64 +29,42 @@ namespace Encryptor.Models
             _key = key;
         }
 
-        public WordDocument Parse()
+        public DocX Parse()
         {
-            var doc = new WordDocument(_docxStream, FormatType.Docx);
-            foreach (WSection section in doc.Sections)
+            var doc = DocX.Load(_docxStream);
+            foreach (var section in doc.Sections)
             {
-                WTextBody sectionBody = section.Body;
-                IterateTextBody(sectionBody);
+                foreach (var paragraph in section.SectionParagraphs)
+                {
+                    ParseParagraph(paragraph);
+                }
             }
-
-            var a = new MemoryStream();
-            //doc.Save("11212.txt", FormatType.Docx, Response, HttpContentDisposition.Attachment);
 
             return doc;
         }
 
-        private void IterateTextBody(WTextBody textBody)
+        private void ParseParagraph(Paragraph paragraph)
         {
-            //Iterates through each of the child items of WTextBody
-            for (int i = 0; i < textBody.ChildEntities.Count; i++)
+            var text = paragraph.Text;
+            if (string.IsNullOrEmpty(text)) return;
+            var newText = new Encryptor().Encrypt(text, _key, _isEncrypted);
+            try
             {
-                //IEntity is the basic unit in DocIO DOM. 
-                //Accesses the body items (should be either paragraph or table) as IEntity
-                IEntity bodyItemEntity = textBody.ChildEntities[i];
-                //A Text body has 2 types of elements - Paragraph and Table
-                //Decides the element type by using EntityType
-                switch (bodyItemEntity.EntityType)
+                paragraph.ReplaceText(text, newText);
+            }
+            catch (Exception e)
+            {
+                var formula = ((XElement)paragraph.Xml.FirstNode).Value;
+                if (text == formula) return;
+                var texts = text.Split(new[] { formula }, System.StringSplitOptions.None);
+                foreach (var item in texts)
                 {
-                    case EntityType.Paragraph:
-                        WParagraph paragraph = bodyItemEntity as WParagraph;
-                        //Checks for particular style name and removes the paragraph from DOM
-                        int index = textBody.ChildEntities.IndexOf(paragraph);
-
-                        var text = ((WParagraph) textBody.ChildEntities[index]).Text;
-                        ((WParagraph) textBody.ChildEntities[index]).Text = new Encryptor().Encrypt(text, _key, false);
-
-                        break;
-                    case EntityType.Table:
-                        //Table is a collection of rows and cells
-                        //Iterates through table's DOM
-                        IterateTable(bodyItemEntity as WTable);
-                        break;
+                    if (item == "") continue;
+                    newText = new Encryptor().Encrypt(item, _key, _isEncrypted);
+                    paragraph.ReplaceText(item, newText);
                 }
             }
         }
-
-        private void IterateTable(WTable table)
-        {
-            //Iterates the row collection in a table
-            foreach (WTableRow row in table.Rows)
-            {
-                //Iterates the cell collection in a table row
-                foreach (WTableCell cell in row.Cells)
-                {
-                    //Table cell is derived from (also a) TextBody
-                    //Reusing the code meant for iterating TextBody
-                    IterateTextBody(cell);
-                }
-            }
-        }
+        
     }
 }
