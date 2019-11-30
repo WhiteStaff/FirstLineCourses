@@ -56,7 +56,7 @@ namespace Encryptor.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase upload)
+        public ActionResult Upload(HttpPostedFileBase upload, string key, bool isEncrypted, string name)
         {
             DocX a;
             if (upload != null)
@@ -64,14 +64,16 @@ namespace Encryptor.Controllers
                 MemoryStream stream = new MemoryStream();
                 using (var x = upload.InputStream)
                 {
-                    a = new DocxHandler(x, "скорпион", true).Parse(); 
+                    a = new DocxHandler(x, key, isEncrypted).Parse(); 
                 }
                 
                 Session["firstactive"] = false;
                 a.SaveAs(stream);
                 stream.Position = 0;
+                if (string.IsNullOrEmpty(name)) name = upload.FileName.Replace(".docx", "");
+                
                 return File(stream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                    "123.docx");
+                    $"{name}.docx");
                 
             }
             

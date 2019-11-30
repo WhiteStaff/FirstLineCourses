@@ -16,6 +16,7 @@ namespace Encryptor.Models
             string alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
             string bigAlphabet = alphabet.ToUpper();
             StringBuilder result = new StringBuilder();
+            key = key.ToLower();
             int counter = 0;
             for (int i = 0; i < text.Length; i++)
             {
@@ -46,6 +47,7 @@ namespace Encryptor.Models
             string bigAlphabet = alphabet.ToUpper();
             StringBuilder result = new StringBuilder();
             int counter = 0;
+            key = key.ToLower();
             for (int i = 0; i < text.Length; i++)
             {
                 var keySymbolNumber = alphabet.IndexOf(key[counter % key.Length]);

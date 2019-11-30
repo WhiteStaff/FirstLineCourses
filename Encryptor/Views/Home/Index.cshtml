@@ -31,8 +31,8 @@
                 </div>
                 <div class="row" style="margin-top: 5px">
                     <div class="col-lg-6">
-                        <label class="">Ключ</label>
-                        <input name="key" class="form-control" value="@ViewBag.key"/>
+                        <label>Ключ</label>
+                        <input name="key" placeholder="Введите ключ" pattern="^[А-Яа-яЁё]+$" class="form-control" required title="Допустимы только русские буквы" value="@ViewBag.key" />
                     </div>
                     <div class="col-lg-3" style="height: 100%">
                         <div class="radio">
@@ -63,9 +63,28 @@
             <h3>Выберите .docx файл для загрузки</h3>
             @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype = "multipart/form-data"}))
             {
-                <input type="file" name="upload" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
-                <br>
-                <input type="submit" value="Загрузить"/>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <input type="file" name="upload" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
+                        <br>
+                        <input type="submit" class="btn  btn-secondary" value="Загрузить"/>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Ключ</label>
+                        <input name="key" placeholder="Введите ключ" pattern="^[А-Яа-яЁё]+$" class="form-control" required title="Допустимы только русские буквы" value="@ViewBag.key" />
+                        <div class="radio">
+                            <label><input name="isEncrypted" value="true" type="radio" checked="checked">Расшифровать</label>
+                        </div>
+                        <div class="radio">
+                            <label><input name="isEncrypted" value="false" type="radio">Зашифровать</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Название нового файла</label>
+                        <input name="name" placeholder="По умолчанию название исходного" class="form-control" value="@ViewBag.name" />
+                    </div>
+                </div>
+                
             }
         </div>
 
