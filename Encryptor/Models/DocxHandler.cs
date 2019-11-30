@@ -52,17 +52,21 @@ namespace Encryptor.Models
             {
                 paragraph.ReplaceText(text, newText);
             }
-            catch (Exception e)
+            catch (ArgumentException e)
             {
-                var formula = ((XElement)paragraph.Xml.FirstNode).Value;
+                var formula = ((XElement) paragraph.Xml.FirstNode).Value;
                 if (text == formula) return;
-                var texts = text.Split(new[] { formula }, System.StringSplitOptions.None);
+                var texts = text.Split(new[] {formula}, System.StringSplitOptions.None);
                 foreach (var item in texts)
                 {
                     if (item == "") continue;
                     newText = new Encryptor().Encrypt(item, _key, _isEncrypted);
                     paragraph.ReplaceText(item, newText);
                 }
+            }
+            catch (Exception e)
+            {
+                // ignored
             }
         }
         
