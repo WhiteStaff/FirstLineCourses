@@ -8,76 +8,77 @@ using System.Web.WebPages;
 
 namespace Encryptor.Models
 {
-    public  class Encryptor
+    public class Encryptor
     {
+        private string _key;
+        private readonly bool _isEncrypted;
+        private const string Alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+        private static readonly string BigAlphabet = Alphabet.ToUpper();
 
-        private string Encrypt(string text, string key)
+        public Encryptor(string key, bool isEncrypted)
         {
-            string alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
-            string bigAlphabet = alphabet.ToUpper();
+            _key = key;
+            _isEncrypted = isEncrypted;
+        }
+
+        private string Encrypt(string text)
+        {
             StringBuilder result = new StringBuilder();
-            key = key.ToLower();
+            _key = _key.ToLower();
             int counter = 0;
-            for (int i = 0; i < text.Length; i++)
+
+            foreach (var symbol in text)
             {
-                var keySymbolNumber = alphabet.IndexOf(key[counter % key.Length]);
-                var symbol = text[i];
-                if (alphabet.Contains(symbol) || bigAlphabet.Contains(symbol))
+                var keySymbolNumber = Alphabet.IndexOf(_key[counter % _key.Length]);
+
+                if (Alphabet.Contains(symbol) || BigAlphabet.Contains(symbol))
                 {
                     counter++;
-                    if (alphabet.Contains(symbol))
-                    {
-                        var newSymbolNumber = (alphabet.IndexOf(symbol) + keySymbolNumber) % alphabet.Length;
-                        result.Append(alphabet[newSymbolNumber]);
-                    }
-                    else
-                    {
-                        var newSymbolNumber = (bigAlphabet.IndexOf(symbol) + keySymbolNumber) % bigAlphabet.Length;
-                        result.Append(bigAlphabet[newSymbolNumber]);
-                    }
+                    var currentAlphabet = GetCurrentAlphabet(symbol);
+
+                    var newSymbolNumber = (currentAlphabet.IndexOf(symbol) + keySymbolNumber) % currentAlphabet.Length;
+                    result.Append(currentAlphabet[newSymbolNumber]);
                 }
-                else result.Append(text[i]);
+                else result.Append(symbol);
             }
+
             return result.ToString();
         }
 
-        private string Decrypt(string text, string key)
+        private string Decrypt(string text)
         {
-            string alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
-            string bigAlphabet = alphabet.ToUpper();
             StringBuilder result = new StringBuilder();
             int counter = 0;
-            key = key.ToLower();
-            for (int i = 0; i < text.Length; i++)
+            _key = _key.ToLower();
+            foreach (var symbol in text)
             {
-                var keySymbolNumber = alphabet.IndexOf(key[counter % key.Length]);
-                var symbol = text[i];
-                if (alphabet.Contains(symbol) || bigAlphabet.Contains(symbol))
+                var keySymbolNumber = Alphabet.IndexOf(_key[counter % _key.Length]);
+
+                if (Alphabet.Contains(symbol) || BigAlphabet.Contains(symbol))
                 {
                     counter++;
-                    if (alphabet.Contains(symbol))
-                    {
-                        var newSymbolNumber = (alphabet.IndexOf(symbol) + alphabet.Length - keySymbolNumber) % alphabet.Length;
-                        result.Append(alphabet[newSymbolNumber]);
-                    }
-                    else
-                    {
-                        var newSymbolNumber = (bigAlphabet.IndexOf(symbol) + bigAlphabet.Length - keySymbolNumber) % bigAlphabet.Length;
-                        result.Append(bigAlphabet[newSymbolNumber]);
-                    }
-                    
-                    
+                    var currentAlphabet = GetCurrentAlphabet(symbol);
+                    var newSymbolNumber =
+                        (currentAlphabet.IndexOf(symbol) + currentAlphabet.Length - keySymbolNumber) %
+                        currentAlphabet.Length;
+                    result.Append(Alphabet[newSymbolNumber]);
                 }
-                else result.Append(text[i]);
+                else result.Append(symbol);
             }
+
             return result.ToString();
         }
 
-        public string Encrypt(string text, string key, bool isEncrypted)
+        private static string GetCurrentAlphabet(char symbol)
+        {
+            return Alphabet.Contains(symbol) ? Alphabet : BigAlphabet;
+        }
+
+        public string Transform(string text)
         {
             try
             {
-                return isEncrypted ? Decrypt(text, key) : Encrypt(text, key);
+                return _isEncrypted ? Decrypt(text) : Encrypt(text);
             }
             catch (Exception e)
             {

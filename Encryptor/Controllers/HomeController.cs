@@ -33,17 +33,23 @@ namespace Encryptor.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            ViewBag.text = ((TextRequest)Session["curr"])?.Text??"";
-            ViewBag.key = ((TextRequest)Session["curr"])?.Key??"";
-            ViewBag.isEncrypted = ((TextRequest)Session["curr"])?.IsEncrypted??false;
-            ViewBag.result = ((TextRequest)Session["curr"])?.Result??"";
+            ViewBag.text = (Session["curr"] as TextRequest)?.Text ?? "";
+            ViewBag.key = (Session["curr"] as TextRequest)?.Key ?? "";
+            ViewBag.result = (Session["curr"] as TextRequest)?.Result ?? "";
+
             if (Session["error"] == null) Session["error"] = false;
+
             ViewBag.error = Session["error"];
             ViewBag.firstActive = "";
             ViewBag.secondActive = "";
             bool isFirst;
+
             if (Session["firstactive"] == null) isFirst = true;
             else isFirst = (bool) Session["firstactive"];
+
+            Session["curr"] = null;
+            Session["error"] = null;
+            Session["firstactive"] = null;
 
             if (isFirst)
             {
@@ -52,53 +58,55 @@ namespace Encryptor.Controllers
             else
                 ViewBag.secondActive = "active in";
 
+
             return View();
         }
 
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase upload, string key, bool isEncrypted, string name)
         {
+            Session["firstactive"] = false;
+
             try
             {
-                ViewBag.error = false;
-                DocX a;
+                Session["error"] = false;
+                DocX newFile;
                 if (upload != null)
                 {
-                    MemoryStream stream = new MemoryStream();
-                    using (var x = upload.InputStream)
+                    MemoryStream newFileStream = new MemoryStream();
+                    using (var uploadInputStream = upload.InputStream)
                     {
-                        a = new DocxHandler(x, key, isEncrypted).Parse();
+                        newFile = new DocxHandler(uploadInputStream, key, isEncrypted).Parse();
                     }
 
                     Session["firstactive"] = false;
-                    a.SaveAs(stream);
-                    stream.Position = 0;
+                    newFile.SaveAs(newFileStream);
+                    newFileStream.Position = 0;
                     if (string.IsNullOrEmpty(name)) name = upload.FileName.Replace(".docx", "");
+                    var outputBytes = newFileStream.ToArray();
+                    newFileStream.Close();
 
-                    return File(stream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    return File(outputBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                         $"{name}.docx");
-
+                    
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Session["secondactive"] = true;
-                Session["firstactive"] = false;
                 Session["error"] = true;
             }
-            
-            
-            
+
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public ActionResult Send(string text, string key,bool isEncrypted)
+        public ActionResult Send(string text, string key, bool isEncrypted)
         {
-            Session["curr"] = new TextRequest(text, key, isEncrypted, new Models.Encryptor().Encrypt(text, key, isEncrypted));
+            Session["curr"] = new TextRequest(text, key, isEncrypted,
+                new Models.Encryptor(key, isEncrypted).Transform(text));
+            Session["error"] = false;
             Session["firstactive"] = true;
             return RedirectToAction("Index");
         }
-
     }
 }
