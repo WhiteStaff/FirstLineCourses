@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
-using System.Xml;
-using System.Xml.Linq;
+﻿using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.Ajax.Utilities;
-using Syncfusion.DocIO;
-using Syncfusion.DocIO.DLS;
-using Xceed.Document.NET;
-using Xceed.Words.NET;
-using Paragraph = Xceed.Document.NET.Paragraph;
+using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
+using Run = DocumentFormat.OpenXml.Wordprocessing.Run;
 
 namespace Encryptor.Models
 {
@@ -21,6 +11,7 @@ namespace Encryptor.Models
     {
         private readonly Stream _docxStream;
         private readonly Encryptor _encryptor;
+        
 
 
         public DocxHandler(Stream docxStream, string key, bool isEncrypted)
@@ -29,28 +20,73 @@ namespace Encryptor.Models
             _encryptor = new Encryptor(key, isEncrypted);
         }
 
-        public DocX Parse()
-        {
-            var doc = DocX.Load(_docxStream);
-            doc.Sections.ForEach(x => x.SectionParagraphs.ForEach(ParseParagraph));
-            _docxStream.Close();
 
-            return doc;
+        public byte[] Parse()
+        {
+            byte[] a;
+            using (var stream = new MemoryStream())
+            {
+                var bytes = GetStreamBytes(_docxStream);
+                stream.Write(bytes, 0, bytes.Length);
+
+                using (WordprocessingDocument doc =
+                    WordprocessingDocument.Open(stream, true))
+                {
+                    string docText = null;
+                    using (StreamReader sr = new StreamReader(doc.MainDocumentPart.GetStream()))
+                        docText = sr.ReadToEnd();
+                    docText = TransformText(docText);
+                    using (StreamWriter sw = new StreamWriter(doc.MainDocumentPart.GetStream(FileMode.Create)))
+                        sw.Write(docText);
+                }
+
+                a = stream.ToArray();
+            }
+
+            return a;
+
+            //var doc = DocX.Load(_docxStream);
+            //doc.Sections.ForEach(x => x.SectionParagraphs.ForEach(ParseParagraph));
+            //_docxStream.Close();
+
+            //return doc;
         }
 
-        private void ParseParagraph(Paragraph paragraph)
+        private byte[] GetStreamBytes(Stream stream)
+        {
+            using (var resultStream = new MemoryStream())
+            {
+                stream.CopyTo(resultStream);
+                return resultStream.ToArray();
+            }
+        }
+
+        private string TransformText(string text) => _encryptor.Transform(text);
+
+
+        /*private void ParseParagraph(Paragraph paragraph)
         {
             var text = paragraph.Text;
             if (string.IsNullOrEmpty(text)) return;
             var newText = _encryptor.Transform(text);
+            if (paragraph.Xml.Name.LocalName == "p" && mock == null) mock = paragraph.Xml.Name;
             Regex reg = new Regex("[а-яА-ЯЁё]");
             try
             {
-                paragraph.ReplaceText(text, newText);
+                //paragraph.ReplaceText(text, newText);
+                paragraph.InsertText(newText);
+                //paragraph.RemoveText(0, paragraph.Text.Length);
+
+
+
             }
             catch (ArgumentException e)
             {
-                var formula = paragraph.Xml.FirstNode;
+                var a = paragraph.Xml.Name;
+                paragraph.Xml.Name = mock;
+                paragraph.InsertText(newText);
+                paragraph.Xml.Name = a;
+                /*var formula = paragraph.Xml.FirstNode;
                 List<string> list = new List<string>();
                 while (formula != null)
                 {
@@ -72,6 +108,6 @@ namespace Encryptor.Models
                     paragraph.ReplaceText(item, newText);
                 }
             }
-        }
+        }*/
     }
 }

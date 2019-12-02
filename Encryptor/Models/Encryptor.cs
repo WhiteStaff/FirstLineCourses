@@ -61,7 +61,7 @@ namespace Encryptor.Models
                     var newSymbolNumber =
                         (currentAlphabet.IndexOf(symbol) + currentAlphabet.Length - keySymbolNumber) %
                         currentAlphabet.Length;
-                    result.Append(Alphabet[newSymbolNumber]);
+                    result.Append(currentAlphabet[newSymbolNumber]);
                 }
                 else result.Append(symbol);
             }
