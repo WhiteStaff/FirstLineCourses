@@ -6,6 +6,8 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.UI.WebControls;
+using Encryptor.Controllers;
 
 namespace Encryptor
 {
@@ -21,10 +23,8 @@ namespace Encryptor
             {
                 // Clear the response header but do not clear errors and
                 // transfer back to requesting page to handle error
-                response.ClearHeaders();
-                
-                HttpContext.Current.Server.Transfer(
-                    "~/Errors/404.aspx");
+
+                HttpContext.Current.RewritePath("/");
             }
         }
 
