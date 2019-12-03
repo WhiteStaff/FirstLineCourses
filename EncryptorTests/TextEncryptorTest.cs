@@ -8,7 +8,7 @@ using Assert = NUnit.Framework.Assert;
 namespace EncryptorTests
 {
     [TestFixture]
-    public class TextTest
+    public class TextEncryptorTest
     {
         [TestCase("123", "фыв", "123")]
         [TestCase("asd", "фыв", "asd")]
@@ -17,7 +17,7 @@ namespace EncryptorTests
         [TestCase("Привет, эТо Text!!", "скорпион", "Бычтфы, лАа Text!!")]
         public void CorrectlyEncrypt(string text, string key, string result)
         {
-            var encrypted = new Encryptor.Models.Encryptor(key, false).Transform(text);
+            var encrypted = new Encryptor.Models.TextEncryptor(key, false).Transform(text);
             Assert.AreEqual(result, encrypted);
         }
 
@@ -28,19 +28,20 @@ namespace EncryptorTests
         [TestCase("Привет, эТо Text!!", "скорпион", "Бычтфы, лАа Text!!")]
         public void CorrectlyDecrypt(string result, string key, string text)
         {
-            var decrypted = new Encryptor.Models.Encryptor(key, true).Transform(text);
+            var decrypted = new Encryptor.Models.TextEncryptor(key, true).Transform(text);
             Assert.AreEqual(result, decrypted);
         }
 
         [TestCase("123", "фыв", "123")]
         [TestCase("asd", "фыв", "asd")]
+        [TestCase("Это тест", "фыв", "Это тест")]
         [TestCase("привет!!", "скорпион", "привет!!")]
         [TestCase("Привет!!", "скорпион", "Привет!!")]
         [TestCase("Привет, эТо Text!!", "скорпион", "Привет, эТо Text!!")]
         public void CorrectlyDecryptAndEncrypt(string text, string key, string result)
         {
-            var encryptText = new Encryptor.Models.Encryptor(key, false).Transform(text);
-            var decryptText = new Encryptor.Models.Encryptor(key, true).Transform(encryptText);
+            var encryptText = new Encryptor.Models.TextEncryptor(key, false).Transform(text);
+            var decryptText = new Encryptor.Models.TextEncryptor(key, true).Transform(encryptText);
             Assert.AreEqual(decryptText, result);
         }
 
@@ -48,7 +49,7 @@ namespace EncryptorTests
         [TestCase("asd", "фы12в", typeof(InvalidKeyException))]
         public void CorrectlyThrowExceptions(string text, string key, Type ex)
         {
-            var encryptor = new Encryptor.Models.Encryptor(key, false);
+            var encryptor = new Encryptor.Models.TextEncryptor(key, false);
             Assert.Throws(ex, ()=>encryptor.Transform(text));
         }
     }

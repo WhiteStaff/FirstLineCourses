@@ -154,7 +154,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DocxHandler.cs" />
-    <Compile Include="Models\Encryptor.cs" />
+    <Compile Include="Models\TextEncryptor.cs" />
     <Compile Include="Models\Entities\TextRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -10,14 +10,14 @@ namespace Encryptor.Models
     public class DocxHandler
     {
         private readonly Stream _docxStream;
-        private readonly Encryptor _encryptor;
+        private readonly TextEncryptor _encryptor;
         
 
 
         public DocxHandler(Stream docxStream, string key, bool isEncrypted)
         {
             _docxStream = docxStream;
-            _encryptor = new Encryptor(key, isEncrypted);
+            _encryptor = new TextEncryptor(key, isEncrypted);
         }
 
 

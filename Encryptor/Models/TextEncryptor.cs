@@ -9,14 +9,14 @@ using Encryptor.Exceptions;
 
 namespace Encryptor.Models
 {
-    public class Encryptor
+    public class TextEncryptor
     {
         private string _key;
         private readonly bool _isEncrypted;
         private const string Alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
         private static readonly string BigAlphabet = Alphabet.ToUpper();
 
-        public Encryptor(string key, bool isEncrypted)
+        public TextEncryptor(string key, bool isEncrypted)
         {
             _key = key.ToLower();
             _isEncrypted = isEncrypted;

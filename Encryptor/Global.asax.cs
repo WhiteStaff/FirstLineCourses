@@ -19,9 +19,7 @@ namespace Encryptor
             var httpException = ex as HttpException ?? ex.InnerException as HttpException;
             HttpRequest request = HttpContext.Current.Request;
             HttpResponse response = HttpContext.Current.Response;
-
-            // Clear the response header but do not clear errors and
-            // transfer back to requesting page to handle error
+            
             HttpContext.Current.Server.TransferRequest("/Home/Error");
         }
 
@@ -30,11 +28,10 @@ namespace Encryptor
             HttpRequest request = HttpContext.Current.Request;
             HttpResponse response = HttpContext.Current.Response;
 
-            if (response.StatusCode == 404)
+            if (response.StatusCode == 404 && response.SubStatusCode != 0)
             {
-                // Clear the response header but do not clear errors and transfer back to requesting page to handle error
-                response.Clear();
                 
+                response.Clear();
                 HttpContext.Current.Response.Redirect("/Home/Error");
             }
         }

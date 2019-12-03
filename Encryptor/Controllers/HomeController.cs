@@ -102,7 +102,7 @@ namespace Encryptor.Controllers
             string result;
             try
             {
-                result = new Models.Encryptor(key, isEncrypted).Transform(text);
+                result = new Models.TextEncryptor(key, isEncrypted).Transform(text);
             }
             catch (CustomEncryptException e)
             {

@@ -75,7 +75,7 @@
         </div>
         <div class="tab-pane fade @ViewBag.secondActive" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <h3>Выберите .docx файл для загрузки размером не более 300МБ</h3>
-            @using (Html.BeginForm("Upload1", "Home", FormMethod.Post, new {enctype = "multipart/form-data"}))
+            @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype = "multipart/form-data"}))
             {
                 <div class="row">
                     <div class="col-lg-4">
