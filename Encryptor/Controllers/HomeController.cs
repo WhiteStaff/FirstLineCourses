@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Encryptor.Exceptions;
 using Encryptor.Models;
 
 
@@ -97,10 +98,22 @@ namespace Encryptor.Controllers
         public ActionResult Send(string text, string key, bool isEncrypted)
         {
             Session["firstactive"] = true;
-            Session["curr"] = new TextRequest(text, key, isEncrypted,
-                new Models.Encryptor(key, isEncrypted).Transform(text));
             Session["error"] = false;
+            string result;
+            try
+            {
+                result = new Models.Encryptor(key, isEncrypted).Transform(text);
+            }
+            catch (CustomEncryptException e)
+            {
+                result = $"Ошибка: {e.Message}";
+            }
+            catch (Exception e)
+            {
+                result = "Произошла непредвиденная ошибка конвертации";
+            }
 
+            Session["curr"] = new TextRequest(text, key, isEncrypted, result);
 
             return RedirectToAction("Index");
         }

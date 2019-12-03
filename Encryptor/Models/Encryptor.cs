@@ -5,6 +5,7 @@ using System.Text;
 using System.Web;
 using System.Web.Caching;
 using System.Web.WebPages;
+using Encryptor.Exceptions;
 
 namespace Encryptor.Models
 {
@@ -26,11 +27,11 @@ namespace Encryptor.Models
             StringBuilder result = new StringBuilder();
             _key = _key.ToLower();
             int counter = 0;
-
+            if (_key == "") throw new EmptyKeyException();
             foreach (var symbol in text)
             {
                 var keySymbolNumber = Alphabet.IndexOf(_key[counter % _key.Length]);
-
+                if (keySymbolNumber == -1) throw new InvalidKeyException();
                 if (Alphabet.Contains(symbol) || BigAlphabet.Contains(symbol))
                 {
                     counter++;
@@ -50,10 +51,11 @@ namespace Encryptor.Models
             StringBuilder result = new StringBuilder();
             int counter = 0;
             _key = _key.ToLower();
+            if (_key == "") throw new EmptyKeyException();
             foreach (var symbol in text)
             {
                 var keySymbolNumber = Alphabet.IndexOf(_key[counter % _key.Length]);
-
+                if (keySymbolNumber == -1) throw new InvalidKeyException();
                 if (Alphabet.Contains(symbol) || BigAlphabet.Contains(symbol))
                 {
                     counter++;
@@ -82,7 +84,7 @@ namespace Encryptor.Models
             }
             catch (Exception e)
             {
-                return "ошибка";
+                throw;
             }
         }
     }
