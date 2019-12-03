@@ -18,20 +18,19 @@ namespace Encryptor.Models
 
         public Encryptor(string key, bool isEncrypted)
         {
-            _key = key;
+            _key = key.ToLower();
             _isEncrypted = isEncrypted;
         }
 
         private string Encrypt(string text)
         {
             StringBuilder result = new StringBuilder();
-            _key = _key.ToLower();
             int counter = 0;
             if (_key == "") throw new EmptyKeyException();
+            if (!IsKeyCorrect(_key)) throw new InvalidKeyException();
             foreach (var symbol in text)
             {
                 var keySymbolNumber = Alphabet.IndexOf(_key[counter % _key.Length]);
-                if (keySymbolNumber == -1) throw new InvalidKeyException();
                 if (Alphabet.Contains(symbol) || BigAlphabet.Contains(symbol))
                 {
                     counter++;
@@ -46,16 +45,26 @@ namespace Encryptor.Models
             return result.ToString();
         }
 
+        private bool IsKeyCorrect(string key)
+        {
+            foreach (var symbol in key)
+            {
+                var keySymbolNumber = Alphabet.IndexOf(symbol);
+                if (keySymbolNumber == -1) return false;
+            }
+
+            return true;
+        }
+
         private string Decrypt(string text)
         {
             StringBuilder result = new StringBuilder();
             int counter = 0;
-            _key = _key.ToLower();
             if (_key == "") throw new EmptyKeyException();
+            if (!IsKeyCorrect(_key)) throw new InvalidKeyException();
             foreach (var symbol in text)
             {
                 var keySymbolNumber = Alphabet.IndexOf(_key[counter % _key.Length]);
-                if (keySymbolNumber == -1) throw new InvalidKeyException();
                 if (Alphabet.Contains(symbol) || BigAlphabet.Contains(symbol))
                 {
                     counter++;
