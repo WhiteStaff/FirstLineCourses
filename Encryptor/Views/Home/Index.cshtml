@@ -9,7 +9,7 @@
 <script type="text/javascript">
     function validateFileSize() {
         var uploadControl = document.getElementById('file');
-        if (uploadControl.files[0].size > 1048576) {
+        if (uploadControl.files[0].size > 314572800‬) {
             document.getElementById('dvMsg').style.display = "block";
             document.getElementById('uploadBtn').disabled = true;
             return false;
@@ -81,7 +81,7 @@
                             
                             <span id="dvMsg" class="field-validation-error" id="errorMessagefile" style="display: none" >Максимальный размер 300Мб</span>
                         </div>
-                        <button type="submit" class="btn btn-secondary" id="uploadBtn">Загрузить</button>
+                        <button type="submit" class="btn btn-secondary"  style="margin-top: 5px" id="uploadBtn">Загрузить</button>
                     </div>
                     <div class="col-lg-4">
                         <label>Ключ</label>
