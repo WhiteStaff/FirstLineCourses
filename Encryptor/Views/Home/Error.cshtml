@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Error";
+}
+<div class="text-center">
+    <h2>Был выполнен недопустимый запрос!</h2>
+    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+    {
+        <button class="btn btn-secondary">Вернуться на главную страницу</button>
+    }
+</div>
+

@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Drawing;
-using System.IO;
-using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
-using System.Xml.Serialization;
-using DocumentFormat.OpenXml.Packaging;
 using Encryptor.Models;
-using Syncfusion.DocIO;
-using Syncfusion.DocIO.DLS;
-using Xceed.Words.NET;
+
 
 namespace Encryptor.Controllers
 {
@@ -26,6 +18,11 @@ namespace Encryptor.Controllers
         }
 
         public ActionResult Contact()
+        {
+            return View();
+        }
+
+        public ActionResult Error()
         {
             return View();
         }
@@ -61,38 +58,37 @@ namespace Encryptor.Controllers
 
             return View();
         }
-        
+
         [HttpPost]
-        
         public ActionResult Upload(HttpPostedFileBase upload, string key, bool isEncrypted, string name)
         {
             Session["firstactive"] = false;
+            Session["curr"] = null;
+
 
             try
             {
                 Session["error"] = false;
-                if (upload != null)
+                if (upload == null) return RedirectToAction("Index");
+                byte[] outputBytes;
+
+                using (var uploadInputStream = upload.InputStream)
                 {
-                    byte[] outputBytes;
-                    using (var newFileStream = new MemoryStream())
-                    {
-                        using (var uploadInputStream = upload.InputStream)
-                        {
-                            outputBytes = new DocxHandler(uploadInputStream, key, isEncrypted).Parse();
-                        }
-
-                        Session["firstactive"] = false;
-                        if (string.IsNullOrEmpty(name)) name = upload.FileName.Replace(".docx", "");
-                    }
-
-                    return File(outputBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                        $"{name}.docx");
+                    outputBytes = new DocxHandler(uploadInputStream, key, isEncrypted).Parse();
                 }
+
+                if (string.IsNullOrEmpty(name)) name = upload.FileName.Replace(".docx", "");
+
+
+                return File(outputBytes,
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    $"{name}.docx");
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 Session["error"] = true;
             }
+
 
             return RedirectToAction("Index");
         }
@@ -100,10 +96,12 @@ namespace Encryptor.Controllers
         [HttpPost]
         public ActionResult Send(string text, string key, bool isEncrypted)
         {
+            Session["firstactive"] = true;
             Session["curr"] = new TextRequest(text, key, isEncrypted,
                 new Models.Encryptor(key, isEncrypted).Transform(text));
             Session["error"] = false;
-            Session["firstactive"] = true;
+
+
             return RedirectToAction("Index");
         }
     }
