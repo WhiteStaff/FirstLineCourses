@@ -154,6 +154,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DocxCreator.cs" />
     <Compile Include="Models\DocxHandler.cs" />
     <Compile Include="Models\TextEncryptor.cs" />
     <Compile Include="Models\Entities\TextRequest.cs" />
