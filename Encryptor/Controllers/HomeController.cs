@@ -41,6 +41,12 @@ namespace Encryptor.Controllers
             ViewBag.firstActive = "";
             ViewBag.secondActive = "";
             bool isFirst;
+            bool saveActive;
+
+            if (Session["save"] == null) saveActive = false;
+            else saveActive = (bool) Session["save"];
+
+            ViewBag.Save = saveActive;
 
             if (Session["firstactive"] == null) isFirst = true;
             else isFirst = (bool) Session["firstactive"];
@@ -48,6 +54,7 @@ namespace Encryptor.Controllers
             Session["curr"] = null;
             Session["error"] = null;
             Session["firstactive"] = null;
+            Session["save"] = null;
 
             if (isFirst)
             {
@@ -95,25 +102,46 @@ namespace Encryptor.Controllers
         }
 
         [HttpPost]
-        public ActionResult Send(string text, string key, bool isEncrypted)
+        public ActionResult Send(string text, string key, bool isEncrypted, string action, string fileName)
         {
             Session["firstactive"] = true;
             Session["error"] = false;
-            string result;
-            try
+            
+            if (action == "Рассчитать")
             {
-                result = new Models.TextEncryptor(key, isEncrypted).Transform(text);
+                string result;
+                try
+                {
+                    result = new Models.TextEncryptor(key, isEncrypted).Transform(text);
+                    Session["save"] = true;
+
+                }
+                catch (CustomEncryptException e)
+                {
+                    Session["save"] = false;
+                    result = $"Ошибка: {e.Message}";
+                }
+                catch (Exception)
+                {
+                    Session["save"] = false;
+                    result = "Произошла непредвиденная ошибка конвертации";
+                }
+                Session["curr"] = new TextRequest(text, key, isEncrypted, result);
+                Session["result"] = result;
             }
-            catch (CustomEncryptException e)
+            else
             {
-                result = $"Ошибка: {e.Message}";
-            }
-            catch (Exception e)
-            {
-                result = "Произошла непредвиденная ошибка конвертации";
+                string resultText;
+                resultText = Session["result"] == null ? "" : Session["result"].ToString();
+                var bytes = new DocxCreator(resultText).Create();
+                if (fileName == "") fileName = "NoName";
+                Session["save"] = false;
+                return File(bytes,
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    $"{fileName}.docx");
             }
 
-            Session["curr"] = new TextRequest(text, key, isEncrypted, result);
+            
 
             return RedirectToAction("Index");
         }

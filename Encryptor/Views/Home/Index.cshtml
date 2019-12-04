@@ -59,7 +59,7 @@
                             @if (ViewBag.Save)
                             {
                             <div class="form-inline">
-                                <input name="name" width="300px" placeholder="Название файла" required="" class="form-control" />
+                                <input name="fileName" width="300px" placeholder="Название файла" required="" class="form-control" />
                                 <input type="submit" class="btn  btn-secondary" value="Сохранить результат" name="action" />
                             </div>
                             }
@@ -71,7 +71,7 @@
                     </div>
                     <div class="row" style="margin-top: 5px">
                         <label>Результат</label>
-                        <div name="result" style="min-height: 300px">
+                        <div  style="min-height: 300px">
                             <span style="white-space: pre-line">@ViewBag.result</span>
                         </div>
                     </div>
