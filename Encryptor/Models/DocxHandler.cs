@@ -1,9 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.CodeDom;
+using System.IO;
 using System.Linq;
 using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Drawing.ChartDrawing;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Math;
 using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.Ajax.Utilities;
 using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
 using Run = DocumentFormat.OpenXml.Wordprocessing.Run;
@@ -36,7 +40,7 @@ namespace Encryptor.Models
                 using (WordprocessingDocument doc =
                     WordprocessingDocument.Open(stream, true))
                 {
-                   doc.MainDocumentPart.Document.Body.Elements<Paragraph>().ForEach(Check);
+                    doc.MainDocumentPart.Document.Body.Descendants().ForEach(x => x.Elements<OpenXmlLeafTextElement>().ForEach(Transform));
                 }
 
                 resultArray = stream.ToArray();
@@ -45,26 +49,9 @@ namespace Encryptor.Models
             return resultArray;
         }
 
-        private void Check(Paragraph element)
+        private void Transform(OpenXmlLeafTextElement element)
         {
-            var c = element;
-            var x = c.Elements().First().Elements().First().Elements().First().Elements<DocumentFormat.OpenXml.Math.Text>();
-            foreach (var item in x)
-            {
-                item.Text = "1212";
-                var w = item;
-                var z = w;
-            }
-            var t = x;
-            element.Elements().ForEach(q=>q.Elements<OfficeMath>().ForEach(y=>y.Elements<Run>().ForEach(u=>u.Elements<Text>().ForEach(AAA))));
-            //var t = z;
-            //x.Elements<Run>().ForEach(c=>c.Elements<Text>().ForEach(q=>AAA(q, x)));
-        }
-
-        private void AAA(Text text)
-        {
-            text.Text = "1212";
-            
+            element.Text = _encryptor.Transform(element.Text);
         }
 
         private byte[] GetStreamBytes(Stream stream)
@@ -76,7 +63,7 @@ namespace Encryptor.Models
             }
         }
 
-        private string TransformText(string text) => _encryptor.Transform(text);
+        //private string TransformText(string text) => _encryptor.Transform(text);
         
     }
 }
