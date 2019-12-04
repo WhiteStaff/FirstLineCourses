@@ -22,7 +22,7 @@
         return true;
     }
     }
-    
+
 </script>
 <div class="row">
     <ul class="nav nav-tabs  " id="myTab" role="tablist">
@@ -32,26 +32,22 @@
         <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Файл</a>
         </li>
-
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade @ViewBag.firstActive" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="container">
-
                 @using (Html.BeginForm("Send", "Home", FormMethod.Post))
                 {
                     <div class="row" style="margin-top: 5px">
-
                         <label>Текст</label>
                         <textarea name="text" class="form-control rounded-0 mb-3" id="exampleFormControlTextarea1" rows="10" maxlength="20000" required>@ViewBag.text</textarea>
-
                     </div>
-                    <div class="row" style="margin-top: 5px">
-                        <div class="col-lg-6">
+                    <div class="row" style="margin-top: 5px; ">
+                        <div class="col-lg-4" style="padding-left: 0!important">
                             <label>Ключ</label>
                             <input name="key" placeholder="Введите ключ" pattern="^[А-Яа-яЁё]+$" class="form-control" required title="Допустимы только русские буквы" value="@ViewBag.key"/>
                         </div>
-                        <div class="col-lg-3" style="height: 100%">
+                        <div class="col-lg-2" style="height: 100%">
                             <div class="radio">
                                 <label><input name="isEncrypted" value="true" type="radio" checked="checked">Расшифровать</label>
                             </div>
@@ -59,9 +55,18 @@
                                 <label><input name="isEncrypted" value="false" type="radio">Зашифровать</label>
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-4" style="padding-right: 0">
+                            @if (ViewBag.Save)
+                            {
+                            <div class="form-inline">
+                                <input name="name" width="300px" placeholder="Название файла" required="" class="form-control" />
+                                <input type="submit" class="btn  btn-secondary" value="Сохранить результат" name="action" />
+                            </div>
+                            }
+                        </div>
+                        <div class="col-lg-2 text-right " style="padding-right: 0!important">
                             <input type="submit" class="btn  btn-secondary" value="Рассчитать" name="action"/>
-                            <input type="submit" class="btn  btn-secondary" value="Сохранить" name="action"/>
+
                         </div>
                     </div>
                     <div class="row" style="margin-top: 5px">
@@ -72,7 +77,6 @@
                     </div>
                 }
             </div>
-
         </div>
         <div class="tab-pane fade @ViewBag.secondActive" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <h3>Выберите .docx файл для загрузки размером не более 300МБ</h3>
@@ -82,7 +86,6 @@
                     <div class="col-lg-4">
                         <div>
                             <input type="file" name="upload" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document" onchange="validateFileSize();" id="file"/>
-
                             <span id="dvMsg" class="field-validation-error" id="errorMessagefile" style="display: none">Максимальный размер 300Мб</span>
                         </div>
                         <button type="submit" class="btn btn-secondary" style="margin-top: 5px" id="uploadBtn">Загрузить</button>
@@ -112,8 +115,6 @@
                 }
             }
         </div>
-
     </div>
-
 
 </div>
