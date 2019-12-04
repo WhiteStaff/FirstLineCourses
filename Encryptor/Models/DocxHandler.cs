@@ -1,17 +1,8 @@
-﻿using System;
-using System.CodeDom;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Drawing.ChartDrawing;
-using DocumentFormat.OpenXml.Drawing.Charts;
-using DocumentFormat.OpenXml.Math;
 using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.Ajax.Utilities;
-using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
-using Run = DocumentFormat.OpenXml.Wordprocessing.Run;
-using Text = DocumentFormat.OpenXml.Wordprocessing.Text;
+
 
 namespace Encryptor.Models
 {
@@ -19,7 +10,6 @@ namespace Encryptor.Models
     {
         private readonly Stream _docxStream;
         private readonly TextEncryptor _encryptor;
-        
 
 
         public DocxHandler(Stream docxStream, string key, bool isEncrypted)
@@ -40,7 +30,8 @@ namespace Encryptor.Models
                 using (WordprocessingDocument doc =
                     WordprocessingDocument.Open(stream, true))
                 {
-                    doc.MainDocumentPart.Document.Body.Descendants().ForEach(x => x.Elements<OpenXmlLeafTextElement>().ForEach(Transform));
+                    doc.MainDocumentPart.Document.Body.Descendants()
+                        .ForEach(x => x.Elements<OpenXmlLeafTextElement>().ForEach(Transform));
                 }
 
                 resultArray = stream.ToArray();
@@ -62,8 +53,5 @@ namespace Encryptor.Models
                 return resultStream.ToArray();
             }
         }
-
-        //private string TransformText(string text) => _encryptor.Transform(text);
-        
     }
 }
