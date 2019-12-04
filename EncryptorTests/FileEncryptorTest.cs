@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Encryptor.Models;
 using NUnit.Framework;
 
@@ -12,24 +13,21 @@ namespace EncryptorTests
         [TestCase("Files/Encrypted/", "Result_v5.docx", TestName = "Документ с обычным текстом")]
         [TestCase("Files/Encrypted/", "dgfsdfg.docx", TestName = "Документ с формулами")]
         [TestCase("Files/Encrypted/", "lab_3.docx", TestName = "Документ с таблицей")]
-        public void CorrectlyEncryptAndDecrypt(string path, string fileName)
+        public void CorrectlyEncryptAndDecryptWithStructureAndStylesSaving(string path, string fileName)
         {
             string solution_dir = Path.GetDirectoryName(Path.GetDirectoryName(
                 TestContext.CurrentContext.TestDirectory));
             var allPath = $"{solution_dir}/{path}{fileName}";
             var newPath = $"{solution_dir}/Files/Encrypted/Result_v5_1.docx";
-            string originalText = "";
-            string docText;
+            Body originalText;
+            Body docText;
             byte[] result2;
             byte[] result1;
 
             using (WordprocessingDocument doc =
                 WordprocessingDocument.Open(allPath, true))
             {
-                var c = doc;
-                var c1 = c.MainDocumentPart;
-                var c2 = c1.Document;
-                originalText = doc.MainDocumentPart.Document.InnerText;
+                originalText = doc.MainDocumentPart.Document.Body;
             }
 
 
@@ -49,7 +47,7 @@ namespace EncryptorTests
             using (WordprocessingDocument doc =
                 WordprocessingDocument.Open(newPath, true))
             {
-                docText = doc.MainDocumentPart.Document.InnerText;
+                docText = doc.MainDocumentPart.Document.Body;
             }
 
             Assert.AreEqual(docText, originalText);
