@@ -149,6 +149,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Exceptions\CustomEncryptException.cs" />
     <Compile Include="Exceptions\EmptyKeyException.cs" />
+    <Compile Include="Exceptions\EmptyTextException.cs" />
     <Compile Include="Exceptions\InvalidKeyException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

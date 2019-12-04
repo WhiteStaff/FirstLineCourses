@@ -11,6 +11,7 @@ namespace EncryptorTests
     {
         [TestCase("Files/Encrypted/", "Result_v5.docx", TestName = "Документ с обычным текстом")]
         [TestCase("Files/Encrypted/", "dgfsdfg.docx", TestName = "Документ с формулами")]
+        [TestCase("Files/Encrypted/", "lab_3.docx", TestName = "Документ с таблицей")]
         public void CorrectlyEncryptAndDecrypt(string path, string fileName)
         {
             string solution_dir = Path.GetDirectoryName(Path.GetDirectoryName(

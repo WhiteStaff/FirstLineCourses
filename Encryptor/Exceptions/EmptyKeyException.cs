@@ -7,7 +7,7 @@ namespace Encryptor.Exceptions
 {
     public class EmptyKeyException : CustomEncryptException
     {
-        public EmptyKeyException():base("Введен пустой ключ")
+        public EmptyKeyException():base("Ключ не может быть пустым")
         { }
     }
 }

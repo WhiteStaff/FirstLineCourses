@@ -89,6 +89,7 @@ namespace Encryptor.Models
         {
             try
             {
+                if (text == "") throw new EmptyTextException();
                 return _isEncrypted ? Decrypt(text) : Encrypt(text);
             }
             catch (Exception e)
