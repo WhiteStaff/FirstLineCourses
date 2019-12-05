@@ -15,17 +15,17 @@ namespace Encryptor.Controllers
         {
             ViewBag.Message = "Описание приложения";
 
-            return View();
+            return View("About");
         }
 
         public ActionResult Contact()
         {
-            return View();
+            return View("Contact");
         }
 
         public ActionResult Error()
         {
-            return View();
+            return View("Error");
         }
 
         [HttpGet]
@@ -64,7 +64,7 @@ namespace Encryptor.Controllers
                 ViewBag.secondActive = "active in";
 
 
-            return View();
+            return View("Index");
         }
 
         [HttpPost]
