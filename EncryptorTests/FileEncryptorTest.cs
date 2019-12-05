@@ -10,9 +10,9 @@ namespace EncryptorTests
     [TestFixture]
     class FileEncryptorTest
     {
-        [TestCase("Files/Encrypted/", "Result_v5.docx", TestName = "Документ с обычным текстом")]
-        [TestCase("Files/Encrypted/", "formula.docx", TestName = "Документ с формулами")]
-        [TestCase("Files/Encrypted/", "tables.docx", TestName = "Документ с таблицей")]
+        [TestCase("Files/", "Result_v5.docx", TestName = "Документ с обычным текстом")]
+        [TestCase("Files/", "formula.docx", TestName = "Документ с формулами")]
+        [TestCase("Files/", "tables.docx", TestName = "Документ с таблицей")]
         public void EncryptAndDecryptWithStructureAndStylesSaving(string path, string fileName)
         {
             string solution_dir = Path.GetDirectoryName(Path.GetDirectoryName(

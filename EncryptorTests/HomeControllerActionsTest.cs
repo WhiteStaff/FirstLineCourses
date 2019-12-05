@@ -97,7 +97,7 @@ namespace EncryptorTests
         {
             string solution_dir = Path.GetDirectoryName(Path.GetDirectoryName(
                 TestContext.CurrentContext.TestDirectory));
-            var filePath = $"{solution_dir}/Files/Encrypted/Result_v5.docx";
+            var filePath = $"{solution_dir}/Files/Result_v5.docx";
 
             using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
             {
@@ -118,7 +118,7 @@ namespace EncryptorTests
         {
             string solution_dir = Path.GetDirectoryName(Path.GetDirectoryName(
                 TestContext.CurrentContext.TestDirectory));
-            var filePath = $"{solution_dir}/Files/Encrypted/Result_v5.docx";
+            var filePath = $"{solution_dir}/Files/Result_v5.docx";
 
             using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
             {
