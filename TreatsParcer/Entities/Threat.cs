@@ -66,6 +66,11 @@ namespace ThreatsParser.Entities
             return x.ToString();
         }
 
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
+
         public override bool Equals(object obj)
         {
             if (!(obj is Threat threat)) return false;
