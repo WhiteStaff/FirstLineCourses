@@ -92,7 +92,7 @@ namespace Encryptor.Controllers
                     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                     $"{name}.docx");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 Session["error"] = true;
             }
@@ -102,7 +102,7 @@ namespace Encryptor.Controllers
         }
 
         [HttpPost]
-        public ActionResult Send(string text, string key, bool isEncrypted, string action, string fileName)
+        public ActionResult Send(string text, string key, bool isEncrypted, string action, string fileName="")
         {
             Session["firstactive"] = true;
             Session["error"] = false;
