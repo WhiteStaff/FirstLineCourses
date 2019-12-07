@@ -52,5 +52,21 @@ namespace EncryptorTests
 
             Assert.AreEqual(docText, originalText);
         }
+        [Test]
+        public void ThrowsExceptionWithCorruptedFile()
+        {
+            Assert.Throws(typeof(FileFormatException), () =>
+                {
+                    string solution_dir = Path.GetDirectoryName(Path.GetDirectoryName(
+                        TestContext.CurrentContext.TestDirectory));
+                    var allPath = $"{solution_dir}/Files/Corrupted.docx";
+                    using (WordprocessingDocument doc =
+                        WordprocessingDocument.Open(allPath, true))
+                    {
+                        var originalText = doc.MainDocumentPart.Document.Body;
+                    }
+                }
+            );
+        }
     }
 }

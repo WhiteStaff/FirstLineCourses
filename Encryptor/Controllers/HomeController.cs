@@ -131,18 +131,26 @@ namespace Encryptor.Controllers
             }
             else
             {
-                string resultText;
-                resultText = Session["result"] == null ? "" : Session["result"].ToString();
-                var bytes = new DocxCreator(resultText).Create();
-                if (fileName == "") fileName = "NoName";
-                Session["save"] = false;
-                return File(bytes,
-                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                    $"{fileName}.docx");
+                string result;
+                try
+                {
+                    string resultText;
+                    resultText = Session["result"] == null ? "" : Session["result"].ToString();
+                    var bytes = new DocxCreator(resultText).Create();
+                    if (fileName == "") fileName = "NoName";
+                    Session["save"] = false;
+                    return File(bytes,
+                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                        $"{fileName}.docx");
+                }
+                catch (Exception e)
+                {
+                    result = "Произошла непредвиденная ошибка записи в файл";
+                    Session["curr"] = new TextRequest(text, key, isEncrypted, result);
+                }
+                
+                
             }
-
-            
-
             return RedirectToAction("Index");
         }
     }
