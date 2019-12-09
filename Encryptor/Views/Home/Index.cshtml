@@ -42,8 +42,8 @@
                         <label>Текст</label>
                         <textarea name="text" class="form-control rounded-0 mb-3" id="exampleFormControlTextarea1" rows="10" maxlength="20000" required>@ViewBag.text</textarea>
                     </div>
-                    <div class="row" style="margin-top: 5px; ">
-                        <div class="col-lg-4" style="padding-left: 0!important">
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-lg-4" style="padding-left: 0 !important">
                             <label>Ключ</label>
                             <input name="key" placeholder="Введите ключ" pattern="^[А-Яа-яЁё]+$" class="form-control" required title="Допустимы только русские буквы" value="@ViewBag.key"/>
                         </div>
@@ -59,19 +59,21 @@
                             @if (ViewBag.Save)
                             {
                             <div class="form-inline">
-                                <input name="fileName" width="300px" placeholder="Название файла" required="" class="form-control" />
+
+                                <input name="fileName" width="300px" placeholder="Название файла" class="form-control" />
                                 <input type="submit" class="btn  btn-secondary" value="Сохранить результат" name="action" />
+                                <span>По умолчанию название NoName</span>
                             </div>
                             }
                         </div>
-                        <div class="col-lg-2 text-right " style="padding-right: 0!important">
+                        <div class="col-lg-2 text-right " style="padding-right: 0 !important">
                             <input type="submit" class="btn  btn-secondary" value="Рассчитать" name="action"/>
 
                         </div>
                     </div>
                     <div class="row" style="margin-top: 5px">
                         <label>Результат</label>
-                        <div  style="min-height: 300px">
+                        <div style="min-height: 300px">
                             <span style="white-space: pre-line">@ViewBag.result</span>
                         </div>
                     </div>
@@ -86,7 +88,7 @@
                     <div class="col-lg-4">
                         <div>
                             <input type="file" name="upload" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document" onchange="validateFileSize();" id="file"/>
-                            <span id="dvMsg" class="field-validation-error" id="errorMessagefile" style="display: none">Максимальный размер 300Мб</span>
+                            <span id="dvMsg" class="field-validation-error" id="errorMessagefile" style="display: none">Максимальный размер 100Мб</span>
                         </div>
                         <button type="submit" class="btn btn-secondary" style="margin-top: 5px" id="uploadBtn">Загрузить</button>
                     </div>
