@@ -6,24 +6,22 @@
 <div class="jumbotron">
     <h1>Шифратор вижинера</h1>
 </div>
+
 <script type="text/javascript">
     function validateFileSize() {
         var uploadControl = document.getElementById('file');
-        if (uploadControl.files[0].size > 314572800‬)
-    {
-        document.getElementById('dvMsg').style.display = "block";
-        document.getElementById('uploadBtn').disabled = true;
-        return false;
+        if (uploadControl.files[0].size > 104857600) {
+            document.getElementById('dvMsg').style.display = "block";
+            document.getElementById('uploadBtn').disabled = true;
+            return false;
+        } else {
+            document.getElementById('dvMsg').style.display = "none";
+            document.getElementById('uploadBtn').disabled = false;
+            return true;
+        }
     }
-    else
-    {
-        document.getElementById('dvMsg').style.display = "none";
-        document.getElementById('uploadBtn').disabled = false;
-        return true;
-    }
-    }
-
 </script>
+
 <div class="row">
     <ul class="nav nav-tabs  " id="myTab" role="tablist">
         <li class="nav-item">
@@ -58,12 +56,12 @@
                         <div class="col-lg-4" style="padding-right: 0">
                             @if (ViewBag.Save)
                             {
-                            <div class="form-inline">
+                                <div class="form-inline">
 
-                                <input name="fileName" width="300px" placeholder="Название файла" class="form-control" />
-                                <input type="submit" class="btn  btn-secondary" value="Сохранить результат" name="action" />
-                                <span>По умолчанию название NoName</span>
-                            </div>
+                                    <input name="fileName" width="300px" placeholder="Название файла" class="form-control"/>
+                                    <input type="submit" class="btn  btn-secondary" value="Сохранить результат" name="action"/>
+                                    <span>По умолчанию название NoName</span>
+                                </div>
                             }
                         </div>
                         <div class="col-lg-2 text-right " style="padding-right: 0 !important">
@@ -81,20 +79,20 @@
             </div>
         </div>
         <div class="tab-pane fade @ViewBag.secondActive" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <h3>Выберите .docx файл для загрузки размером не более 300МБ</h3>
+            <h3>Выберите .docx файл для загрузки, размером не более 100МБ.</h3>
             @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype = "multipart/form-data"}))
             {
                 <div class="row">
                     <div class="col-lg-4">
                         <div>
                             <input type="file" name="upload" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document" onchange="validateFileSize();" id="file"/>
-                            <span id="dvMsg" class="field-validation-error" id="errorMessagefile" style="display: none">Максимальный размер 100Мб</span>
+                            <span id="dvMsg" class="field-validation-error" id="errorMessagefile" style="display: none; color: red">Максимальный размер 100Мб</span>
                         </div>
                         <button type="submit" class="btn btn-secondary" style="margin-top: 5px" id="uploadBtn">Загрузить</button>
                     </div>
                     <div class="col-lg-4">
                         <label>Ключ</label>
-                        <input name="key" placeholder="Введите ключ" pattern="^[А-Яа-яЁё]+$" class="form-control" required title="Допустимы только русские буквы" value="@ViewBag.key"/>
+                        <input name="fileKey" placeholder="Введите ключ" pattern="^[А-Яа-яЁё]+$" class="form-control" required title="Допустимы только русские буквы" value="@ViewBag.fileKey"/>
                         <div class="radio">
                             <label><input name="isEncrypted" value="true" type="radio" checked="checked">Расшифровать</label>
                         </div>

@@ -34,6 +34,9 @@ namespace Encryptor.Controllers
             ViewBag.text = (Session["curr"] as TextRequest)?.Text ?? "";
             ViewBag.key = (Session["curr"] as TextRequest)?.Key ?? "";
             ViewBag.result = (Session["curr"] as TextRequest)?.Result ?? "";
+            ViewBag.fileKey = Session["fileKey"] ?? "";
+
+
 
             if (Session["error"] == null) Session["error"] = false;
 
@@ -55,7 +58,7 @@ namespace Encryptor.Controllers
             Session["error"] = null;
             Session["firstactive"] = null;
             Session["save"] = null;
-
+            Session["fileKey"] = null;
             if (isFirst)
             {
                 ViewBag.firstActive = "active in";
@@ -68,11 +71,11 @@ namespace Encryptor.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase upload, string key, bool isEncrypted, string name)
+        public ActionResult Upload(HttpPostedFileBase upload, string fileKey, bool isEncrypted, string name)
         {
             Session["firstactive"] = false;
             Session["curr"] = null;
-
+            Session["fileKey"] = fileKey;
 
             try
             {
@@ -82,7 +85,7 @@ namespace Encryptor.Controllers
 
                 using (var uploadInputStream = upload.InputStream)
                 {
-                    outputBytes = new DocxHandler(uploadInputStream, key, isEncrypted).Parse();
+                    outputBytes = new DocxHandler(uploadInputStream, fileKey, isEncrypted).Parse();
                 }
 
                 if (string.IsNullOrEmpty(name)) name = upload.FileName.Replace(".docx", "");
