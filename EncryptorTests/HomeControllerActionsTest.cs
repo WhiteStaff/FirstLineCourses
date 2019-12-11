@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Encryptor.Controllers;
 using Encryptor.Models;
 using Moq;

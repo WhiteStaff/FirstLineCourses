@@ -5,7 +5,6 @@ using System.Web;
 
 namespace Encryptor.Models
 {
-    [Serializable]
     public class TextRequest
     {
         public string Text { get;}

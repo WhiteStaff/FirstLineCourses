@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Packaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using Encryptor.Models;
 using NUnit.Framework;
-using NUnit.Framework.Internal.Filters;
-
 
 namespace EncryptorTests
 {

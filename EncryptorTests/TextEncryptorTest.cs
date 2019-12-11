@@ -1,9 +1,6 @@
 ﻿using System;
 using Encryptor.Exceptions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Win32;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using Assert = NUnit.Framework.Assert;
 
 namespace EncryptorTests
