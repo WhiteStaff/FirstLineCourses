@@ -70,6 +70,7 @@
     <Compile Include="Entities\ThreatsChanges.cs" />
     <Compile Include="Exceptions\NoConnectionException.cs" />
     <Compile Include="Exceptions\NoFileException.cs" />
+    <Compile Include="FileActions\FileLoader.cs" />
     <Compile Include="FileActions\FileParser.cs" />
     <Compile Include="MenuActions\About.cs" />
     <Compile Include="MenuActions\Help.cs" />

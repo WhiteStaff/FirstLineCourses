@@ -14,17 +14,7 @@ namespace ThreatsParser.FileActions
     {
         private static bool AreFilesEqual()
         {
-            try
-            {
-                using (var client = new WebClient())
-                {
-                    client.DownloadFile("https://bdu.fstec.ru/documents/files/thrlist.xlsx", "newdata.xlsx");
-                }
-            }
-            catch (Exception e)
-            {
-                throw new NoConnectionException();
-            }
+            FileLoader.Download("newdata.xlsx");
 
             byte[] firstHash;
             byte[] secondHash;

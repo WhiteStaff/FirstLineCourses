@@ -12,21 +12,6 @@ namespace ThreatsParser.FileActions
 {
     static class FileCreator
     {
-        private static void Download()
-        {
-            try
-            {
-                using (var client = new WebClient())
-                {
-                    client.DownloadFile("https://bdu.fstec.ru/documents/files/thrlist.xlsx", "data.xlsx");
-                }
-            }
-            catch (Exception e)
-            {
-                throw new NoConnectionException();
-            }
-            
-        }
 
         private static void CheckFile()
         {
@@ -35,7 +20,7 @@ namespace ThreatsParser.FileActions
                 if (File.Exists("data.xlsx")) return;
                 if (MessageBox.Show("Файл отсутствует, скачать?", "Ошибка файла", MessageBoxButton.YesNo,
                         MessageBoxImage.Question) == MessageBoxResult.Yes)
-                    Download();
+                    FileLoader.Download("data.xlsx");
                 else throw  new NoFileException();
             }
             catch (Exception e)
@@ -60,7 +45,7 @@ namespace ThreatsParser.FileActions
                     if (MessageBox.Show("Файл имеет неверный формат, возможно он поврежден\nСкачать файл заново?",
                             "Ошибка", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
                     {
-                        Download();
+                        FileLoader.Download("data.xlsx");
                         excelData = FileParser.Parse("data.xlsx");
                     }
                     else
