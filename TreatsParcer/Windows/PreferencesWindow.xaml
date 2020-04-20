@@ -1,0 +1,156 @@
+﻿<Window x:Class="ThreatsParser.Windows.PreferencesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ThreatsParser.Windows"
+        mc:Ignorable="d"
+        Title="Технические и эксплуатационные характеристики системы" Height="807.133" Width="700" MinWidth="700" MinHeight="710" MaxWidth="700" MaxHeight="900">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Left" Margin="10,0,0,0" Width="680">
+        <Grid Width="659">
+            <TextBlock Height="22" VerticalAlignment="Top">
+                1. По территориальному размещению:
+            </TextBlock>
+            <StackPanel x:Name="stackPanelTerritorial" Margin="0,27,0,0" Height="82" VerticalAlignment="Top">
+                <RadioButton GroupName="Territorial" IsChecked="True"  Name="s0s0">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+                        Распределенная ИСПДн, которая охватывает несколько областей, краев, округов или государство в целом;
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="Territorial" Name="s0s1">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+                        Городская ИСПДн, охватывающая не более одного населенного пункта (города, поселка);
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="Territorial" Name="s0s2">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+                        Корпоративная распределенная ИСПДн, охватывающая многие подразделения одной организации;
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="Territorial" Name="s0s3">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+                        Локальная (кампусная) ИСПДн, развернутая в пределах нескольких близко расположенных зданий;
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="Territorial" Name="s0s4">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+                        Локальная ИСПДн, развернутая в пределах одного здания
+                    </TextBox>
+                </RadioButton>
+            </StackPanel>
+            <TextBlock Height="22" VerticalAlignment="Top" Margin="0,114,0,0">
+                2. По наличию соединения с сетями общего пользования:
+            </TextBlock>
+            <StackPanel x:Name="stackPanelNetwork" Margin="0,136,0,0" Height="49" VerticalAlignment="Top">
+                <RadioButton GroupName="Network" IsChecked="True" Name="s1s0">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+                        ИСПДн, имеющая многоточечный выход в сеть общего пользования;
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="Network" Name="s1s1">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+                        ИСПДн, имеющая одноточечный выход в сеть общего пользования;
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="Network" Name="s1s2">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+                        ИСПДн, физически отделенная от сети общего пользования
+                    </TextBox>
+                </RadioButton>
+            </StackPanel>
+            <TextBlock Height="22" VerticalAlignment="Top" Margin="0,190,0,0">
+                3. По встроенным (легальным) операциям с записями баз персональных данных:
+            </TextBlock>
+            <StackPanel x:Name="stackPanelPDAction" Margin="0,217,0,0" Height="48" VerticalAlignment="Top">
+                <RadioButton GroupName="PDAction" IsChecked="True" Name="s2s0">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+                        Чтение, поиск;
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="PDAction" Name="s2s1">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True"  BorderThickness="0">
+                        Запись, удаление, сортировка;
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="PDAction" Name="s2s2">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+                        Модификация, передача
+                    </TextBox>
+                </RadioButton>
+            </StackPanel>
+            <TextBlock Height="22" VerticalAlignment="Top" Margin="0,270,0,0">
+                4. По разграничению доступа к персональным данным:
+            </TextBlock>
+            <StackPanel x:Name="stackPanelSplit" Margin="0,297,0,0" Height="67" VerticalAlignment="Top">
+                <RadioButton GroupName="Split" IsChecked="True" Height="33" Margin="0,0,19,0" Name="s3s0">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0" Height="34" Width="619">
+                        ИСПДн, к которой имеют доступ определенные перечнем сотрудники организации, являющейся владельцем ИСПДн, либо субъект ПДн;
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="Split" Name="s3s1">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+                        ИСПДн, к которой имеют доступ все сотрудники организации, являющейся владельцем ИСПДн;
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="Split" Name="s3s2">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0" Text="ИСПДн с открытым доступом"/>
+                </RadioButton>
+            </StackPanel>
+            <TextBlock Height="22" VerticalAlignment="Top" Margin="0,369,0,0">
+                5. По наличию соединений с другими базами ПДн иных ИСПДн:
+            </TextBlock>
+            <StackPanel x:Name="stackPanelDBConn" Margin="0,396,0,0" Height="54" VerticalAlignment="Top">
+                <RadioButton GroupName="DBConn" IsChecked="True" Name="s4s0">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0" Height="34" Width="624">
+                        Интегрированная ИСПДн (организация использует несколько баз ПДн ИСПДн, при этом организация не является владельцем всех используемых баз ПДн);
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="DBConn" Name="s4s1">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0" Text="ИСПДн, в которой используется одна база ПДн, принадлежащая организации – владельцу данной ИСПДн"/>
+                </RadioButton>
+            </StackPanel>
+            <TextBlock Height="22" VerticalAlignment="Top" Margin="10,455,-10,0">
+                6. По уровню обобщения (обезличивания) ПДн:
+            </TextBlock>
+            <StackPanel x:Name="stackPanelAnonLevel" Margin="0,482,0,0" Height="102" VerticalAlignment="Top">
+                <RadioButton GroupName="AnonLevel" IsChecked="True" Name="s5s0">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0" Height="36" Width="625">
+                        ИСПДн, в которой предоставляемые пользователю данные являются обезличенными (на уровне организации, отрасли, области, региона и т.д.);
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="AnonLevel" Name="s5s1">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0" Width="647">
+                        ИСПДн, в которой данные обезличиваются только при передаче в другие организации и не обезличены при предоставлении пользователю в организации;
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="AnonLevel" Name="s5s2">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0" Width="633">
+                        ИСПДн, в которой предоставляемые пользователю данные не являются обезличенными (т.е. присутствует информация, позволяющая идентифицировать субъекта ПДн)
+                    </TextBox>
+                </RadioButton>
+            </StackPanel>
+            <TextBlock Height="22" VerticalAlignment="Top" Margin="0,589,0,0">
+                7. По объему  ПДн, которые предоставляются  сторонним пользователям ИСПДн без предварительной обработки:
+            </TextBlock>
+            <StackPanel x:Name="stackPanelPDSharing" Margin="0,616,0,0" Height="48" VerticalAlignment="Top">
+                <RadioButton GroupName="PDSharing" IsChecked="True" Name="s6s0">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+                        ИСПДн, предоставляющая всю базу данных с ПДн;
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="PDSharing" Name="s6s1">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+                        ИСПДн, предоставляющая часть ПДн
+                    </TextBox>
+                </RadioButton>
+                <RadioButton GroupName="PDSharing" Name="s6s2">
+                    <TextBox TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+                        ИСПДн, не предоставляющая никакой информации.
+                    </TextBox>
+                </RadioButton>
+            </StackPanel>
+            <Button Content="Сохранить" HorizontalAlignment="Left" Margin="188,715,0,0" VerticalAlignment="Top" Width="75" Click="Save"/>
+            <Button Content="Отменить" HorizontalAlignment="Left" Margin="372,715,0,0" VerticalAlignment="Top" Width="75" Click="Cancel"/>
+        </Grid>
+    </ScrollViewer>
+</Window>

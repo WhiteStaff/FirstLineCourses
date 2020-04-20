@@ -9,6 +9,7 @@ using ThreatsParser.Entities;
 using ThreatsParser.FileActions;
 using ThreatsParser.MenuActions;
 using ThreatsParser.MenuActions.Interfaces;
+using ThreatsParser.Windows;
 
 namespace ThreatsParser
 {
@@ -20,6 +21,7 @@ namespace ThreatsParser
         private static List<Threat> _items;
         private int _pageNumber;
         private int _maxPages;
+        private readonly InitialSecurityLevel _initialSecurityLevel = new InitialSecurityLevel();
 
         public MainWindow() : this(new IMenuAction[] {new About(), new Help()})
         {
@@ -129,6 +131,12 @@ namespace ThreatsParser
                 MessageBox.Show($"Ошибка обновления!\n{exception.Message}", "Ошибка");
                 updateWindow.Close();
             }
+        }
+
+        private void OpenPreferences(object sender, RoutedEventArgs e)
+        {
+            var win = new PreferencesWindow {InitialSecurityLevel = _initialSecurityLevel};
+            win.Show();
         }
     }
 }
