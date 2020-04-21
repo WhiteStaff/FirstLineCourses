@@ -1,17 +1,27 @@
 ﻿using System.Text;
+using ThreatsParser.Entities.Enums;
 
 namespace ThreatsParser.Entities
 {
     class Threat
     {
         public int Id { get; }
+
         public string Name { get; }
+
         public string Description { get; }
+
         public string Source { get; }
+
         public string ExposureSubject { get; }
+
         public bool IsHasPrivacyViolation { get; }
+
         public bool IsHasIntegrityViolation { get; }
+
         public bool IsHasAvailabilityViolation { get; }
+
+        public RiskProbabilities RiskProbabilities { get; set; }
 
         public Threat(string[] rowValues)
         {

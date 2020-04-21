@@ -4,20 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ThreatsParser"
+        xmlns:core="clr-namespace:System;assembly=mscorlib"
+        xmlns:enums="clr-namespace:ThreatsParser.Entities.Enums"
         mc:Ignorable="d"
-        Title="Парсер угроз" Height="570.91" Width="610" MinHeight="570" MinWidth="610" Loaded="Window_Loaded">
+        Title="Парсер угроз" Height="570.91" Width="780.407" MinHeight="570" MinWidth="610" Loaded="Window_Loaded">
     <Grid Name="All" Loaded="All_OnLoaded" Margin="0,0,2,0">
         <DataGrid Name="TreatsGrid" CanUserAddRows="False" HeadersVisibility="Column"
                   HorizontalScrollBarVisibility="Disabled"
                   Margin="14,31,0,0" AutoGenerateColumns="False" ItemsSource="{Binding}"
                   MouseDoubleClick="TreatsGrid_MouseDoubleClick" HorizontalAlignment="Left"
-                  MaxWidth="470" Height="450" VerticalAlignment="Top" CanUserReorderColumns="True" BorderThickness="0"
-                  CanUserResizeColumns="False" CanUserSortColumns="True" Background="White" >
-
+                  MaxWidth="570" Height="450" VerticalAlignment="Top" CanUserReorderColumns="True" BorderThickness="0"
+                  CanUserResizeColumns="False" CanUserSortColumns="True" Background="White" Width="570">
             <DataGrid.Resources>
                 <Style TargetType="TextBlock" x:Key="WrapText">
                     <Setter Property="TextWrapping" Value="Wrap" />
                 </Style>
+                <ObjectDataProvider x:Key="myEnum" MethodName="GetValues" ObjectType="{x:Type core:Enum}">
+                    <ObjectDataProvider.MethodParameters>
+                        <x:Type Type="enums:RiskProbabilities" />
+                    </ObjectDataProvider.MethodParameters>
+                </ObjectDataProvider>
                 <Style TargetType="DataGridCell" x:Key="FirstColumn">
                     <Setter Property="BorderThickness" Value="1,0,0,0"/>
                     <Setter Property="BorderBrush" Value="Black"/>
@@ -26,12 +32,22 @@
                     <Setter Property="BorderThickness" Value="0,0,0,0"/>
                     <Setter Property="BorderBrush" Value="Black"/>
                 </Style>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="IsEditing" Value="True" />
+                            <Setter Property="BindingGroup" Value="{Binding RiskProbabilities, Mode=TwoWay}"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Width="60" Header="ID" ElementStyle="{StaticResource WrapText}"
                                     Binding="{Binding Id, Mode=OneWay, StringFormat=УБИ.{0}}" CellStyle="{StaticResource FirstColumn}"/>
                 <DataGridTextColumn Width="390" Header="Название угрозы" Binding="{Binding Name, Mode=OneWay}"
                                     ElementStyle="{StaticResource WrapText}"  CellStyle="{StaticResource SecondColumn}"/>
+                <DataGridComboBoxColumn Width="120" SelectedItemBinding="{Binding RiskProbabilities, Mode=TwoWay}" Header="Вероятность" ItemsSource="{Binding Source={StaticResource myEnum}}">
+                </DataGridComboBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Margin="86,486,0,0" HorizontalAlignment="Left" Width="305" Height="44" VerticalAlignment="Top"
@@ -48,10 +64,10 @@
                     Click="MuchNext_Click" />
         </Grid>
         <Menu HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" Width="792" Name="MainMenu"/>
-        <Button Content="Сохранить" Margin="486,211,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.362,-2.551" Name="SaveButton" Click="SaveButton_Click" HorizontalAlignment="Left" Width="75"/>
-        <Button HorizontalAlignment="Left" Margin="486,250,0,0" VerticalAlignment="Top" Width="75" Height="44" Name="CheckUpdates" Click="CheckUpdates_OnClick">
+        <Button Content="Сохранить" Margin="636,209,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.362,-2.551" Name="SaveButton" Click="SaveButton_Click" HorizontalAlignment="Left" Width="75"/>
+        <Button HorizontalAlignment="Left" Margin="636,244,0,0" VerticalAlignment="Top" Width="75" Height="44" Name="CheckUpdates" Click="CheckUpdates_OnClick">
             <TextBlock Text="Проверить обновления" TextWrapping="Wrap" TextAlignment="Center" Height="34"/>
         </Button>
-        <Button Content="Настройка" HorizontalAlignment="Left" Margin="486,310,0,0" VerticalAlignment="Top" Width="75" Click="OpenPreferences"/>
+        <Button Content="Настройка" HorizontalAlignment="Left" Margin="636,303,0,0" VerticalAlignment="Top" Width="75" Click="OpenPreferences"/>
     </Grid>
 </Window>

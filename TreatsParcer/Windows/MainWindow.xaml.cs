@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
 using ThreatsParser;
 using ThreatsParser.Entities;
 using ThreatsParser.FileActions;
@@ -22,6 +26,7 @@ namespace ThreatsParser
         private int _pageNumber;
         private int _maxPages;
         private readonly InitialSecurityLevel _initialSecurityLevel = new InitialSecurityLevel();
+        private static ObservableCollection<Threat> _dataGridElements = new ObservableCollection<Threat>();
 
         public MainWindow() : this(new IMenuAction[] {new About(), new Help()})
         {
@@ -58,7 +63,8 @@ namespace ThreatsParser
 
         private void All_OnLoaded(object sender, RoutedEventArgs e)
         {
-            TreatsGrid.DataContext = _items.Where(x => x.Id <= 15);
+            _dataGridElements = new ObservableCollection<Threat>(_items.Where(x => x.Id <= 15));
+            TreatsGrid.DataContext = _dataGridElements;
             _pageNumber = 1;
             _maxPages = _items.Count / 15 + 1;
             PageInfo.Content = $"Страница {_pageNumber} из {_maxPages}";
@@ -70,7 +76,8 @@ namespace ThreatsParser
 
         private void PageChanger_ButtonClick(object sender, RoutedEventArgs e)
         {
-            TreatsGrid.DataContext = _items.Where(x => x.Id > (_pageNumber - 1) * 15 && x.Id <= (_pageNumber) * 15);
+            _dataGridElements = new ObservableCollection<Threat>(_items.Where(x => x.Id > (_pageNumber - 1) * 15 && x.Id <= (_pageNumber) * 15));
+            TreatsGrid.DataContext = _dataGridElements;
             PageInfo.Content = $"Страница {_pageNumber} из {_maxPages}";
         }
 

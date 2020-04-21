@@ -67,27 +67,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Entities\Enums\AnonymityLevel.cs" />
-    <Compile Include="Entities\Enums\NetworkCharacteristic.cs" />
-    <Compile Include="Entities\Enums\OtherDBConnections.cs" />
-    <Compile Include="Entities\Enums\PersonalDataActionCharacteristics.cs" />
-    <Compile Include="Entities\Enums\PersonalDataPermissionSplit.cs" />
-    <Compile Include="Entities\Enums\PersonalDataSharingLevel.cs" />
-    <Compile Include="Entities\InitialSecurityLevel.cs" />
-    <Compile Include="Entities\Enums\LocationCharacteristic.cs" />
-    <Compile Include="Entities\ThreatsChanges.cs" />
-    <Compile Include="Exceptions\NoConnectionException.cs" />
-    <Compile Include="Exceptions\NoFileException.cs" />
-    <Compile Include="FileActions\FileLoader.cs" />
-    <Compile Include="FileActions\FileParser.cs" />
-    <Compile Include="MenuActions\About.cs" />
-    <Compile Include="MenuActions\Help.cs" />
-    <Compile Include="MenuActions\Interfaces\IMenuAction.cs" />
-    <Compile Include="MenuActions\Interfaces\MenuActionExtension.cs" />
-    <Compile Include="FileActions\FileSaver.cs" />
-    <Compile Include="FileActions\FileUpdater.cs" />
-    <Compile Include="FileActions\FileCreator.cs" />
-    <Compile Include="Entities\Threat.cs" />
+    <Compile Include="Core\Entities\Enums\AnonymityLevel.cs" />
+    <Compile Include="Core\Entities\Enums\NetworkCharacteristic.cs" />
+    <Compile Include="Core\Entities\Enums\OtherDBConnections.cs" />
+    <Compile Include="Core\Entities\Enums\PersonalDataActionCharacteristics.cs" />
+    <Compile Include="Core\Entities\Enums\PersonalDataPermissionSplit.cs" />
+    <Compile Include="Core\Entities\Enums\PersonalDataSharingLevel.cs" />
+    <Compile Include="Core\Entities\Enums\RiskProbabilities.cs" />
+    <Compile Include="Core\Entities\InitialSecurityLevel.cs" />
+    <Compile Include="Core\Entities\Enums\LocationCharacteristic.cs" />
+    <Compile Include="Core\Entities\ThreatsChanges.cs" />
+    <Compile Include="Core\Exceptions\NoConnectionException.cs" />
+    <Compile Include="Core\Exceptions\NoFileException.cs" />
+    <Compile Include="Core\FileActions\FileLoader.cs" />
+    <Compile Include="Core\FileActions\FileParser.cs" />
+    <Compile Include="Core\Helpers\EnumDescriptionTypeConverter.cs" />
+    <Compile Include="Core\Helpers\EnumToItemsSource.cs" />
+    <Compile Include="Core\MenuActions\About.cs" />
+    <Compile Include="Core\MenuActions\Help.cs" />
+    <Compile Include="Core\MenuActions\Interfaces\IMenuAction.cs" />
+    <Compile Include="Core\MenuActions\Interfaces\MenuActionExtension.cs" />
+    <Compile Include="Core\FileActions\FileSaver.cs" />
+    <Compile Include="Core\FileActions\FileUpdater.cs" />
+    <Compile Include="Core\FileActions\FileCreator.cs" />
+    <Compile Include="Core\Entities\Threat.cs" />
     <Compile Include="Windows\PreferencesWindow.xaml.cs">
       <DependentUpon>PreferencesWindow.xaml</DependentUpon>
     </Compile>
