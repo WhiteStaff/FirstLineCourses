@@ -4,18 +4,18 @@ using TreatsParser.Core.Helpers;
 namespace ThreatsParser.Entities.Enums
 {
     [TypeConverter(typeof(EnumDescriptionTypeConverter))]
-    public enum RiskProbabilities
+    public enum DangerLevel
     {
-        [Description("Маловероятно")]
-        Unlikely = 0,
-
         [Description("Низкая")]
-        Low = 2,
+        Low = 0,
 
         [Description("Средняя")]
-        Medium = 5,
+        Medium = 1,
 
         [Description("Высокая")]
-        High = 10,
+        High = 2,
+
+        [Description("Очень высокая")]
+        VeryHigh = 3
     }
 }

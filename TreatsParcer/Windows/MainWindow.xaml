@@ -69,5 +69,6 @@
             <TextBlock Text="Проверить обновления" TextWrapping="Wrap" TextAlignment="Center" Height="34"/>
         </Button>
         <Button Content="Настройка" HorizontalAlignment="Left" Margin="636,303,0,0" VerticalAlignment="Top" Width="75" Click="OpenPreferences"/>
+        <Button Content="Сгенерировать модель" HorizontalAlignment="Left" Margin="636,344,0,0" VerticalAlignment="Top" Width="75" Click="OpenPreview"/>
     </Grid>
 </Window>

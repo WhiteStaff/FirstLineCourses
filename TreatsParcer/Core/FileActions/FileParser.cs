@@ -28,7 +28,6 @@ namespace ThreatsParser.FileActions
                 }
             }
 
-
             return excelData;
         }
     }

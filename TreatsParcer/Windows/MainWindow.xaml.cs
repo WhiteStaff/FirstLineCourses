@@ -14,6 +14,8 @@ using ThreatsParser.FileActions;
 using ThreatsParser.MenuActions;
 using ThreatsParser.MenuActions.Interfaces;
 using ThreatsParser.Windows;
+using TreatsParser.Core;
+using TreatsParser.Core.Helpers;
 
 namespace ThreatsParser
 {
@@ -25,7 +27,7 @@ namespace ThreatsParser
         private static List<Threat> _items;
         private int _pageNumber;
         private int _maxPages;
-        private readonly InitialSecurityLevel _initialSecurityLevel = new InitialSecurityLevel();
+        private InitialSecurityLevel _initialSecurityLevel;
         private static ObservableCollection<Threat> _dataGridElements = new ObservableCollection<Threat>();
 
         public MainWindow() : this(new IMenuAction[] {new About(), new Help()})
@@ -35,6 +37,7 @@ namespace ThreatsParser
         private MainWindow(IMenuAction[] actions)
         {
             InitializeComponent();
+            _initialSecurityLevel = new InitialSecurityLevel();
 
             foreach (var item in actions.ToMenuItems())
             {
@@ -142,8 +145,17 @@ namespace ThreatsParser
 
         private void OpenPreferences(object sender, RoutedEventArgs e)
         {
-            var win = new PreferencesWindow {InitialSecurityLevel = _initialSecurityLevel};
+            var win = new PreferencesWindow(ref _initialSecurityLevel);
+            _initialSecurityLevel = win.InitialSecurityLevel;
             win.Show();
+        }
+
+        private void OpenPreview(object sender, RoutedEventArgs e)
+        {
+            var window = new PreviewWindow();
+            var previewItems = ModelGeneration.GenerateModelForPreview(_items, _initialSecurityLevel.GlobalCoef);
+            window.PreviewModel.ItemsSource = previewItems;
+            window.Show();
         }
     }
 }

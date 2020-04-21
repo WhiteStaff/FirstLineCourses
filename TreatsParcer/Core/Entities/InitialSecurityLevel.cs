@@ -1,4 +1,7 @@
-﻿using ThreatsParser.Entities.Enums;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Documents;
+using ThreatsParser.Entities.Enums;
 
 namespace ThreatsParser.Entities
 {
@@ -110,5 +113,22 @@ namespace ThreatsParser.Entities
         }
 
         #endregion
+
+        public double GlobalCoef
+        {
+            get
+            {
+                var res = new List<int>();
+                res.Add(TerritorialLocationCoef);
+                res.Add(NetworkCharacteristicCoef);
+                res.Add(PersonalDataActionCharacteristicsCoef);
+                res.Add(PersonalDataPermissionSplitCoef);
+                res.Add(OtherDbConnectionsCoef);
+                res.Add(AnonymityLevelCoef);
+                res.Add(PersonalDataSharingLevelCoef);
+                if (res.Count(x => x == 0) >= 5 && res.All(x => x != 10)) return 0;
+                return res.Count(x => x <= 5) >= 5 ? 5 : 10;
+            }
+        }
     }
 }

@@ -23,14 +23,18 @@ namespace ThreatsParser.Windows
     {
         public InitialSecurityLevel InitialSecurityLevel { get; set; }
 
-        public PreferencesWindow()
+        public PreferencesWindow(ref InitialSecurityLevel initialSecurityLevel)
         {
             InitializeComponent();
+            InitialSecurityLevel = initialSecurityLevel;
         }
-
 
         private void Save(object sender, RoutedEventArgs e)
         {
+            var a = new InitialSecurityLevel();
+            var b = a;
+            b.AnonymityLevel = AnonymityLevel.OnlyInside;
+
             InitialSecurityLevel.TerritorialLocation = (LocationCharacteristic) stackPanelTerritorial.Children
                 .OfType<RadioButton>().FirstOrDefault(r => r.IsChecked == true).Name
                 .Split(new[] {'s'}, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).Last();

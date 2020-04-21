@@ -3,7 +3,7 @@ using ThreatsParser.Entities.Enums;
 
 namespace ThreatsParser.Entities
 {
-    class Threat
+    public class Threat
     {
         public int Id { get; }
 

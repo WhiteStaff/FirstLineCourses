@@ -68,6 +68,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\Entities\Enums\AnonymityLevel.cs" />
+    <Compile Include="Core\Entities\Enums\DangerLevel.cs" />
     <Compile Include="Core\Entities\Enums\NetworkCharacteristic.cs" />
     <Compile Include="Core\Entities\Enums\OtherDBConnections.cs" />
     <Compile Include="Core\Entities\Enums\PersonalDataActionCharacteristics.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Core\Entities\Enums\RiskProbabilities.cs" />
     <Compile Include="Core\Entities\InitialSecurityLevel.cs" />
     <Compile Include="Core\Entities\Enums\LocationCharacteristic.cs" />
+    <Compile Include="Core\Entities\ModelLine.cs" />
     <Compile Include="Core\Entities\ThreatsChanges.cs" />
     <Compile Include="Core\Exceptions\NoConnectionException.cs" />
     <Compile Include="Core\Exceptions\NoFileException.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Core\FileActions\FileParser.cs" />
     <Compile Include="Core\Helpers\EnumDescriptionTypeConverter.cs" />
     <Compile Include="Core\Helpers\EnumToItemsSource.cs" />
+    <Compile Include="Core\Helpers\Resolver.cs" />
     <Compile Include="Core\MenuActions\About.cs" />
     <Compile Include="Core\MenuActions\Help.cs" />
     <Compile Include="Core\MenuActions\Interfaces\IMenuAction.cs" />
@@ -91,8 +94,12 @@
     <Compile Include="Core\FileActions\FileUpdater.cs" />
     <Compile Include="Core\FileActions\FileCreator.cs" />
     <Compile Include="Core\Entities\Threat.cs" />
+    <Compile Include="Core\ModelGeneration.cs" />
     <Compile Include="Windows\PreferencesWindow.xaml.cs">
       <DependentUpon>PreferencesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\PreviewWindow.xaml.cs">
+      <DependentUpon>PreviewWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\UpdatesResultWindow.xaml.cs">
       <DependentUpon>UpdatesResultWindow.xaml</DependentUpon>
@@ -110,6 +117,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Windows\PreferencesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\PreviewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
