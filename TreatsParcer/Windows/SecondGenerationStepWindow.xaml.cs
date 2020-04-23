@@ -72,7 +72,22 @@ namespace ThreatsParser.Windows
 
         private void All_OnLoaded(object sender, RoutedEventArgs e)
         {
-            _dataGridElements = new ObservableCollection<Threat>(_globalPreferences.Items.Where(x => x.Id <= 15));
+            _globalPreferences.Items = _globalPreferences.Items
+                .Where(x => x.Source
+                    .Any(y => _globalPreferences.Source
+                        .Where(x2 => x2.Item2)
+                        .Select(x1 => x1.Item1)
+                        .Contains(y))).ToList();
+            _globalPreferences.Items = _globalPreferences.Items
+                .Where(x =>
+                    x.ExposureSubject
+                        .Any(y => _globalPreferences.Targets
+                            .Where(x2 => x2.Item2)
+                            .Select(k => k.Item1)
+                            .Contains(y)))
+                .ToList();
+
+            _dataGridElements = new ObservableCollection<Threat>(_globalPreferences.Items.GetRange(0,  _globalPreferences.Items.Count >= 15 ? 15 : _globalPreferences.Items.Count));// .Where(x => x.Id <= 15));
             TreatsGrid.DataContext = _dataGridElements;
             _pageNumber = 1;
             _maxPages = _globalPreferences.Items.Count / 15 + 1;
@@ -86,8 +101,8 @@ namespace ThreatsParser.Windows
         private void PageChanger_ButtonClick(object sender, RoutedEventArgs e)
         {
             _dataGridElements =
-                new ObservableCollection<Threat>(_globalPreferences.Items.Where(x =>
-                    x.Id > (_pageNumber - 1) * 15 && x.Id <= (_pageNumber) * 15));
+                new ObservableCollection<Threat>(_globalPreferences.Items.GetRange((_pageNumber - 1) * 15, _globalPreferences.Items.Count >= _pageNumber * 15 ? 15 : _globalPreferences.Items.Count - (_pageNumber - 1) * 15));
+                //.Where(x => x.Id > (_pageNumber - 1) * 15 && x.Id <= (_pageNumber) * 15));
             TreatsGrid.DataContext = _dataGridElements;
             PageInfo.Content = $"Страница {_pageNumber} из {_maxPages}";
         }
@@ -117,6 +132,7 @@ namespace ThreatsParser.Windows
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
+            _globalPreferences = new GlobalPreferences();
             Close();
         }
 

@@ -51,6 +51,7 @@ namespace ThreatsParser.Windows
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
+            _globalPreferences = new GlobalPreferences();
             Close();
         }
 

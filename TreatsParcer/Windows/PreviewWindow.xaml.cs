@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ThreatsParser.Entities;
+using TreatsParser.Core;
 
 namespace ThreatsParser.Windows
 {
@@ -19,9 +21,11 @@ namespace ThreatsParser.Windows
     /// </summary>
     public partial class PreviewWindow : Window
     {
-        public PreviewWindow()
+        public PreviewWindow(GlobalPreferences _globalPreferences)
         {
             InitializeComponent();
+            PreviewModel.ItemsSource = ModelGeneration.GenerateModelForPreview(_globalPreferences.Items,
+                _globalPreferences.InitialSecurityLevel.GlobalCoef);
         }
     }
 }

@@ -14,7 +14,6 @@
         <Button HorizontalAlignment="Left" Margin="636,244,0,0" VerticalAlignment="Top" Width="75" Height="44" Name="CheckUpdates" Click="CheckUpdates_OnClick">
             <TextBlock Text="Проверить обновления" TextWrapping="Wrap" TextAlignment="Center" Height="34"/>
         </Button>
-        <Button Content="Сгенерировать модель" HorizontalAlignment="Left" Margin="636,344,0,0" VerticalAlignment="Top" Width="75" Click="OpenPreview"/>
-        <Button Content="Новая модель&#xD;&#xA;" HorizontalAlignment="Left" Margin="621,387,0,0" VerticalAlignment="Top" Width="109" Click="ButtonBase_OnClick" Height="23"/>
+        <Button Content="Новая модель&#xD;&#xA;" HorizontalAlignment="Left" Margin="622,305,0,0" VerticalAlignment="Top" Width="109" Click="ButtonBase_OnClick" Height="23"/>
     </Grid>
 </Window>

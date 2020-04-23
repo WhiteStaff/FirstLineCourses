@@ -87,14 +87,6 @@ namespace ThreatsParser
             }*/
         }
 
-        private void OpenPreview(object sender, RoutedEventArgs e)
-        {
-            var window = new PreviewWindow();
-            //var previewItems = ModelGeneration.GenerateModelForPreview(_items, _initialSecurityLevel.GlobalCoef);
-            //window.PreviewModel.ItemsSource = previewItems;
-            window.Show();
-        }
-
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             new FirstGenerationStep(_globalPreferences).Show();

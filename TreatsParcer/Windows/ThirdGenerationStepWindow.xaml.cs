@@ -63,11 +63,14 @@ namespace ThreatsParser.Windows
 
         private void Save(object sender, RoutedEventArgs e)
         {
+            var win = new PreviewWindow(_globalPreferences);
+            win.Show();
             Close();
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
         {
+            _globalPreferences = new GlobalPreferences();
             Close();
         }
 
