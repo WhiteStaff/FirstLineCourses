@@ -1,0 +1,23 @@
+﻿<Window x:Class="ThreatsParser.Windows.FirstGenerationStep"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ThreatsParser.Windows"
+        mc:Ignorable="d"
+        Title="FirstGenerationStep"  Height="390" Width="780" MinHeight="470" MinWidth="780">
+    <Grid>
+        <Button Content="Отмена" HorizontalAlignment="Left" Margin="106,376,0,0" VerticalAlignment="Top" Width="75" Click="Cancel_Click" />
+        <Button Content="Далее" HorizontalAlignment="Left" Margin="622,376,0,0" VerticalAlignment="Top" Width="75" Click="Next_Click" />
+        <StackPanel Name="Source" HorizontalAlignment="Left" Height="275" VerticalAlignment="Top" Width="194"
+                    Margin="47,71,0,0" />
+        <ListBox Height="275" VerticalAlignment="Top" Margin="311,71,24,0" Name="Target">
+        </ListBox>
+        <Label  HorizontalAlignment="Left" Margin="47,10,0,0" VerticalAlignment="Top" Width="194" Height="46">
+            <TextBlock TextWrapping="Wrap" >Выберите возможные источники угрозы:</TextBlock>
+        </Label>
+        <Label  HorizontalAlignment="Left" Margin="311,10,0,0" VerticalAlignment="Top" Width="437" Height="46">
+            <TextBlock TextWrapping="Wrap" >Выберите возможные объекты воздействия:</TextBlock>
+        </Label>
+    </Grid>
+</Window>

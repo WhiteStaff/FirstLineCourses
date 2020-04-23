@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,6 +17,8 @@ using ThreatsParser.MenuActions;
 using ThreatsParser.MenuActions.Interfaces;
 using ThreatsParser.Windows;
 using TreatsParser.Core;
+using TreatsParser.Core.DataBase;
+using TreatsParser.Core.DataBase.Models;
 using TreatsParser.Core.Helpers;
 
 namespace ThreatsParser
@@ -24,11 +28,7 @@ namespace ThreatsParser
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static List<Threat> _items;
-        private int _pageNumber;
-        private int _maxPages;
-        private InitialSecurityLevel _initialSecurityLevel;
-        private static ObservableCollection<Threat> _dataGridElements = new ObservableCollection<Threat>();
+        private GlobalPreferences _globalPreferences;
 
         public MainWindow() : this(new IMenuAction[] {new About(), new Help()})
         {
@@ -37,7 +37,7 @@ namespace ThreatsParser
         private MainWindow(IMenuAction[] actions)
         {
             InitializeComponent();
-            _initialSecurityLevel = new InitialSecurityLevel();
+            _globalPreferences = new GlobalPreferences();
 
             foreach (var item in actions.ToMenuItems())
             {
@@ -47,74 +47,18 @@ namespace ThreatsParser
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _items = FileCreator.GetParsedData();
-        }
-
-
-        private void TreatsGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var x = TreatsGrid.SelectedItem as Threat;
-            try
-            {
-                MessageBox.Show(x.ToString(), $"УБИ.{x.Id.ToString()}");
-            }
-            catch (NullReferenceException exception)
-            {
-                MessageBox.Show("Выберите столбец!", "Ошибка данных");
-            }
-        }
-
-        private void All_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            _dataGridElements = new ObservableCollection<Threat>(_items.Where(x => x.Id <= 15));
-            TreatsGrid.DataContext = _dataGridElements;
-            _pageNumber = 1;
-            _maxPages = _items.Count / 15 + 1;
-            PageInfo.Content = $"Страница {_pageNumber} из {_maxPages}";
-            OneBack.Click += PageChanger_ButtonClick;
-            MuchBack.Click += PageChanger_ButtonClick;
-            OneNext.Click += PageChanger_ButtonClick;
-            MuchNext.Click += PageChanger_ButtonClick;
-        }
-
-        private void PageChanger_ButtonClick(object sender, RoutedEventArgs e)
-        {
-            _dataGridElements = new ObservableCollection<Threat>(_items.Where(x => x.Id > (_pageNumber - 1) * 15 && x.Id <= (_pageNumber) * 15));
-            TreatsGrid.DataContext = _dataGridElements;
-            PageInfo.Content = $"Страница {_pageNumber} из {_maxPages}";
-        }
-
-        private void MuchBack_OnClick(object sender, RoutedEventArgs e)
-        {
-            _pageNumber -= 10;
-            if (_pageNumber < 1) _pageNumber = 1;
-        }
-
-        private void OneBack_Click(object sender, RoutedEventArgs e)
-        {
-            if (_pageNumber > 1) _pageNumber--;
-        }
-
-        private void OneNext_Click(object sender, RoutedEventArgs e)
-        {
-            if (_pageNumber < _maxPages) _pageNumber++;
-        }
-
-        private void MuchNext_Click(object sender, RoutedEventArgs e)
-        {
-            _pageNumber += 10;
-            if (_pageNumber > _maxPages) _pageNumber = _maxPages;
+            
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            FileSaver.Save(_items);
+            //FileSaver.Save(_items);
         }
 
         private void CheckUpdates_OnClick(object sender, RoutedEventArgs e)
         {
             var updateWindow = new UpdatesResultWindow();
-            try
+            /*try
             {
                 List<ThreatsChanges> changes = FileUpdater.GetDifference(_items, out var newItems);
                 if (changes.Count == 0)
@@ -140,22 +84,20 @@ namespace ThreatsParser
             {
                 MessageBox.Show($"Ошибка обновления!\n{exception.Message}", "Ошибка");
                 updateWindow.Close();
-            }
-        }
-
-        private void OpenPreferences(object sender, RoutedEventArgs e)
-        {
-            var win = new PreferencesWindow(ref _initialSecurityLevel);
-            _initialSecurityLevel = win.InitialSecurityLevel;
-            win.Show();
+            }*/
         }
 
         private void OpenPreview(object sender, RoutedEventArgs e)
         {
             var window = new PreviewWindow();
-            var previewItems = ModelGeneration.GenerateModelForPreview(_items, _initialSecurityLevel.GlobalCoef);
-            window.PreviewModel.ItemsSource = previewItems;
+            //var previewItems = ModelGeneration.GenerateModelForPreview(_items, _initialSecurityLevel.GlobalCoef);
+            //window.PreviewModel.ItemsSource = previewItems;
             window.Show();
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            new FirstGenerationStep(_globalPreferences).Show();
         }
     }
 }

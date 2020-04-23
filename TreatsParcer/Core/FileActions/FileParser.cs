@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using OfficeOpenXml;
 using ThreatsParser.Entities;
+using ThreatsParser.Exceptions;
 
 namespace ThreatsParser.FileActions
 {
@@ -9,6 +12,7 @@ namespace ThreatsParser.FileActions
     {
         public static List<Threat> Parse(string path)
         {
+            Download("data.xlsx");
             var excelData = new List<Threat>();
             byte[] bin = File.ReadAllBytes(path);
             using (MemoryStream stream = new MemoryStream(bin))
@@ -28,7 +32,25 @@ namespace ThreatsParser.FileActions
                 }
             }
 
+            File.Delete(path);
+
             return excelData;
+        }
+
+        private static void Download(string name)
+        {
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile("https://bdu.fstec.ru/files/documents/thrlist.xlsx", name);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new NoConnectionException();
+            }
+
         }
     }
 }
