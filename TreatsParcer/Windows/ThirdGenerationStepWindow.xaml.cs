@@ -30,17 +30,18 @@ namespace ThreatsParser.Windows
             InitializeComponent();
             _globalPreferences = globalPreferences;
 
-            if (_globalPreferences.Dangers == null)
-            {
-                _globalPreferences.Dangers = new List<DangerousLevelLine>();
-                _globalPreferences.Targets
-                    .Where(x => x.Item2)
-                    .ToList()
-                    .ForEach(target => _globalPreferences.Source
-                        .Where(x => x.Item2)
-                        .ToList()
-                        .ForEach(source => _globalPreferences.Dangers.Add(new DangerousLevelLine(source.Item1, target.Item1))));
-            }
+            _globalPreferences.Dangers = _globalPreferences.Dangers
+                .Where(x => 
+                    _globalPreferences.Source
+                        .Where(y => y.Item2)
+                        .Select(y => y.Item1)
+                        .Contains(x.Source) &&
+                    _globalPreferences.Targets
+                        .Where(y => y.Item2)
+                        .Select(y => y.Item1)
+                        .Contains(x.Target))
+                .OrderBy(x => x.Target)
+                .ToList();
 
             _dataGridElements = new ObservableCollection<DangerousLevelLine>(_globalPreferences.Dangers);
             DangersGrid.DataContext = _dataGridElements;
