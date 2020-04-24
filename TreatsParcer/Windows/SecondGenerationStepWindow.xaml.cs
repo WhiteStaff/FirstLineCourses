@@ -145,7 +145,7 @@ namespace ThreatsParser.Windows
 
         private void Next_Click(object sender, RoutedEventArgs e)
         {
-            var third = new PreferencesWindow(_globalPreferences);
+            var third = new ThirdGenerationStepWindow(_globalPreferences);
             third.Show();
             Close();
         }

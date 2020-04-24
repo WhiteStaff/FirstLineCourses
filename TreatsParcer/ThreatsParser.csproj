@@ -145,6 +145,7 @@
     <Compile Include="Core\DataBase\Models\ThreatSources.cs" />
     <Compile Include="Core\DataBase\Models\ThreatTargets.cs" />
     <Compile Include="Core\DataBase\ThreatDbContext.cs" />
+    <Compile Include="Core\Entities\DangerousLevelLine.cs" />
     <Compile Include="Core\Entities\Enums\AnonymityLevel.cs" />
     <Compile Include="Core\Entities\Enums\DangerLevel.cs" />
     <Compile Include="Core\Entities\Enums\NetworkCharacteristic.cs" />
@@ -203,14 +204,17 @@
     <Compile Include="Windows\FirstGenerationStepWindow.xaml.cs">
       <DependentUpon>FirstGenerationStepWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ThirdGenerationStepWindow.xaml.cs">
-      <DependentUpon>ThirdGenerationStepWindow.xaml</DependentUpon>
+    <Compile Include="Windows\PreferencesWindow.xaml.cs">
+      <DependentUpon>PreferencesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\PreviewWindow.xaml.cs">
       <DependentUpon>PreviewWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\SecondGenerationStepWindow.xaml.cs">
       <DependentUpon>SecondGenerationStepWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ThirdGenerationStepWindow.xaml.cs">
+      <DependentUpon>ThirdGenerationStepWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\UpdatesResultWindow.xaml.cs">
       <DependentUpon>UpdatesResultWindow.xaml</DependentUpon>
@@ -231,7 +235,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Windows\ThirdGenerationStepWindow.xaml">
+    <Page Include="Windows\PreferencesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -240,6 +244,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\SecondGenerationStepWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ThirdGenerationStepWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

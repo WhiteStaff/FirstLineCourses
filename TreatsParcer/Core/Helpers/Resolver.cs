@@ -15,7 +15,7 @@ namespace TreatsParser.Core.Helpers
             if (coef <= 0.3) return DangerLevel.Low;
             if (coef <= 0.6) return DangerLevel.Medium;
             if (coef <= 0.8) return DangerLevel.High;
-            return DangerLevel.VeryHigh;
+            return DangerLevel.High;
         }
 
         public static bool ResolveActual(DangerLevel dangerLevel, RiskProbabilities risk)

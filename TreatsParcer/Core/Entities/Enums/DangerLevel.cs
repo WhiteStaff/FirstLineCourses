@@ -13,9 +13,6 @@ namespace ThreatsParser.Entities.Enums
         Medium = 1,
 
         [Description("Высокая")]
-        High = 2,
-
-        [Description("Очень высокая")]
-        VeryHigh = 3
+        High = 2
     }
 }

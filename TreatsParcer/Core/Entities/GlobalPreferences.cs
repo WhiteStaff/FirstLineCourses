@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Documents;
+using ThreatsParser.Entities.Enums;
 
 namespace ThreatsParser.Entities
 {
@@ -13,5 +14,7 @@ namespace ThreatsParser.Entities
         public List<(string, bool)> Targets { get; set; }
 
         public InitialSecurityLevel InitialSecurityLevel { get; set; }
+
+        public List<DangerousLevelLine> Dangers { get; set; }
     }
 }

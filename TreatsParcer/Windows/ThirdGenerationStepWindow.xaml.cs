@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,116 +14,57 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using OfficeOpenXml.Packaging.Ionic.Zip;
 using ThreatsParser.Entities;
-using ThreatsParser.Entities.Enums;
 
 namespace ThreatsParser.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для PreferencesWindow.xaml
+    /// Логика взаимодействия для ThirdGenerationStepWindow.xaml
     /// </summary>
-    public partial class PreferencesWindow : Window
+    public partial class ThirdGenerationStepWindow : Window
     {
         private GlobalPreferences _globalPreferences;
+        private static ObservableCollection<DangerousLevelLine> _dataGridElements;
 
-        public PreferencesWindow(GlobalPreferences globalPreferences)
+        public ThirdGenerationStepWindow(GlobalPreferences globalPreferences)
         {
             InitializeComponent();
             _globalPreferences = globalPreferences;
 
-            if (_globalPreferences.InitialSecurityLevel == null)
-                _globalPreferences.InitialSecurityLevel = new InitialSecurityLevel();
+            if (_globalPreferences.Dangers == null)
+            {
+                _globalPreferences.Dangers = new List<DangerousLevelLine>();
+                _globalPreferences.Targets
+                    .Where(x => x.Item2)
+                    .ToList()
+                    .ForEach(target => _globalPreferences.Source
+                        .Where(x => x.Item2)
+                        .ToList()
+                        .ForEach(source => _globalPreferences.Dangers.Add(new DangerousLevelLine(source.Item1, target.Item1))));
+            }
 
-            stackPanelTerritorial.Children.OfType<RadioButton>().FirstOrDefault(x =>
-                int.Parse(x.Name.Split(new[] {'s'}, StringSplitOptions.RemoveEmptyEntries).Last()) ==
-                (int) _globalPreferences.InitialSecurityLevel.TerritorialLocation).IsChecked = true;
-
-            stackPanelNetwork.Children.OfType<RadioButton>().FirstOrDefault(x =>
-                int.Parse(x.Name.Split(new[] {'s'}, StringSplitOptions.RemoveEmptyEntries).Last()) ==
-                (int) _globalPreferences.InitialSecurityLevel.NetworkCharacteristic).IsChecked = true;
-
-            stackPanelPDAction.Children.OfType<RadioButton>().FirstOrDefault(x =>
-                int.Parse(x.Name.Split(new[] {'s'}, StringSplitOptions.RemoveEmptyEntries).Last()) ==
-                (int) _globalPreferences.InitialSecurityLevel.PersonalDataActionCharacteristics).IsChecked = true;
-
-            stackPanelSplit.Children.OfType<RadioButton>().FirstOrDefault(x =>
-                int.Parse(x.Name.Split(new[] {'s'}, StringSplitOptions.RemoveEmptyEntries).Last()) ==
-                (int) _globalPreferences.InitialSecurityLevel.PersonalDataActionCharacteristics).IsChecked = true;
-
-            stackPanelDBConn.Children.OfType<RadioButton>().FirstOrDefault(x =>
-                int.Parse(x.Name.Split(new[] {'s'}, StringSplitOptions.RemoveEmptyEntries).Last()) ==
-                (int) _globalPreferences.InitialSecurityLevel.OtherDbConnections).IsChecked = true;
-
-            stackPanelAnonLevel.Children.OfType<RadioButton>().FirstOrDefault(x =>
-                int.Parse(x.Name.Split(new[] {'s'}, StringSplitOptions.RemoveEmptyEntries).Last()) ==
-                (int) _globalPreferences.InitialSecurityLevel.AnonymityLevel).IsChecked = true;
-
-            stackPanelPDSharing.Children.OfType<RadioButton>().FirstOrDefault(x =>
-                int.Parse(x.Name.Split(new[] {'s'}, StringSplitOptions.RemoveEmptyEntries).Last()) ==
-                (int) _globalPreferences.InitialSecurityLevel.PersonalDataSharingLevel).IsChecked = true;
+            _dataGridElements = new ObservableCollection<DangerousLevelLine>(_globalPreferences.Dangers);
+            DangersGrid.DataContext = _dataGridElements;
         }
 
-        private void Save(object sender, RoutedEventArgs e)
-        {
-            var win = new PreviewWindow(_globalPreferences);
-            win.Show();
-            Close();
-        }
 
-        private void Cancel(object sender, RoutedEventArgs e)
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             _globalPreferences = new GlobalPreferences();
             Close();
         }
 
-        private void Back_Click(object sender, RoutedEventArgs e)
+        private void Next_Click(object sender, RoutedEventArgs e)
         {
-            var second = new SecondGenerationStepWindow(_globalPreferences);
-            second.Show();
+            var win = new PreferencesWindow(_globalPreferences);
+            win.Show();
             Close();
         }
 
-        private void Radio_Checked(object sender, RoutedEventArgs e)
+        private void Back_Click(object sender, RoutedEventArgs e)
         {
-            var x = sender as RadioButton;
-            if (_globalPreferences == null) return;
-            switch (x.GroupName)
-            {
-                case "Territorial":
-                    _globalPreferences.InitialSecurityLevel.TerritorialLocation =
-                        (LocationCharacteristic) int.Parse(x.Name.Split(new[] {'s'}, StringSplitOptions.RemoveEmptyEntries)
-                            .Last());
-                    break;
-                case "Network":
-                    _globalPreferences.InitialSecurityLevel.NetworkCharacteristic =
-                        (NetworkCharacteristic)int.Parse(x.Name.Split(new[] { 's' }, StringSplitOptions.RemoveEmptyEntries)
-                            .Last());
-                    break;
-                case "PDAction":
-                    _globalPreferences.InitialSecurityLevel.PersonalDataActionCharacteristics =
-                        (PersonalDataActionCharacteristics)int.Parse(x.Name.Split(new[] { 's' }, StringSplitOptions.RemoveEmptyEntries)
-                            .Last());
-                    break;
-                case "Split":
-                    _globalPreferences.InitialSecurityLevel.PersonalDataPermissionSplit =
-                        (PersonalDataPermissionSplit)int.Parse(x.Name.Split(new[] { 's' }, StringSplitOptions.RemoveEmptyEntries)
-                            .Last());
-                    break;
-                case "DBConn":
-                    _globalPreferences.InitialSecurityLevel.OtherDbConnections =
-                        (OtherDBConnections)int.Parse(x.Name.Split(new[] { 's' }, StringSplitOptions.RemoveEmptyEntries)
-                            .Last());
-                    break;
-                case "AnonLevel":
-                    _globalPreferences.InitialSecurityLevel.AnonymityLevel =
-                        (AnonymityLevel)int.Parse(x.Name.Split(new[] { 's' }, StringSplitOptions.RemoveEmptyEntries)
-                            .Last());
-                    break;
-                default:
-                    _globalPreferences.InitialSecurityLevel.PersonalDataSharingLevel =
-                        (PersonalDataSharingLevel)int.Parse(x.Name.Split(new[] { 's' }, StringSplitOptions.RemoveEmptyEntries)
-                            .Last());
-                    break;
-            }
+            var win = new SecondGenerationStepWindow(_globalPreferences);
+            win.Show();
+            Close();
         }
     }
 }
