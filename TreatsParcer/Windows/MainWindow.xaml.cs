@@ -37,7 +37,7 @@ namespace ThreatsParser
         private MainWindow(IMenuAction[] actions)
         {
             InitializeComponent();
-            _globalPreferences = new GlobalPreferences();
+            _globalPreferences = FileCreator.GetParsedData();
 
             foreach (var item in actions.ToMenuItems())
             {

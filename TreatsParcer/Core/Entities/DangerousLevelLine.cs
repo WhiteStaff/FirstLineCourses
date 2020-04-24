@@ -16,5 +16,10 @@ namespace ThreatsParser.Entities
             Source = source;
             Target = target;
         }
+
+        public bool Equal(string target, string source)
+        {
+            return Target == target && Source == source;
+        }
     }
 }

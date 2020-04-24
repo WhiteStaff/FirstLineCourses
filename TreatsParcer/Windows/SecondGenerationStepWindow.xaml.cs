@@ -37,7 +37,7 @@ namespace ThreatsParser.Windows
 
             if (globalPreferences.Items != null) return;
 
-            using (var context = new ThreatDbContext())
+            /*using (var context = new ThreatDbContext())
             {
                 if (context.Threat.Count() < 3)
                 {
@@ -54,7 +54,7 @@ namespace ThreatsParser.Windows
                         .ToList()
                         .Select(x => x.ToEntity()).OrderBy(x => x.Id).ToList();
                 }
-            }
+            }*/
         }
 
         private void TreatsGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)

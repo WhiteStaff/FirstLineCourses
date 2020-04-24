@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using OfficeOpenXml;
@@ -12,12 +13,12 @@ namespace ThreatsParser.FileActions
 {
     static class FileCreator
     {
-        public static  List<Threat> GetParsedData()
+        public static GlobalPreferences GetParsedData()
         {
-            var excelData = new List<Threat>();
+            GlobalPreferences excelData;
             try
             {
-                excelData = FileParser.Parse("data.xlsx");
+                excelData = Parse("data.xlsx");
                 return excelData;
             }
             catch (Exception e)
@@ -25,8 +26,89 @@ namespace ThreatsParser.FileActions
                 MessageBox.Show($"{e.StackTrace}\nДальнейшая работа невозможна", "Ошибка", MessageBoxButton.OK,
                     MessageBoxImage.Error);
                 Application.Current.Shutdown();
-                return excelData;
+                return null;
             }
+        }
+
+        private static GlobalPreferences Parse(string path)
+        {
+            var excelData = new GlobalPreferences();
+            try
+            {
+                byte[] bin = File.ReadAllBytes(path);
+                using (MemoryStream stream = new MemoryStream(bin))
+                using (ExcelPackage excelPackage = new ExcelPackage(stream))
+                {
+                    var sheet = excelPackage.Workbook.Worksheets[1];
+                    for (int i = 3; i <= sheet.Dimension.End.Row; i++)
+                    {
+                        var row = new string[8];
+                        for (int j = 1; j <= 8; j++)
+                        {
+                            var value = sheet.Cells[i, j].Value.ToString();
+                            row[j - 1] = value;
+                        }
+
+                        excelData.RowHandler(row);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Download(path);
+                excelData = Parse(path);
+            }
+
+            return excelData;
+        }
+
+        private static void Download(string name)
+        {
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile("https://bdu.fstec.ru/files/documents/thrlist.xlsx", name);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new NoConnectionException();
+            }
+
+        }
+
+        private static void RowHandler(this GlobalPreferences globalPreferences , string[] row)
+        {
+            var currentThreat = new Threat(row);
+            globalPreferences.Items.Add(currentThreat);
+
+            currentThreat.Source.ForEach(source =>
+            {
+                if (!globalPreferences.Source.Select(x => x.Item1).Contains(source))
+                {
+                    globalPreferences.Source.Add((source, true));
+                }
+            });
+
+            currentThreat.ExposureSubject.ForEach(target =>
+            {
+                if (!globalPreferences.Targets.Select(x => x.Item1).Contains(target))
+                {
+                    globalPreferences.Targets.Add((target, true));
+                }
+            });
+
+            currentThreat.ExposureSubject
+                .ForEach(target => currentThreat.Source
+                    .ForEach(source =>
+                    {
+                        if (!globalPreferences.Dangers.Any(x => x.Equal(target, source)))
+                        {
+                            globalPreferences.Dangers.Add(new DangerousLevelLine(source, target));
+                        }
+                    }));
+
         }
     }
 }

@@ -163,8 +163,6 @@
     <Compile Include="Core\Exceptions\NoConnectionException.cs" />
     <Compile Include="Core\Exceptions\NoFileException.cs" />
     <Compile Include="Core\Extensions.cs" />
-    <Compile Include="Core\FileActions\FileLoader.cs" />
-    <Compile Include="Core\FileActions\FileParser.cs" />
     <Compile Include="Core\Helpers\EnumDescriptionTypeConverter.cs" />
     <Compile Include="Core\Helpers\EnumToItemsSource.cs" />
     <Compile Include="Core\Helpers\Resolver.cs" />

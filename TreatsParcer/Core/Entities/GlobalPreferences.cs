@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Documents;
+using System.Windows.Forms.VisualStyles;
 using ThreatsParser.Entities.Enums;
 
 namespace ThreatsParser.Entities
@@ -16,5 +17,13 @@ namespace ThreatsParser.Entities
         public InitialSecurityLevel InitialSecurityLevel { get; set; }
 
         public List<DangerousLevelLine> Dangers { get; set; }
+
+        public GlobalPreferences()
+        {
+            Items = new List<Threat>();
+            Source = new List<(string, bool)>();
+            Targets = new List<(string, bool)>();
+            Dangers = new List<DangerousLevelLine>();
+        }
     }
 }
