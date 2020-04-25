@@ -8,18 +8,44 @@ namespace TreatsParser.Core
 {
     public static class ModelGeneration
     {
-        public static List<ModelLine> GenerateModelForPreview(List<Threat> items, double GlobalCoef)
+        public static List<ModelLine> GenerateModelForPreview(GlobalPreferences globalPreferences)
         {
             var _model = new List<ModelLine>();
-            _model = items.Select((threat, i) => new ModelLine()
-            {
-                Id = i+1,
-                ThreatNumber = $"УБИ.{threat.Id}",
-                Y2 = (int)threat.RiskProbabilities ,
-                Y = (GlobalCoef + (int)threat.RiskProbabilities)/20,
-                DangerLevel = Resolver.ResolveDanger((double)((int)threat.RiskProbabilities)/ GlobalCoef),
-                isActual = Resolver.ResolveActual(Resolver.ResolveDanger((double)((int)threat.RiskProbabilities) / GlobalCoef), threat.RiskProbabilities).ToString()
-            }).ToList();
+            var counter = 0;
+
+            globalPreferences.Targets
+                .Where(x => x.Item2)
+                .Select(x => x.Item1)
+                .ToList()
+                .ForEach(target => globalPreferences.Source
+                    .Where(x => x.Item2)
+                    .Select(x => x.Item1)
+                    .ToList()
+                    .ForEach(source => globalPreferences.Items
+                        .ForEach(threat =>
+                        {
+                            if (threat.ExposureSubject.Contains(target) && threat.Source.Contains(source))
+                            {
+                                counter++;
+                                var danger = globalPreferences.Dangers
+                                    .FirstOrDefault(
+                                        dangerCurr => dangerCurr.Equal(threat.Name, source, threat.Properies))
+                                    .DangerLevel;
+                                _model.Add(new ModelLine
+                                {
+                                    Id = 0,
+                                    Target = target,
+                                    Source = source,
+                                    ThreatName = threat.Name,
+                                    Possibility = threat.GetPossibility,
+                                    Y = Resolver.ResolveRealizeCoef(
+                                        (globalPreferences.InitialSecurityLevel.GlobalCoef +
+                                         (int) threat.RiskProbabilities) / 20),
+                                    Danger = danger.ResolveDanger(),
+                                    isActual = Resolver.ResolveActual(danger, threat.RiskProbabilities).ToString()
+                                });
+                            }
+                        })));
 
             return _model;
         }

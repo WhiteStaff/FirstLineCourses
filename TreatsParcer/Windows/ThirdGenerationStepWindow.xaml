@@ -7,13 +7,13 @@
         xmlns:core="clr-namespace:System;assembly=mscorlib"
         xmlns:enums="clr-namespace:ThreatsParser.Entities.Enums"
         mc:Ignorable="d"
-        Title="ThirdGenerationStepWindow" Height="574" Width="800">
+        Title="ThirdGenerationStepWindow" Height="574" Width="1130">
     <Grid>
         <DataGrid Name="DangersGrid" CanUserAddRows="False" HeadersVisibility="Column"
                   HorizontalScrollBarVisibility="Disabled"
                   Margin="14,31,0,0" AutoGenerateColumns="False" ItemsSource="{Binding}" HorizontalAlignment="Left"
-                  MaxWidth="540" Height="450" VerticalAlignment="Top" CanUserReorderColumns="True" BorderThickness="0"
-                  CanUserResizeColumns="False" CanUserSortColumns="True" Background="White" Width="560">
+                  MaxWidth="960" Height="450" VerticalAlignment="Top" CanUserReorderColumns="True" BorderThickness="0"
+                  CanUserResizeColumns="False" CanUserSortColumns="True" Background="White" Width="960" Loaded="DangersGrid_OnLoaded">
             <DataGrid.Resources>
                 <Style TargetType="TextBlock" x:Key="WrapText">
                     <Setter Property="TextWrapping" Value="Wrap" />
@@ -41,12 +41,13 @@
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Width="210" Header="Объект воздействия" ElementStyle="{StaticResource WrapText}"
-                                    Binding="{Binding Target, Mode=OneWay}" CellStyle="{StaticResource FirstColumn}"/>
+                <DataGridTextColumn Width="410" Header="Угроза" ElementStyle="{StaticResource WrapText}"
+                                    Binding="{Binding ThreatName, Mode=OneWay}" CellStyle="{StaticResource FirstColumn}"/>
                 <DataGridTextColumn Width="210" Header="Источник воздействия" Binding="{Binding Source, Mode=OneWay}"
                                     ElementStyle="{StaticResource WrapText}"  CellStyle="{StaticResource SecondColumn}"/>
-                <DataGridComboBoxColumn Width="120" SelectedItemBinding="{Binding DangerLevel, Mode=TwoWay}" Header="Опасность" ItemsSource="{Binding Source={StaticResource myEnum}}">
-                </DataGridComboBoxColumn>
+                <DataGridTextColumn Width="210" Header="Свойства" Binding="{Binding Properties, Mode=OneWay}"
+                                    ElementStyle="{StaticResource WrapText}"  CellStyle="{StaticResource SecondColumn}"/>
+                <DataGridComboBoxColumn Width="120" SelectedItemBinding="{Binding DangerLevel, Mode=TwoWay}" Header="Опасность" ItemsSource="{Binding Source={StaticResource myEnum}}" />
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Назад" HorizontalAlignment="Left" Margin="418,508,0,0" VerticalAlignment="Top" Width="75" Click="Back_Click"/>

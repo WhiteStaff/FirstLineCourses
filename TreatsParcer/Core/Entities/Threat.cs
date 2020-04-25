@@ -30,6 +30,48 @@ namespace ThreatsParser.Entities
 
         public RiskProbabilities RiskProbabilities { get; set; }
 
+        public string GetPossibility
+        {
+            get
+            {
+                switch (RiskProbabilities)
+                {
+                    case RiskProbabilities.Unlikely:
+                        return "Маловероятно";
+                    case RiskProbabilities.Low:
+                        return "Низкая";
+                    case RiskProbabilities.Medium:
+                        return "Средняя";
+                    default:
+                        return "Очень высокая";
+                }
+            }
+        }
+
+        public string Properies
+        {
+            get
+            {
+                var result = new List<string>();
+                if (IsHasPrivacyViolation)
+                {
+                    result.Add("Нарушение конфиденциальности");
+                }
+
+                if (IsHasIntegrityViolation)
+                {
+                    result.Add("Нарушение целостности");
+                }
+
+                if (IsHasAvailabilityViolation)
+                {
+                    result.Add("Нарушение доступности");
+                }
+
+                return result.Count > 0 ? string.Join(", ", result) : "Нарушения отсуствуют";
+            }
+        }
+
         public Threat(Threats value)
         {
             Id = value.ThreatId;
@@ -59,13 +101,17 @@ namespace ThreatsParser.Entities
             var privacy = (IsHasPrivacyViolation
                 ? "Присутствует"
                 : "Отсутствует");
-            var integrity = (IsHasPrivacyViolation
+            var integrity = (IsHasIntegrityViolation
                 ? "Присутствует"
                 : "Отсутствует");
-            var available = (IsHasPrivacyViolation
+            var available = (IsHasAvailabilityViolation
                 ? "Присутствует"
                 : "Отсутствует");
-            return new[] {$"УБИ.{Id}", $"{Name}", $"{Description}", $"{Source}", $"{ExposureSubject}", privacy, integrity, available};
+            return new[]
+            {
+                $"УБИ.{Id}", $"{Name}", $"{Description}", $"{Source}", $"{ExposureSubject}", privacy, integrity,
+                available
+            };
         }
 
         public override string ToString()
@@ -79,7 +125,7 @@ namespace ThreatsParser.Entities
             x.AppendLine();
             x.AppendLine($"Источник: {string.Join(", ", Source)}");
             x.AppendLine();
-            x.AppendLine($"Объект воздействия: {string.Join(", " ,ExposureSubject)}");
+            x.AppendLine($"Объект воздействия: {string.Join(", ", ExposureSubject)}");
             x.AppendLine();
             x.AppendLine(IsHasPrivacyViolation
                 ? "Нарушение конфиденциальности присутствует"
@@ -105,7 +151,8 @@ namespace ThreatsParser.Entities
             if (!(obj is Threat threat)) return false;
             var x1 = Id == threat.Id;
             var x2 = Name.Replace("\r", "").Replace("\n", "") == threat.Name.Replace("\r", "").Replace("\n", "");
-            var x3 = Description.Replace("\r", "").Replace("\n", "") == threat.Description.Replace("\r", "").Replace("\n", "");
+            var x3 = Description.Replace("\r", "").Replace("\n", "") ==
+                     threat.Description.Replace("\r", "").Replace("\n", "");
             var x4 = Source.All(x => threat.Source.Contains(x));
             var x5 = ExposureSubject.All(x => threat.ExposureSubject.Contains(x));
             var x6 = IsHasPrivacyViolation == threat.IsHasPrivacyViolation;

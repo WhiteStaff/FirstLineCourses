@@ -23,7 +23,7 @@ namespace ThreatsParser.FileActions
             }
             catch (Exception e)
             {
-                MessageBox.Show($"{e.StackTrace}\nДальнейшая работа невозможна", "Ошибка", MessageBoxButton.OK,
+                MessageBox.Show($"{e.Message}\nДальнейшая работа невозможна", "Ошибка", MessageBoxButton.OK,
                     MessageBoxImage.Error);
                 Application.Current.Shutdown();
                 return null;
@@ -82,6 +82,7 @@ namespace ThreatsParser.FileActions
         {
             var currentThreat = new Threat(row);
             globalPreferences.Items.Add(currentThreat);
+            globalPreferences.AllItems.Add(currentThreat);
 
             currentThreat.Source.ForEach(source =>
             {
@@ -99,15 +100,16 @@ namespace ThreatsParser.FileActions
                 }
             });
 
-            currentThreat.ExposureSubject
-                .ForEach(target => currentThreat.Source
-                    .ForEach(source =>
+            currentThreat.Source
+                .ForEach(source =>
+                {
+                    if (!globalPreferences.Dangers.Any(x =>
+                        x.Equal(currentThreat.Name, source, currentThreat.Properies)))
                     {
-                        if (!globalPreferences.Dangers.Any(x => x.Equal(target, source)))
-                        {
-                            globalPreferences.Dangers.Add(new DangerousLevelLine(source, target));
-                        }
-                    }));
+                        globalPreferences.Dangers.Add(new DangerousLevelLine(source, currentThreat.Name, currentThreat.Properies));
+                        globalPreferences.AllDangers.Add(new DangerousLevelLine(source, currentThreat.Name, currentThreat.Properies));
+                    }
+                });
 
         }
     }

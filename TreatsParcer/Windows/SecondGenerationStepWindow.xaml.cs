@@ -72,13 +72,12 @@ namespace ThreatsParser.Windows
 
         private void All_OnLoaded(object sender, RoutedEventArgs e)
         {
-            _globalPreferences.Items = _globalPreferences.Items
+            _globalPreferences.Items = _globalPreferences.AllItems
                 .Where(x => x.Source
                     .Any(y => _globalPreferences.Source
                         .Where(x2 => x2.Item2)
                         .Select(x1 => x1.Item1)
-                        .Contains(y))).ToList();
-            _globalPreferences.Items = _globalPreferences.Items
+                        .Contains(y)))
                 .Where(x =>
                     x.ExposureSubject
                         .Any(y => _globalPreferences.Targets

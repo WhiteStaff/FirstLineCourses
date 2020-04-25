@@ -1,18 +1,10 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using OfficeOpenXml.Packaging.Ionic.Zip;
+using System.Windows.Controls.Primitives;
 using ThreatsParser.Entities;
 
 namespace ThreatsParser.Windows
@@ -23,28 +15,26 @@ namespace ThreatsParser.Windows
     public partial class ThirdGenerationStepWindow : Window
     {
         private GlobalPreferences _globalPreferences;
-        private static ObservableCollection<DangerousLevelLine> _dataGridElements;
 
         public ThirdGenerationStepWindow(GlobalPreferences globalPreferences)
         {
             InitializeComponent();
             _globalPreferences = globalPreferences;
 
-            _globalPreferences.Dangers = _globalPreferences.Dangers
-                .Where(x => 
+            _globalPreferences.Dangers = _globalPreferences.AllDangers
+                .Where(x =>
                     _globalPreferences.Source
                         .Where(y => y.Item2)
                         .Select(y => y.Item1)
                         .Contains(x.Source) &&
-                    _globalPreferences.Targets
-                        .Where(y => y.Item2)
-                        .Select(y => y.Item1)
-                        .Contains(x.Target))
-                .OrderBy(x => x.Target)
+                    _globalPreferences.Items
+                        .Select(y => y.Name)
+                        .Contains(x.ThreatName))
+                .OrderBy(x => x.ThreatName)
                 .ToList();
 
-            _dataGridElements = new ObservableCollection<DangerousLevelLine>(_globalPreferences.Dangers);
-            DangersGrid.DataContext = _dataGridElements;
+            var dataGridElements = new ObservableCollection<DangerousLevelLine>(_globalPreferences.Dangers);
+            DangersGrid.ItemsSource = dataGridElements;
         }
 
 
@@ -67,5 +57,11 @@ namespace ThreatsParser.Windows
             win.Show();
             Close();
         }
+
+        private void DangersGrid_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
     }
 }

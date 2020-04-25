@@ -10,12 +10,25 @@ namespace TreatsParser.Core.Helpers
 {
     public static class Resolver
     {
-        public static DangerLevel ResolveDanger(double coef)
+        public static string ResolveRealizeCoef(double coef)
         {
-            if (coef <= 0.3) return DangerLevel.Low;
-            if (coef <= 0.6) return DangerLevel.Medium;
-            if (coef <= 0.8) return DangerLevel.High;
-            return DangerLevel.High;
+            if (coef <= 0.3) return $"{coef} - низкая";
+            if (coef <= 0.6) return $"{coef} - средняя";
+            if (coef <= 0.8) return $"{coef} - высокая";
+            return $"{coef} - очень высокая";
+        }
+
+        public static string ResolveDanger(this DangerLevel level)
+        {
+            switch (level)
+            {
+                case DangerLevel.Low:
+                    return "Низкая";
+                case DangerLevel.Medium:
+                    return "Средняя";
+                default:
+                    return "Высокая";
+            }
         }
 
         public static bool ResolveActual(DangerLevel dangerLevel, RiskProbabilities risk)

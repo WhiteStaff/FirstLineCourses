@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using OfficeOpenXml.Packaging.Ionic.Zip;
 using ThreatsParser.Entities;
 using TreatsParser.Core;
 
@@ -21,11 +22,43 @@ namespace ThreatsParser.Windows
     /// </summary>
     public partial class PreviewWindow : Window
     {
-        public PreviewWindow(GlobalPreferences _globalPreferences)
+        private List<ModelLine> _model;
+
+        private GlobalPreferences _globalPreferences;
+        
+        public PreviewWindow(GlobalPreferences globalPreferences)
         {
             InitializeComponent();
-            PreviewModel.ItemsSource = ModelGeneration.GenerateModelForPreview(_globalPreferences.Items,
-                _globalPreferences.InitialSecurityLevel.GlobalCoef);
+            _globalPreferences = globalPreferences;
+            _model = ModelGeneration.GenerateModelForPreview(_globalPreferences)
+                .OrderBy(x => x.ThreatName)
+                .ThenBy(x => x.Target)
+                .ThenBy(x => x.Source)
+                .Select((x, y) => new ModelLine(y + 1, x))
+                .ToList();
+            PreviewModel.ItemsSource = _model;
+        }
+
+        private void All_OnSelected(object sender, RoutedEventArgs e)
+        {
+            PreviewModel.ItemsSource = _model;
+        }
+
+        private void Actual_OnSelected(object sender, RoutedEventArgs e)
+        {
+            PreviewModel.ItemsSource = _model.Where(x => x.isActual == "Актуальная");
+        }
+
+        private void NotActual_OnSelected(object sender, RoutedEventArgs e)
+        {
+            PreviewModel.ItemsSource = _model.Where(x => x.isActual == "Неактуальная");
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new PreferencesWindow(_globalPreferences);
+            win.Show();
+            Close();
         }
     }
 }

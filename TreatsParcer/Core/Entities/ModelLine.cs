@@ -8,18 +8,39 @@ namespace ThreatsParser.Entities
 
         public int Id { get; set; }
 
-        public string ThreatNumber { get; set; }
+        public string Target { get; set; }
 
-        public int Y2 { get; set; }
+        public string Source { get; set; }
 
-        public double Y { get; set; }
+        public string ThreatName { get; set; }
 
-        public DangerLevel DangerLevel { get; set; }
+        public string Possibility { get; set; }
+
+        public string Y { get; set; }
+
+        public string Danger { get; set; }
 
         public string isActual
         {
             get => _isActual ? "Актуальная" : "Неактуальная";
-            set => _isActual = value == "True";
+            set => _isActual = value == "True" || value == "Актуальная";
+        }
+
+        public ModelLine()
+        {
+
+        }
+
+        public ModelLine(int id, ModelLine model)
+        {
+            Id = id;
+            Target = model.Target;
+            Source = model.Source;
+            ThreatName = model.ThreatName;
+            Possibility = model.Possibility;
+            Y = model.Y;
+            Danger = model.Danger;
+            isActual = model.isActual;
         }
     }
 }

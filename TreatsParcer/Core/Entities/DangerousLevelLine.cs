@@ -5,21 +5,24 @@ namespace ThreatsParser.Entities
 {
     public class DangerousLevelLine
     {
+        public string ThreatName { get; }
+
         public string Source { get; }
 
-        public string Target { get; }
+        public string Properties { get; }
 
         public DangerLevel DangerLevel { get; set; }
 
-        public DangerousLevelLine(string source, string target)
+        public DangerousLevelLine(string source, string threatName, string properties)
         {
             Source = source;
-            Target = target;
+            ThreatName = threatName;
+            Properties = properties;
         }
 
-        public bool Equal(string target, string source)
+        public bool Equal(string threatDescription, string source, string properties)
         {
-            return Target == target && Source == source;
+            return ThreatName == threatDescription && Source == source && Properties == properties;
         }
     }
 }

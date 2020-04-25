@@ -7,13 +7,13 @@
         xmlns:core="clr-namespace:System;assembly=mscorlib"
         xmlns:enums="clr-namespace:ThreatsParser.Entities.Enums"
         mc:Ignorable="d"
-        Title="PreviewWindow" Height="572.934" Width="800">
+        Title="PreviewWindow" Height="572.934" Width="1324.5">
     <Grid>
         <DataGrid Name="PreviewModel" CanUserAddRows="False" HeadersVisibility="Column"
                   HorizontalScrollBarVisibility="Disabled"
-                  Margin="10,10,0,-41" AutoGenerateColumns="False" ItemsSource="{Binding}" HorizontalAlignment="Left"
-                  MaxWidth="630" Height="450" VerticalAlignment="Top" CanUserReorderColumns="True" BorderThickness="0"
-                  CanUserResizeColumns="False" CanUserSortColumns="True" Background="White" Width="630">
+                  Margin="10,10,0,0" AutoGenerateColumns="False" ItemsSource="{Binding}" HorizontalAlignment="Left"
+                  MaxWidth="1120" Height="450" VerticalAlignment="Top" CanUserReorderColumns="True" BorderThickness="0"
+                  CanUserResizeColumns="False" CanUserSortColumns="True" Background="White" Width="1140">
             <DataGrid.Resources>
                 <Style TargetType="TextBlock" x:Key="WrapText">
                     <Setter Property="TextWrapping" Value="Wrap" />
@@ -31,17 +31,29 @@
                 <DataGridTextColumn Width="50" Header="№ п/п" ElementStyle="{StaticResource WrapText}"
                                     Binding="{Binding Id, Mode=OneWay}"
                                     CellStyle="{StaticResource FirstColumn}" />
-                <DataGridTextColumn Width="50" Header="Угрозы" Binding="{Binding ThreatNumber, Mode=OneWay}"
+                <DataGridTextColumn Width="150" Header="Объект" Binding="{Binding ThreatName, Mode=OneWay}"
                                     ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource SecondColumn}" />
-                <DataGridTextColumn Width="110" Header="Коэффициент Y2" Binding="{Binding Y2, Mode=OneWay}"
+                <DataGridTextColumn Width="150" Header="Источник" Binding="{Binding Target, Mode=OneWay}"
                                     ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource SecondColumn}" />
-                <DataGridTextColumn Width="150" Header="Коэф. реализуемости Y" Binding="{Binding Y, Mode=OneWay}"
+                <DataGridTextColumn Width="150" Header="Название угрозы" Binding="{Binding Source, Mode=OneWay}"
                                     ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource SecondColumn}" />
-                <DataGridTextColumn Width="130" Header="Показатель опасности" Binding="{Binding DangerLevel, Mode=OneWay}"
+                <DataGridTextColumn Width="130" Header="Вероятность" Binding="{Binding Possibility, Mode=OneWay}"
                                     ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource SecondColumn}" />
-                <DataGridTextColumn Width="130" Header="Актуальность угрозы" Binding="{Binding isActual, Mode=OneWay}"
+                <DataGridTextColumn Width="180" Header="Коэф реализуемости Y" Binding="{Binding Y, Mode=OneWay}"
+                                    ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource SecondColumn}" />
+                <DataGridTextColumn Width="180" Header="Опасность" Binding="{Binding Danger, Mode=OneWay}"
+                                    ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource SecondColumn}" />
+                <DataGridTextColumn Width="130" Header="Актуальность" Binding="{Binding isActual, Mode=OneWay}"
                                     ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource SecondColumn}" />
             </DataGrid.Columns>
         </DataGrid>
+        <ComboBox HorizontalAlignment="Left" Margin="1155,41,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem IsSelected="True" Content="Все" Name="All" Selected="All_OnSelected"/>
+            <ComboBoxItem IsSelected="False" Content="Актуальные" Name="Actual" Selected="Actual_OnSelected"/>
+            <ComboBoxItem IsSelected="False" Content="Неактуальные" Name="NotActual" Selected="NotActual_OnSelected"/>
+        </ComboBox>
+        <Label Content="Актуальность" HorizontalAlignment="Left" Margin="1155,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.355,0.692" Width="120"/>
+        <Button Content="Сохранить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Margin="1174,256,0,0"/>
+        <Button Content="Назад" HorizontalAlignment="Left" Margin="1174,306,0,0" VerticalAlignment="Top" Width="74" Click="Back_Click"/>
     </Grid>
 </Window>
