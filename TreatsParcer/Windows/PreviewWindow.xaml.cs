@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using OfficeOpenXml.Packaging.Ionic.Zip;
 using ThreatsParser.Entities;
+using ThreatsParser.FileActions;
 using TreatsParser.Core;
 
 namespace ThreatsParser.Windows
@@ -59,6 +60,11 @@ namespace ThreatsParser.Windows
             var win = new PreferencesWindow(_globalPreferences);
             win.Show();
             Close();
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            FileSaver.Save(_model);
         }
     }
 }

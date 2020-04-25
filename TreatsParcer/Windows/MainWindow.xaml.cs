@@ -45,48 +45,6 @@ namespace ThreatsParser
             }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            //FileSaver.Save(_items);
-        }
-
-        private void CheckUpdates_OnClick(object sender, RoutedEventArgs e)
-        {
-            var updateWindow = new UpdatesResultWindow();
-            /*try
-            {
-                List<ThreatsChanges> changes = FileUpdater.GetDifference(_items, out var newItems);
-                if (changes.Count == 0)
-                {
-                    File.Delete("newdata.xlsx");
-                    MessageBox.Show("Используется актуальная версия файла!", "Успешно", MessageBoxButton.OK,
-                        MessageBoxImage.Exclamation);
-                    updateWindow.Close();
-                }
-                else
-                {
-                    File.Delete("data.xlsx");
-                    File.Move("newdata.xlsx", "data.xlsx");
-                    _items = newItems;
-                    TreatsGrid.DataContext =
-                        _items.Where(x => x.Id > (_pageNumber - 1) * 15 && x.Id <= (_pageNumber) * 15);
-                    updateWindow.Changes.ItemsSource = changes;
-                    updateWindow.Info.Text = $"Идентификаторы угроз изменившихся записей (Всего {changes.Count}):";
-                    updateWindow.Show();
-                }
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show($"Ошибка обновления!\n{exception.Message}", "Ошибка");
-                updateWindow.Close();
-            }*/
-        }
-
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             new FirstGenerationStep(_globalPreferences).Show();

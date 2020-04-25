@@ -33,7 +33,7 @@ namespace TreatsParser.Core
                                     .DangerLevel;
                                 _model.Add(new ModelLine
                                 {
-                                    Id = 0,
+                                    Id = "0",
                                     Target = target,
                                     Source = source,
                                     ThreatName = threat.Name,

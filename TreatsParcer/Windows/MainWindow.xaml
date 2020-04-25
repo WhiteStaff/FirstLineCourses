@@ -10,10 +10,7 @@
         Title="Парсер угроз" Height="570.91" Width="780.407" MinHeight="570" MinWidth="610">
     <Grid Name="All" Margin="0,0,2,0">
         <Menu HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" Width="792" Name="MainMenu"/>
-        <Button Content="Сохранить" Margin="636,209,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.362,-2.551" Name="SaveButton" Click="SaveButton_Click" HorizontalAlignment="Left" Width="75"/>
-        <Button HorizontalAlignment="Left" Margin="636,244,0,0" VerticalAlignment="Top" Width="75" Height="44" Name="CheckUpdates" Click="CheckUpdates_OnClick">
-            <TextBlock Text="Проверить обновления" TextWrapping="Wrap" TextAlignment="Center" Height="34"/>
-        </Button>
+        <TextBlock Text="Проверить обновления" TextWrapping="Wrap" TextAlignment="Center" Height="34"/>
         <Button Content="Новая модель&#xD;&#xA;" HorizontalAlignment="Left" Margin="622,305,0,0" VerticalAlignment="Top" Width="109" Click="ButtonBase_OnClick" Height="23"/>
     </Grid>
 </Window>

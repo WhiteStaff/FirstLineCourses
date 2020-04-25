@@ -53,7 +53,7 @@
             <ComboBoxItem IsSelected="False" Content="Неактуальные" Name="NotActual" Selected="NotActual_OnSelected"/>
         </ComboBox>
         <Label Content="Актуальность" HorizontalAlignment="Left" Margin="1155,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.355,0.692" Width="120"/>
-        <Button Content="Сохранить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Margin="1174,256,0,0"/>
+        <Button Content="Сохранить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Margin="1174,256,0,0" Click="Save_Click"/>
         <Button Content="Назад" HorizontalAlignment="Left" Margin="1174,306,0,0" VerticalAlignment="Top" Width="74" Click="Back_Click"/>
     </Grid>
 </Window>

@@ -6,7 +6,7 @@ namespace ThreatsParser.Entities
     {
         private bool _isActual;
 
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string Target { get; set; }
 
@@ -33,7 +33,7 @@ namespace ThreatsParser.Entities
 
         public ModelLine(int id, ModelLine model)
         {
-            Id = id;
+            Id = id.ToString();
             Target = model.Target;
             Source = model.Source;
             ThreatName = model.ThreatName;
