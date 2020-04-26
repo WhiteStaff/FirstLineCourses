@@ -7,7 +7,7 @@
         xmlns:core="clr-namespace:System;assembly=mscorlib"
         xmlns:enums="clr-namespace:ThreatsParser.Entities.Enums"
         mc:Ignorable="d"
-        Title="PreviewWindow" Height="572.934" Width="1324.5">
+        Title="Предпросмотр модели" Height="573" Width="1325"  MinWidth="1325" MinHeight="573">
     <Grid>
         <DataGrid Name="PreviewModel" CanUserAddRows="False" HeadersVisibility="Column"
                   HorizontalScrollBarVisibility="Disabled"
@@ -31,11 +31,11 @@
                 <DataGridTextColumn Width="50" Header="№ п/п" ElementStyle="{StaticResource WrapText}"
                                     Binding="{Binding Id, Mode=OneWay}"
                                     CellStyle="{StaticResource FirstColumn}" />
-                <DataGridTextColumn Width="150" Header="Объект" Binding="{Binding ThreatName, Mode=OneWay}"
+                <DataGridTextColumn Width="150" Header="Название угрозы" Binding="{Binding ThreatName, Mode=OneWay}"
                                     ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource SecondColumn}" />
-                <DataGridTextColumn Width="150" Header="Источник" Binding="{Binding Target, Mode=OneWay}"
+                <DataGridTextColumn Width="150" Header="Объект воздействия" Binding="{Binding Target, Mode=OneWay}"
                                     ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource SecondColumn}" />
-                <DataGridTextColumn Width="150" Header="Название угрозы" Binding="{Binding Source, Mode=OneWay}"
+                <DataGridTextColumn Width="150" Header="Источник угрозы" Binding="{Binding Source, Mode=OneWay}"
                                     ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource SecondColumn}" />
                 <DataGridTextColumn Width="130" Header="Вероятность" Binding="{Binding Possibility, Mode=OneWay}"
                                     ElementStyle="{StaticResource WrapText}" CellStyle="{StaticResource SecondColumn}" />
@@ -55,5 +55,6 @@
         <Label Content="Актуальность" HorizontalAlignment="Left" Margin="1155,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.355,0.692" Width="120"/>
         <Button Content="Сохранить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Margin="1174,256,0,0" Click="Save_Click"/>
         <Button Content="Назад" HorizontalAlignment="Left" Margin="1174,306,0,0" VerticalAlignment="Top" Width="74" Click="Back_Click"/>
+        <Button Content="Отмена" HorizontalAlignment="Left" Margin="1174,363,0,0" VerticalAlignment="Top" Width="74" Click="Cancel_Button"/>
     </Grid>
 </Window>

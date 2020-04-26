@@ -77,7 +77,7 @@ namespace ThreatsParser.FileActions
                     Id = "№ п/п",
                     Target = "Объект воздействия",
                     Source = "Источник угрозы",
-                    ThreatName = "Наименвоание УБИ",
+                    ThreatName = "Наименование УБИ",
                     Possibility = "Вероятность",
                     Y = "Коэф. реализуемости Y",
                     Danger = "Опасность",

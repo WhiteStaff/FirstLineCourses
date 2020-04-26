@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
-using System.Windows.Documents;
-using ThreatsParser.Core.Entities.Enums.DbEnums;
 using ThreatsParser.Entities.Enums;
-using TreatsParser.Core.DataBase.Models;
 using TreatsParser.Core.Helpers;
 
 namespace ThreatsParser.Entities
@@ -70,18 +66,6 @@ namespace ThreatsParser.Entities
 
                 return result.Count > 0 ? string.Join(", ", result) : "Нарушения отсуствуют";
             }
-        }
-
-        public Threat(Threats value)
-        {
-            Id = value.ThreatId;
-            Name = value.Name;
-            Description = value.Description;
-            Source = value.Sources.Select(x => x.Source).ToList();
-            ExposureSubject = value.Targets.Select(x => x.Type).ToList();
-            IsHasAvailabilityViolation = value.IsHasAvailabilityViolation;
-            IsHasIntegrityViolation = value.IsHasIntegrityViolation;
-            IsHasPrivacyViolation = value.IsHasPrivacyViolation;
         }
 
         public Threat(string[] rowValues)

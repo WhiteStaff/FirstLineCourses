@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ThreatsParser.Entities;
-using TreatsParser.Core.DataBase;
 
 namespace ThreatsParser.Windows
 {
@@ -65,6 +60,24 @@ namespace ThreatsParser.Windows
             var secondWindow = new SecondGenerationStepWindow(_globalPreferences);
             secondWindow.Show();
             Close();
+        }
+
+        private void All_Click(object sender, RoutedEventArgs e)
+        {
+            if (((CheckBox) sender).IsChecked == true)
+            {
+                foreach (CheckBox targetItem in Target.Items)
+                {
+                    targetItem.IsChecked = true;
+                }
+            }
+            else
+            {
+                foreach (CheckBox targetItem in Target.Items)
+                {
+                    targetItem.IsChecked = false;
+                }
+            }
         }
     }
 }

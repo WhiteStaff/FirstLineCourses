@@ -7,13 +7,13 @@
         xmlns:core="clr-namespace:System;assembly=mscorlib"
         xmlns:enums="clr-namespace:ThreatsParser.Entities.Enums"
         mc:Ignorable="d"
-        Title="ThirdGenerationStepWindow" Height="574" Width="1130">
+        Title="Третий шаг" Height="574" Width="1016">
     <Grid>
         <DataGrid Name="DangersGrid" CanUserAddRows="False" HeadersVisibility="Column"
                   HorizontalScrollBarVisibility="Disabled"
                   Margin="14,31,0,0" AutoGenerateColumns="False" ItemsSource="{Binding}" HorizontalAlignment="Left"
-                  MaxWidth="960" Height="450" VerticalAlignment="Top" CanUserReorderColumns="True" BorderThickness="0"
-                  CanUserResizeColumns="False" CanUserSortColumns="True" Background="White" Width="960" Loaded="DangersGrid_OnLoaded">
+                  MaxWidth="950" Height="450" VerticalAlignment="Top" CanUserReorderColumns="True" BorderThickness="0"
+                  CanUserResizeColumns="False" CanUserSortColumns="True" Background="White" Width="970" Loaded="DangersGrid_OnLoaded">
             <DataGrid.Resources>
                 <Style TargetType="TextBlock" x:Key="WrapText">
                     <Setter Property="TextWrapping" Value="Wrap" />
@@ -53,5 +53,6 @@
         <Button Content="Назад" HorizontalAlignment="Left" Margin="418,508,0,0" VerticalAlignment="Top" Width="75" Click="Back_Click"/>
         <Button Content="Далее" HorizontalAlignment="Left" Margin="643,508,0,0" VerticalAlignment="Top" Width="75" Click="Next_Click"/>
         <Button Content="Отмена" HorizontalAlignment="Left" Margin="63,508,0,0" VerticalAlignment="Top" Width="75" Click="Cancel_Click"/>
+        <Label Content="Выберите опасность каждой угрозы:" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="974"/>
     </Grid>
 </Window>

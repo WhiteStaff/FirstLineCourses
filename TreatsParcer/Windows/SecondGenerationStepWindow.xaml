@@ -7,11 +7,11 @@
         xmlns:core="clr-namespace:System;assembly=mscorlib"
         xmlns:enums="clr-namespace:ThreatsParser.Entities.Enums"
         mc:Ignorable="d"
-        Title="SecondGenerationStepWindow"  Height="570.91" Width="780.407" MinHeight="570" MinWidth="610">
+        Title="Второй шаг"  Height="570.91" Width="780.407" MinHeight="570" MinWidth="610">
     <Grid Loaded="All_OnLoaded">
         <DataGrid Name="TreatsGrid" CanUserAddRows="False" HeadersVisibility="Column"
                   HorizontalScrollBarVisibility="Disabled"
-                  Margin="14,31,0,0" AutoGenerateColumns="False" ItemsSource="{Binding}"
+                  Margin="10,36,0,0" AutoGenerateColumns="False" ItemsSource="{Binding}"
                   MouseDoubleClick="TreatsGrid_MouseDoubleClick" HorizontalAlignment="Left"
                   MaxWidth="570" Height="450" VerticalAlignment="Top" CanUserReorderColumns="True" BorderThickness="0"
                   CanUserResizeColumns="False" CanUserSortColumns="True" Background="White" Width="570">
@@ -66,5 +66,6 @@
         <Button Content="Отмена" HorizontalAlignment="Left" Margin="396,496,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="Cancel_Click"/>
         <Button Content="Назад" HorizontalAlignment="Left" Margin="501,496,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="Back_Click"/>
         <Button Content="Далее" HorizontalAlignment="Left" Margin="615,496,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="Next_Click"/>
+        <Label Content="Выберите вероятность каждой угрозы:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="570"/>
     </Grid>
 </Window>

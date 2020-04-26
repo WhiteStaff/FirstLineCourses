@@ -1,25 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Threading;
-using ThreatsParser;
+﻿using System.Windows;
 using ThreatsParser.Entities;
 using ThreatsParser.FileActions;
 using ThreatsParser.MenuActions;
 using ThreatsParser.MenuActions.Interfaces;
 using ThreatsParser.Windows;
-using TreatsParser.Core;
-using TreatsParser.Core.DataBase;
-using TreatsParser.Core.DataBase.Models;
-using TreatsParser.Core.Helpers;
 
 namespace ThreatsParser
 {

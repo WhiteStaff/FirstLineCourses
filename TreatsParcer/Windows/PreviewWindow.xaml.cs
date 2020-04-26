@@ -66,5 +66,11 @@ namespace ThreatsParser.Windows
         {
             FileSaver.Save(_model);
         }
+
+        private void Cancel_Button(object sender, RoutedEventArgs e)
+        {
+            _globalPreferences = new GlobalPreferences();
+            Close();
+        }
     }
 }
