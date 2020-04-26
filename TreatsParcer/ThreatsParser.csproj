@@ -154,7 +154,6 @@
     <Compile Include="Core\Entities\Enums\PersonalDataPermissionSplit.cs" />
     <Compile Include="Core\Entities\Enums\PersonalDataSharingLevel.cs" />
     <Compile Include="Core\Entities\Enums\RiskProbabilities.cs" />
-    <Compile Include="Core\Entities\Enums\DbEnums\ThreatSourceType.cs" />
     <Compile Include="Core\Entities\GlobalPreferences.cs" />
     <Compile Include="Core\Entities\InitialSecurityLevel.cs" />
     <Compile Include="Core\Entities\Enums\LocationCharacteristic.cs" />
@@ -165,10 +164,6 @@
     <Compile Include="Core\Helpers\EnumDescriptionTypeConverter.cs" />
     <Compile Include="Core\Helpers\EnumToItemsSource.cs" />
     <Compile Include="Core\Helpers\Resolver.cs" />
-    <Compile Include="Core\MenuActions\About.cs" />
-    <Compile Include="Core\MenuActions\Help.cs" />
-    <Compile Include="Core\MenuActions\Interfaces\IMenuAction.cs" />
-    <Compile Include="Core\MenuActions\Interfaces\MenuActionExtension.cs" />
     <Compile Include="Core\FileActions\FileSaver.cs" />
     <Compile Include="Core\FileActions\FileCreator.cs" />
     <Compile Include="Core\Entities\Threat.cs" />

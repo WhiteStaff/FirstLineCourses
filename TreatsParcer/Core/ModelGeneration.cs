@@ -29,7 +29,7 @@ namespace TreatsParser.Core
                                 counter++;
                                 var danger = globalPreferences.Dangers
                                     .FirstOrDefault(
-                                        dangerCurr => dangerCurr.Equal(threat.Name, source, threat.Properies))
+                                        dangerCurr => dangerCurr.Equal(threat.Name, source, threat.Properties))
                                     .DangerLevel;
                                 _model.Add(new ModelLine
                                 {

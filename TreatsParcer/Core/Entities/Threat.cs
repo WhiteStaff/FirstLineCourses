@@ -25,6 +25,7 @@ namespace ThreatsParser.Entities
         public bool IsHasAvailabilityViolation { get; }
 
         public RiskProbabilities RiskProbabilities { get; set; }
+        
 
         public string GetPossibility
         {
@@ -44,7 +45,7 @@ namespace ThreatsParser.Entities
             }
         }
 
-        public string Properies
+        public string Properties
         {
             get
             {

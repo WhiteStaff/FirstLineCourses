@@ -28,7 +28,6 @@ namespace ThreatsParser.Entities
 
         public ModelLine()
         {
-
         }
 
         public ModelLine(int id, ModelLine model)

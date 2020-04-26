@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
-using ThreatsParser.Core.Entities.Enums.DbEnums;
 using ThreatsParser.Entities.Enums;
 
 namespace TreatsParser.Core.Helpers

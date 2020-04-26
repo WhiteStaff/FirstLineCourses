@@ -7,9 +7,17 @@
         xmlns:core="clr-namespace:System;assembly=mscorlib"
         xmlns:enums="clr-namespace:ThreatsParser.Entities.Enums"
         mc:Ignorable="d"
-        Title="Генератор моделей угроз" Height="570.91" Width="780.407" MinHeight="570" MinWidth="610">
+        Title="Генератор моделей угроз" Height="570" Width="780" MinHeight="570" MinWidth="610">
     <Grid Name="All" Margin="0,0,2,0">
-        <Menu HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" Width="792" Name="MainMenu"/>
-        <Button Content="Новая модель&#xD;&#xA;" Margin="329,493,332,0" Click="ButtonBase_OnClick" Height="23" VerticalAlignment="Top"/>
+        <Button Content="Новая модель" Margin="329,493,332,0" Click="ButtonBase_OnClick" Height="23" VerticalAlignment="Top"/>
+        <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Height="414" Width="670" Margin="50,40,0,0">
+            <TextBox BorderThickness="0" IsReadOnly="True" TextWrapping="Wrap" Width="670">Данная программа предоставляет возможность генерации модели угроз для ИСПДн по параметрам, заданным экспертом по информационной безопасности.
+            Процесс генерации состоит из 4 шагов:</TextBox>
+            <TextBox  IsReadOnly="True" BorderThickness="0" TextWrapping="Wrap">1. Выбор объектов воздействия, характерных для системы и выбор потенциальных источников угроз</TextBox>
+            <TextBox  BorderThickness="0" IsReadOnly="True" TextWrapping="Wrap">2. Выставление вероятности реализации каждой угрозы, попавшей под фильтр</TextBox>
+            <TextBox  BorderThickness="0" IsReadOnly="True" TextWrapping="Wrap">3. Выставление опасности каждой угрозе и каждому ее обхекту воздействия</TextBox>
+            <TextBox  BorderThickness="0" IsReadOnly="True" TextWrapping="Wrap">4. Определение технических и эксплуатационных характеристик ИСПДн</TextBox>
+            <TextBox  BorderThickness="0" IsReadOnly="True" TextWrapping="Wrap">Сгенерированную модель можно сохранить в docx файл в виде таблицы</TextBox>
+        </TextBlock>
     </Grid>
 </Window>

@@ -17,16 +17,6 @@ namespace ThreatsParser.Windows
             InitializeComponent();
             _globalPreferences = globalPreferences;
 
-            /*using (var context = new ThreatDbContext())
-            {
-                if (_globalPreferences.Source == null)
-                    _globalPreferences.Source = context.Source.Select(x => x.Source).Distinct().OrderBy(x => x).ToList()
-                        .Select(x => (x, true)).ToList();
-                if (_globalPreferences.Targets == null)
-                    _globalPreferences.Targets = context.Target.Select(x => x.Type).Distinct().OrderBy(x => x).ToList()
-                        .Select(x => (x, true)).ToList();
-            }*/
-
             _globalPreferences.Source.Select((val, i) =>
                 new CheckBox
                 {
@@ -35,7 +25,7 @@ namespace ThreatsParser.Windows
                     Content = new TextBlock {Text = val.Item1, TextWrapping = TextWrapping.Wrap}
                 }).ToList().ForEach(x => Source.Children.Add(x));
 
-            _globalPreferences.Targets.Select((val, i) =>
+            _globalPreferences.Targets.OrderBy(x => x.Item1).Select((val, i) =>
                 new CheckBox
                 {
                     Name = $"_{i}",

@@ -104,10 +104,10 @@ namespace ThreatsParser.FileActions
                 .ForEach(source =>
                 {
                     if (!globalPreferences.Dangers.Any(x =>
-                        x.Equal(currentThreat.Name, source, currentThreat.Properies)))
+                        x.Equal(currentThreat.Name, source, currentThreat.Properties)))
                     {
-                        globalPreferences.Dangers.Add(new DangerousLevelLine(source, currentThreat.Name, currentThreat.Properies));
-                        globalPreferences.AllDangers.Add(new DangerousLevelLine(source, currentThreat.Name, currentThreat.Properies));
+                        globalPreferences.Dangers.Add(new DangerousLevelLine(source, currentThreat.Name, currentThreat.Properties));
+                        globalPreferences.AllDangers.Add(new DangerousLevelLine(source, currentThreat.Name, currentThreat.Properties));
                     }
                 });
 
